@@ -1,95 +1,40 @@
-import Image from "next/image";
-import styles from "./page.module.css";
-
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
+    <div className="w-full">
+      <section className="h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="text-center">
+          <h1 className="text-6xl font-bold text-gray-900 mb-4">Section 1</h1>
+          <p className="text-xl text-gray-600">Welcome - Scroll to see the fade effect</p>
         </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </section>
+
+      <section className="h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100">
+        <div className="text-center">
+          <h2 className="text-5xl font-bold text-gray-900 mb-4">Section 2</h2>
+          <p className="text-xl text-gray-600">Notice how the content fades at the edges</p>
+        </div>
+      </section>
+
+      <section className="h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-pink-100">
+        <div className="text-center">
+          <h2 className="text-5xl font-bold text-gray-900 mb-4">Section 3</h2>
+          <p className="text-xl text-gray-600">The mask creates a smooth transition</p>
+        </div>
+      </section>
+
+      <section className="h-screen flex items-center justify-center bg-gradient-to-br from-yellow-50 to-orange-100">
+        <div className="text-center">
+          <h2 className="text-5xl font-bold text-gray-900 mb-4">Section 4</h2>
+          <p className="text-xl text-gray-600">Content appears and disappears smoothly</p>
+        </div>
+      </section>
+
+      <section className="h-screen flex items-center justify-center bg-gradient-to-br from-red-50 to-rose-100">
+        <div className="text-center">
+          <h2 className="text-5xl font-bold text-gray-900 mb-4">Section 5</h2>
+          <p className="text-xl text-gray-600">Last section - The fade effect works throughout</p>
+        </div>
+      </section>
     </div>
   );
 }
