@@ -18,14 +18,23 @@ export default function ScrollBlurEffect({ children }: { children: React.ReactNo
 
     if (!sections || sections.length === 0) return;
 
-    sections.forEach((section) => {
+    // Define background colors for each section
+    const backgroundColors = [
+      "rgb(239, 246, 255)", // blue-50
+      "rgb(240, 253, 244)", // green-50
+      "rgb(250, 245, 255)", // purple-50
+      "rgb(254, 252, 232)", // yellow-50
+      "rgb(254, 242, 242)"  // red-50
+    ];
+
+    sections.forEach((section, index) => {
       ScrollTrigger.create({
         trigger: section,
         scroller: container,
         start: "center 100%",
         end: "center 0%",
         scrub: 1,
-        markers: true,
+
         onUpdate: (self) => {
           const progress = self.progress;
           let blur: number, opacity: number;
@@ -52,6 +61,31 @@ export default function ScrollBlurEffect({ children }: { children: React.ReactNo
           });
         }
       });
+
+      // Create background color animation
+      ScrollTrigger.create({
+        trigger: section,
+        scroller: container,
+        start: "top center",
+        end: "bottom center",
+        scrub: 1,
+        onUpdate: (self) => {
+          const currentColor = backgroundColors[index];
+          const nextColor = backgroundColors[index + 1] || backgroundColors[index];
+
+          if (self.progress < 0.5) {
+            // Fade in current color
+            gsap.set(document.body, {
+              backgroundColor: currentColor
+            });
+          } else {
+            // Start transitioning to next color
+            gsap.set(document.body, {
+              backgroundColor: gsap.utils.interpolate(currentColor, nextColor, (self.progress - 0.5) * 2)
+            });
+          }
+        }
+      });
     });
 
     return () => {
@@ -62,13 +96,13 @@ export default function ScrollBlurEffect({ children }: { children: React.ReactNo
   return (
     <div
       ref={containerRef}
-      className="h-full overflow-y-auto px-16 py-16"
+      className="h-full overflow-y-auto"
       style={{
         mask: "linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%)",
         WebkitMask: "linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%)"
       }}
     >
-      <div ref={contentRef} className="max-w-7xl mx-auto">
+      <div ref={contentRef} className="w-full mx-auto">
         {children}
       </div>
     </div>
