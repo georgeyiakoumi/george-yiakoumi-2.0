@@ -11,15 +11,25 @@ export default function ScrollBlurEffect({ children }: { children: React.ReactNo
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!containerRef.current || !contentRef.current) return;
+    const initScrollEffects = () => {
+      if (!containerRef.current || !contentRef.current) return;
 
-    const container = containerRef.current;
-    const sections = contentRef.current.querySelectorAll("section");
+      const container = containerRef.current;
+      const sections = contentRef.current.querySelectorAll("section");
 
-    if (!sections || sections.length === 0) return;
+      if (!sections || sections.length === 0) return;
+
+      // Check if dark mode is active
+      const isDarkMode = document.documentElement.classList.contains('dark');
 
     // Define background colors for each section
-    const backgroundColors = [
+    const backgroundColors = isDarkMode ? [
+      "rgb(25, 32, 45)",    // dark blue-tinted gray
+      "rgb(22, 35, 28)",    // dark green-tinted gray
+      "rgb(32, 25, 40)",    // dark purple-tinted gray
+      "rgb(35, 32, 22)",    // dark yellow-tinted gray
+      "rgb(35, 25, 25)"     // dark red-tinted gray
+    ] : [
       "rgb(239, 246, 255)", // blue-50
       "rgb(240, 253, 244)", // green-50
       "rgb(250, 245, 255)", // purple-50
@@ -28,6 +38,8 @@ export default function ScrollBlurEffect({ children }: { children: React.ReactNo
     ];
 
     sections.forEach((section, index) => {
+      gsap.set(section, { opacity: 0, filter: 'blur(15px)' });
+
       ScrollTrigger.create({
         trigger: section,
         scroller: container,
@@ -40,17 +52,14 @@ export default function ScrollBlurEffect({ children }: { children: React.ReactNo
           let blur: number, opacity: number;
 
           if (progress < 0.1) {
-            // Bottom fade zone (center between 100% and 90%)
             const localProgress = progress / 0.1;
             blur = 15 * (1 - localProgress);
             opacity = localProgress;
           } else if (progress > 0.9) {
-            // Top fade zone (center between 10% and 0%)
             const localProgress = (progress - 0.9) / 0.1;
             blur = 15 * localProgress;
             opacity = 1 - localProgress;
           } else {
-            // Clear zone (center between 90% and 10%)
             blur = 0;
             opacity = 1;
           }
@@ -87,9 +96,32 @@ export default function ScrollBlurEffect({ children }: { children: React.ReactNo
         }
       });
     });
+    };
+
+    // Initialize scroll effects
+    initScrollEffects();
+
+    // Set up observer for theme changes
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+          // Kill all existing triggers
+          ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+          // Reinitialize with new theme colors
+          initScrollEffects();
+        }
+      });
+    });
+
+    // Observe changes to the document's class attribute
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
 
     return () => {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      observer.disconnect();
     };
   }, [children]);
 

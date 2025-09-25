@@ -9,14 +9,20 @@ function NavigationMenu({
   className,
   children,
   viewport = true,
+  orientation = "horizontal",
   ...props
 }) {
   return (
     <NavigationMenuPrimitive.Root
       data-slot="navigation-menu"
       data-viewport={viewport}
+      data-orientation={orientation}
       className={cn(
-        "group/navigation-menu relative flex max-w-max flex-1 items-center justify-center",
+        "group/navigation-menu relative flex max-w-max flex-1",
+        // Default horizontal orientation
+        "items-center justify-center",
+        // Responsive vertical orientation on md+
+        "md:flex-col md:items-start",
         className
       )}
       {...props}>
@@ -33,7 +39,12 @@ function NavigationMenuList({
   return (
     <NavigationMenuPrimitive.List
       data-slot="navigation-menu-list"
-      className={cn("group flex flex-1 list-none items-center justify-center gap-1", className)}
+      className={cn(
+        "group flex flex-1 list-none items-center justify-start gap-2",
+        // Mobile horizontal, desktop vertical
+        "flex-row md:flex-col md:items-start md:gap-0",
+        className
+      )}
       {...props} />
   );
 }
@@ -114,7 +125,17 @@ function NavigationMenuLink({
     <NavigationMenuPrimitive.Link
       data-slot="navigation-menu-link"
       className={cn(
-        "data-[active=true]:focus:bg-accent data-[active=true]:hover:bg-accent data-[active=true]:bg-accent/50 data-[active=true]:text-accent-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus-visible:ring-ring/50 [&_svg:not([class*='text-'])]:text-muted-foreground flex flex-col gap-1 rounded-sm p-2 text-sm transition-all outline-none focus-visible:ring-[3px] focus-visible:outline-1 [&_svg:not([class*='size-'])]:size-4",
+        "data-[active=true]:focus:bg-accent data-[active=true]:hover:bg-accent data-[active=true]:bg-accent/50 data-[active=true]:text-accent-foreground hover:bg-black/3 dark:hover:bg-white/4 focus:bg-accent focus:text-accent-foreground focus-visible:ring-ring/50 rounded-lg text-left transition-all outline-none focus-visible:ring-[3px] focus-visible:outline-1",
+        // Icon styling with proper stroke colors
+        "[&_svg]:stroke-black/50 dark:[&_svg]:stroke-white/40 hover:[&_svg]:stroke-black/90 dark:hover:[&_svg]:stroke-white/90 [&_svg]:transition-all [&_svg:not([class*='size-'])]:size-4",
+        // Base link styling with flex for icon + text alignment
+        "font-normal leading-6 text-base whitespace-nowrap px-4 py-3 w-full flex items-center gap-3",
+        // Hide text on mobile, show on md+
+        "[&_span]:hidden md:[&_span]:inline",
+        // Color states
+        "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100",
+        // Active state styling
+        "[&[aria-current]]:text-gray-900 [&[aria-current]]:dark:text-gray-100",
         className
       )}
       {...props} />
