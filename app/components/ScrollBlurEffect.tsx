@@ -3,16 +3,27 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollSmoother } from "gsap/ScrollSmoother";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
 export default function ScrollBlurEffect({ children }: { children: React.ReactNode }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const smootherRef = useRef<any>(null);
 
   useEffect(() => {
     const initScrollEffects = () => {
       if (!containerRef.current || !contentRef.current) return;
+
+      // Create ScrollSmoother instance
+      smootherRef.current = ScrollSmoother.create({
+        wrapper: containerRef.current,
+        content: contentRef.current,
+        smooth: 1.5,
+        effects: true,
+        normalizeScroll: true
+      });
 
       const container = containerRef.current;
       const sections = contentRef.current.querySelectorAll("section");
@@ -42,7 +53,6 @@ export default function ScrollBlurEffect({ children }: { children: React.ReactNo
 
       ScrollTrigger.create({
         trigger: section,
-        scroller: container,
         start: "center 100%",
         end: "center 0%",
         scrub: 1,
@@ -74,7 +84,6 @@ export default function ScrollBlurEffect({ children }: { children: React.ReactNo
       // Create background color animation
       ScrollTrigger.create({
         trigger: section,
-        scroller: container,
         start: "top center",
         end: "bottom center",
         scrub: 1,
@@ -121,6 +130,9 @@ export default function ScrollBlurEffect({ children }: { children: React.ReactNo
 
     return () => {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      if (smootherRef.current) {
+        smootherRef.current.kill();
+      }
       observer.disconnect();
     };
   }, [children]);
@@ -128,13 +140,14 @@ export default function ScrollBlurEffect({ children }: { children: React.ReactNo
   return (
     <div
       ref={containerRef}
-      className="h-full overflow-y-auto"
+      id="smooth-wrapper"
+      className="h-full overflow-hidden"
       style={{
         mask: "linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%)",
         WebkitMask: "linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%)"
       }}
     >
-      <div ref={contentRef} className="w-full mx-auto">
+      <div ref={contentRef} id="smooth-content" className="w-full mx-auto">
         {children}
       </div>
     </div>
