@@ -21,7 +21,7 @@ function NavigationMenu({
       data-viewport={viewport}
       orientation={orientation}
       className={cn(
-        "group/navigation-menu relative flex max-w-max flex-1 items-center justify-center md:block fixed box-border items-start p-4 md:p-4 left-4 bottom-4 sm:left-8 md:left-16 sm:bottom-auto sm:top-8 md:top-16 z-10",
+        "group/navigation-menu relative flex max-w-max flex-1 items-center justify-center md:block",
         className
       )}
       {...props}
@@ -126,13 +126,16 @@ function NavigationMenuViewport({
 
 function NavigationMenuLink({
   className,
+  active,
   ...props
 }: React.ComponentProps<typeof NavigationMenuPrimitive.Link>) {
   return (
     <NavigationMenuPrimitive.Link
       data-slot="navigation-menu-link"
+      active={active}
       className={cn(
-        "data-[active=true]:focus:bg-accent data-[active=true]:hover:bg-accent data-[active=true]:bg-accent/50 data-[active=true]:text-accent-foreground hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus-visible:ring-ring/50 [&_svg:not([class*='text-'])]:text-muted-foreground flex items-center gap-2 rounded-sm p-2 text-sm transition-all outline-none focus-visible:ring-[3px] focus-visible:outline-1 [&_svg:not([class*='size-'])]:size-4 [&_span]:hidden md:[&_span]:inline",
+        "data-[active]:bg-foreground/5 data-[active]:font-semibold hover:bg-foreground/3 hover:text-accent-foreground focus:bg-foreground/5 focus:text-accent-foreground focus-visible:ring-ring/50 [&_svg:not([class*='text-'])]:text-foreground/80 flex items-center gap-2 rounded-sm py-2 pl-4 md:pl-3 pr-4 text-sm transition-all outline-none focus-visible:ring-[3px] focus-visible:outline-1 [&_svg:not([class*='size-'])]:size-4 [&_span]:hidden md:[&_span]:inline",
+        active && "bg-accent text-accent-foreground",
         className
       )}
       {...props}

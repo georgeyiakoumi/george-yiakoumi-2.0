@@ -1,16 +1,10 @@
 import { Mulish } from "next/font/google";
 import "./globals.css";
-import { User, Briefcase, Mail, Github, Linkedin } from "lucide-react";
-import Link from "next/link";
-import ScrollBlurEffect from "./components/ScrollBlurEffect";
-import {
-  NavigationMenu,
-  NavigationMenuList,
-  NavigationMenuItem,
-  NavigationMenuLink,
-} from "@/components/ui/navigation-menu";
+import ScrollBlurEffect from "@/components/ScrollBlurEffect";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ModeToggle } from "@/components/mode-toggle";
+import { SiteNavigation } from "@/components/site-navigation";
+import { SiteFooter } from "@/components/site-footer";
 
 const mulish = Mulish({
   subsets: ["latin"],
@@ -30,64 +24,18 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${mulish.className} h-screen overflow-hidden`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-        <NavigationMenu orientation="vertical">
-          <NavigationMenuList>
-            <NavigationMenuItem>
-              <NavigationMenuLink asChild>
-                <Link href="/about">
-                  <User className="size-4" />
-                  <span>About</span>
-                </Link>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink asChild>
-                <Link href="/portfolio">
-                  <Briefcase className="size-4" />
-                  <span>Portfolio</span>
-                </Link>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink asChild>
-                <Link href="/contact">
-                  <Mail className="size-4" />
-                  <span>Contact</span>
-                </Link>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink asChild>
-                <a href="https://linkedin.com/in/georgeyiakoumi" target="_blank" rel="noopener noreferrer">
-                  <Linkedin className="size-4" />
-                  <span>LinkedIn</span>
-                </a>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink asChild>
-                <a href="https://github.com/georgeyiakoumi" target="_blank" rel="noopener noreferrer">
-                  <Github className="size-4" />
-                  <span>GitHub</span>
-                </a>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
+          <SiteNavigation />
 
-        <div className="fixed box-border flex items-center justify-center p-4 md:p-0 right-4 bottom-4 md:right-16 md:bottom-auto md:top-16 z-10">
           <ModeToggle />
-        </div>
+          
+          <main className="h-full overflow-hidden relative">
+            <ScrollBlurEffect>
+              {children}
+            </ScrollBlurEffect>
+          </main>
 
-        <main className="h-full overflow-hidden relative">
-          <ScrollBlurEffect>
-            {children}
-          </ScrollBlurEffect>
-        </main>
-
-        <footer className="fixed top-4 left-4 md:bottom-16 md:top-auto md:right-16 md:left-auto box-border flex flex-col gap-4 items-start md:items-end z-10 p-4">
-          <img src="/logo.svg" alt="George Yiakoumi Logo" className="size-10 dark:invert dark:brightness-0 dark:contrast-100"/>
-        </footer>
+          <SiteFooter />
+          
         </ThemeProvider>
       </body>
     </html>

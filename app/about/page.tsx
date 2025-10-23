@@ -1,11 +1,11 @@
 "use client";
 
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { HandMetal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { AUTHOR } from "@/lib/constants";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -86,12 +86,12 @@ export default function About() {
           <div className="mb-8">
             <img
               src="https://res.cloudinary.com/georgeyiakoumi/image/upload/f_auto,q_auto/v1741778561/avatar_9ddb26a1cc.jpg"
-              alt="George Yiakoumi"
+              alt={AUTHOR.fullName}
               className="w-32 h-32 rounded-full mx-auto mb-6 object-cover"
             />
           </div>
           <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
-            George Yiakoumi
+            {AUTHOR.fullName}
           </h1>
           <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-400 leading-relaxed">
             Lead product designer with 10+ years of experience turning messy ideas into clean, usable, well-built products.
@@ -139,7 +139,7 @@ export default function About() {
       <section className="h-screen flex items-center justify-center bg-transparent">
         <div className="text-center max-w-6xl mx-auto px-6">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-12">
-            Tools and languages
+            Tools of the trade
           </h2>
           <div ref={toolsRef} className="grid grid-cols-3 md:grid-cols-6 gap-6 items-center justify-items-center">
             {/* Placeholder for tool/language icons */}
@@ -193,11 +193,9 @@ export default function About() {
             Ready to bring your ideas to life? I'd love to hear about your project
             and explore how we can work together.
           </p>
-          <Button variant="secondary" size="lg" asChild>
-            <Link href="/contact" className="flex items-center gap-2">
-              Get in touch
-              <ArrowRight className="w-5 h-5" />
-            </Link>
+          <Button size="lg" href="/contact">
+            <HandMetal />
+            Get in touch
           </Button>
         </div>
       </section>
