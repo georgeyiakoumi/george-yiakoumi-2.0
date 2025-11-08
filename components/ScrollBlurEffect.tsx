@@ -13,42 +13,22 @@ export default function ScrollBlurEffect({ children }: { children: React.ReactNo
   const smootherRef = useRef<any>(null);
 
   useEffect(() => {
-    const initScrollEffects = () => {
-      if (!containerRef.current || !contentRef.current) return;
+    if (!containerRef.current || !contentRef.current) return;
 
-      // Create ScrollSmoother instance
-      smootherRef.current = ScrollSmoother.create({
-        wrapper: containerRef.current,
-        content: contentRef.current,
-        smooth: 1.5,
-        effects: true,
-        normalizeScroll: true
-      });
+    // Create ScrollSmoother instance
+    smootherRef.current = ScrollSmoother.create({
+      wrapper: containerRef.current,
+      content: contentRef.current,
+      smooth: 1.5,
+      effects: true,
+      normalizeScroll: true
+    });
 
-      const container = containerRef.current;
-      const sections = contentRef.current.querySelectorAll("section");
+    const sections = contentRef.current.querySelectorAll("section");
 
-      if (!sections || sections.length === 0) return;
+    if (!sections || sections.length === 0) return;
 
-      // Check if dark mode is active
-      const isDarkMode = document.documentElement.classList.contains('dark');
-
-    // Define background colors for each section
-    const backgroundColors = isDarkMode ? [
-      "rgb(25, 32, 45)",    // dark blue-tinted gray
-      "rgb(22, 35, 28)",    // dark green-tinted gray
-      "rgb(32, 25, 40)",    // dark purple-tinted gray
-      "rgb(35, 32, 22)",    // dark yellow-tinted gray
-      "rgb(35, 25, 25)"     // dark red-tinted gray
-    ] : [
-      "rgb(239, 246, 255)", // blue-50
-      "rgb(240, 253, 244)", // green-50
-      "rgb(250, 245, 255)", // purple-50
-      "rgb(254, 252, 232)", // yellow-50
-      "rgb(254, 242, 242)"  // red-50
-    ];
-
-    sections.forEach((section, index) => {
+    sections.forEach((section) => {
       gsap.set(section, { opacity: 0, filter: 'blur(15px)' });
 
       ScrollTrigger.create({
@@ -80,52 +60,6 @@ export default function ScrollBlurEffect({ children }: { children: React.ReactNo
           });
         }
       });
-
-      // Create background color animation
-      ScrollTrigger.create({
-        trigger: section,
-        start: "top center",
-        end: "bottom center",
-        scrub: 1,
-        onUpdate: (self) => {
-          const currentColor = backgroundColors[index];
-          const nextColor = backgroundColors[index + 1] || backgroundColors[index];
-
-          if (self.progress < 0.5) {
-            // Fade in current color
-            gsap.set(document.body, {
-              backgroundColor: currentColor
-            });
-          } else {
-            // Start transitioning to next color
-            gsap.set(document.body, {
-              backgroundColor: gsap.utils.interpolate(currentColor, nextColor, (self.progress - 0.5) * 2)
-            });
-          }
-        }
-      });
-    });
-    };
-
-    // Initialize scroll effects
-    initScrollEffects();
-
-    // Set up observer for theme changes
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.attributeName === 'class') {
-          // Kill all existing triggers
-          ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-          // Reinitialize with new theme colors
-          initScrollEffects();
-        }
-      });
-    });
-
-    // Observe changes to the document's class attribute
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['class']
     });
 
     return () => {
@@ -133,7 +67,6 @@ export default function ScrollBlurEffect({ children }: { children: React.ReactNo
       if (smootherRef.current) {
         smootherRef.current.kill();
       }
-      observer.disconnect();
     };
   }, [children]);
 

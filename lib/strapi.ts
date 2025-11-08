@@ -1,0 +1,69 @@
+const STRAPI_API_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL || 'http://localhost:1337';
+const STRAPI_API_TOKEN = process.env.STRAPI_API_TOKEN;
+
+interface StrapiRequestOptions {
+  endpoint: string;
+  query?: Record<string, string | number | boolean>;
+  cache?: RequestCache;
+  tags?: string[];
+}
+
+interface StrapiResponse<T> {
+  data: T;
+  meta?: {
+    pagination?: {
+      page: number;
+      pageSize: number;
+      pageCount: number;
+      total: number;
+    };
+  };
+}
+
+export async function fetchAPI<T>(
+  { endpoint, query, cache = 'no-store', tags }: StrapiRequestOptions
+): Promise<T> {
+  const url = new URL(`/api${endpoint}`, STRAPI_API_URL);
+
+  if (query) {
+    Object.entries(query).forEach(([key, value]) => {
+      url.searchParams.append(key, String(value));
+    });
+  }
+
+  const headers: HeadersInit = {
+    'Content-Type': 'application/json',
+  };
+
+  if (STRAPI_API_TOKEN) {
+    headers.Authorization = `Bearer ${STRAPI_API_TOKEN}`;
+  }
+
+  try {
+    const response = await fetch(url.toString(), {
+      headers,
+      cache,
+      ...(tags && { next: { tags } }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Strapi API error: ${response.status} ${response.statusText}`);
+    }
+
+    const data: StrapiResponse<T> = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error('Error fetching from Strapi:', error);
+    throw error;
+  }
+}
+
+export function getStrapiURL(path = '') {
+  return `${STRAPI_API_URL}${path}`;
+}
+
+export function getStrapiMediaURL(url: string | null | undefined) {
+  if (!url) return null;
+  if (url.startsWith('http')) return url;
+  return getStrapiURL(url);
+}

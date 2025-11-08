@@ -2,6 +2,7 @@
 
 import { HandMetal } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Item, ItemMedia } from "@/components/ui/item";
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -81,123 +82,106 @@ export default function About() {
   return (
     <div className="w-full">
       {/* Avatar and Bio Section */}
-      <section className="h-screen flex items-center justify-center bg-transparent">
-        <div className="text-center max-w-2xl mx-auto px-6">
-          <div className="mb-8">
-            <img
-              src="https://res.cloudinary.com/georgeyiakoumi/image/upload/f_auto,q_auto/v1741778561/avatar_9ddb26a1cc.jpg"
-              alt={AUTHOR.fullName}
-              className="w-32 h-32 rounded-full mx-auto mb-6 object-cover"
-            />
-          </div>
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
-            {AUTHOR.fullName}
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-400 leading-relaxed">
-            Lead product designer with 10+ years of experience turning messy ideas into clean, usable, well-built products.
-          </p>
-        </div>
-      </section>
+      <header className="h-screen flex flex-col gap-6 max-w-2xl mx-auto items-center justify-center text-center px-5 md:px-0">
+        <img
+            src="https://res.cloudinary.com/georgeyiakoumi/image/upload/f_auto,q_auto/v1741778561/avatar_9ddb26a1cc.jpg"
+            alt={AUTHOR.fullName}
+            className="size-32 rounded-full mx-auto object-cover"
+          />
+        <h1 className="text-3xl md:text-4xl font-semibold text-gray-900 dark:text-gray-100">
+          {AUTHOR.fullName}
+        </h1>
+        <p className="text-xl md:text-lg text-gray-600 dark:text-gray-400">
+          Lead product designer with 10+ years of experience turning messy ideas into clean, usable, well-built products.
+        </p>
+      </header>
 
       {/* Companies Section */}
-      <section className="h-screen flex items-center justify-center bg-transparent">
-        <div className="text-center max-w-6xl mx-auto px-6">
-          <h2 className="text-4xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-12">
-            Had the pleasure of working with
-          </h2>
-          <div ref={companiesRef} className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center justify-items-center">
-            {/* Placeholder for company logos */}
-            <div className="company-item w-24 h-24 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-              <span className="text-xs text-gray-500 dark:text-gray-400">Logo 1</span>
-            </div>
-            <div className="company-item w-24 h-24 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-              <span className="text-xs text-gray-500 dark:text-gray-400">Logo 2</span>
-            </div>
-            <div className="company-item w-24 h-24 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-              <span className="text-xs text-gray-500 dark:text-gray-400">Logo 3</span>
-            </div>
-            <div className="company-item w-24 h-24 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-              <span className="text-xs text-gray-500 dark:text-gray-400">Logo 4</span>
-            </div>
-            <div className="company-item w-24 h-24 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-              <span className="text-xs text-gray-500 dark:text-gray-400">Logo 5</span>
-            </div>
-            <div className="company-item w-24 h-24 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-              <span className="text-xs text-gray-500 dark:text-gray-400">Logo 6</span>
-            </div>
-            <div className="company-item w-24 h-24 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-              <span className="text-xs text-gray-500 dark:text-gray-400">Logo 7</span>
-            </div>
-            <div className="company-item w-24 h-24 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-              <span className="text-xs text-gray-500 dark:text-gray-400">Logo 8</span>
-            </div>
-          </div>
+      <section className="h-screen flex flex-col gap-6 max-w-6xl mx-auto items-center justify-center text-center px-5 md:px-0">
+        <h2 className="text-2xl md:text-3xl font-semibold text-gray-900 dark:text-gray-100">
+          Had the pleasure of working with
+        </h2>
+        <div ref={companiesRef} className="grid grid-cols-2 md:grid-cols-4 gap-2 items-center justify-items-center">
+          {/* Placeholder for company logos */}
+          <Item>
+            <ItemMedia>HP</ItemMedia>
+          </Item>
+          <Item>
+            <ItemMedia>Novartis</ItemMedia>
+          </Item>
+          <Item>
+            <ItemMedia>Johnson & Johnson</ItemMedia>
+          </Item>
+          <Item>
+            <ItemMedia>Takeda</ItemMedia>
+          </Item>
+          <Item>
+            <ItemMedia>Gofundme</ItemMedia>
+          </Item>
+          <Item>
+            <ItemMedia>Wickes</ItemMedia>
+          </Item>
+          <Item>
+            <ItemMedia>Ocean</ItemMedia>
+          </Item>
+          <Item>
+            <ItemMedia>thinkmoney</ItemMedia>
+          </Item>
         </div>
       </section>
 
       {/* Tools and Languages Section */}
-      <section className="h-screen flex items-center justify-center bg-transparent">
-        <div className="text-center max-w-6xl mx-auto px-6">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-12">
-            Tools of the trade
-          </h2>
-          <div ref={toolsRef} className="grid grid-cols-3 md:grid-cols-6 gap-6 items-center justify-items-center">
-            {/* Placeholder for tool/language icons */}
-            <div className="tool-item w-16 h-16 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-              <span className="text-xs text-gray-500 dark:text-gray-400">JS</span>
-            </div>
-            <div className="tool-item w-16 h-16 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-              <span className="text-xs text-gray-500 dark:text-gray-400">TS</span>
-            </div>
-            <div className="tool-item w-16 h-16 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-              <span className="text-xs text-gray-500 dark:text-gray-400">React</span>
-            </div>
-            <div className="tool-item w-16 h-16 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-              <span className="text-xs text-gray-500 dark:text-gray-400">Next</span>
-            </div>
-            <div className="tool-item w-16 h-16 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-              <span className="text-xs text-gray-500 dark:text-gray-400">Figma</span>
-            </div>
-            <div className="tool-item w-16 h-16 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-              <span className="text-xs text-gray-500 dark:text-gray-400">CSS</span>
-            </div>
-            <div className="tool-item w-16 h-16 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-              <span className="text-xs text-gray-500 dark:text-gray-400">Node</span>
-            </div>
-            <div className="tool-item w-16 h-16 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-              <span className="text-xs text-gray-500 dark:text-gray-400">Git</span>
-            </div>
-            <div className="tool-item w-16 h-16 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-              <span className="text-xs text-gray-500 dark:text-gray-400">AWS</span>
-            </div>
-            <div className="tool-item w-16 h-16 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-              <span className="text-xs text-gray-500 dark:text-gray-400">Docker</span>
-            </div>
-            <div className="tool-item w-16 h-16 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-              <span className="text-xs text-gray-500 dark:text-gray-400">PS</span>
-            </div>
-            <div className="tool-item w-16 h-16 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-              <span className="text-xs text-gray-500 dark:text-gray-400">AI</span>
-            </div>
-          </div>
+      <section className="h-screen flex flex-col gap-6 max-w-6xl mx-auto items-center justify-center text-center px-5 md:px-0">
+        <h2 className="text-2xl md:text-3xl font-semibold text-gray-900 dark:text-gray-100">
+          I know my way around
+        </h2>
+        <div ref={toolsRef} className="grid grid-cols-3 md:grid-cols-6 gap-2 items-center justify-items-center">
+          {/* Placeholder for tool/language icons */}
+          <Item>
+            <ItemMedia>JS</ItemMedia>
+          </Item>
+          <Item>
+            <ItemMedia>TS</ItemMedia>
+          </Item>
+          <Item>
+            <ItemMedia>React</ItemMedia>
+          </Item>
+          <Item>
+            <ItemMedia>Next</ItemMedia>
+          </Item>
+          <Item>
+            <ItemMedia>Figma</ItemMedia>
+          </Item>
+          <Item>
+            <ItemMedia>CSS</ItemMedia>
+          </Item>
+          <Item>
+            <ItemMedia>Node</ItemMedia>
+          </Item>
+          <Item>
+            <ItemMedia>Git</ItemMedia>
+          </Item>
+          <Item>
+            <ItemMedia>PS</ItemMedia>
+          </Item>
+          <Item>
+            <ItemMedia>AI</ItemMedia>
+          </Item>
         </div>
       </section>
 
       {/* Contact CTA Section */}
-      <section className="h-screen flex items-center justify-center bg-transparent">
-        <div className="text-center max-w-2xl mx-auto px-6">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 mb-8">
-            Let's chat
-          </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-400 mb-12 leading-relaxed">
-            Ready to bring your ideas to life? I'd love to hear about your project
-            and explore how we can work together.
-          </p>
-          <Button size="lg" href="/contact">
-            <HandMetal />
-            Get in touch
-          </Button>
-        </div>
+      <section className="h-screen flex flex-col gap-6 max-w-2xl mx-auto items-center justify-center text-center px-5 md:px-0">
+        <h2 className="text-2xl md:text-3xl font-semibold text-gray-900 dark:text-gray-100">
+          Let's chat
+        </h2>
+        <p className="text-lg text-gray-600 dark:text-gray-400">
+          Ready to bring your ideas to life? I'd love to hear about your project and explore how we can work together.
+        </p>
+        <Button size="lg" href="/contact">
+          <HandMetal />
+          Get in touch
+        </Button>
       </section>
     </div>
   );

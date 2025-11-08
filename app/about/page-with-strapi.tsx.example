@@ -1,0 +1,27 @@
+import { getAboutPage } from "@/lib/strapi-queries";
+import { AUTHOR } from "@/lib/constants";
+import AboutClient from "./AboutClient";
+
+export default async function AboutPage() {
+  const aboutData = await getAboutPage();
+
+  if (!aboutData) {
+    console.warn("No about page data found, using fallback");
+    return (
+      <div className="w-full h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-semibold mb-4">
+            Unable to load about page
+          </h1>
+          <p className="text-gray-600 dark:text-gray-400">
+            Please check your Strapi connection and try again.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  return <AboutClient data={aboutData} />;
+}
+
+export const dynamic = "force-dynamic";

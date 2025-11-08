@@ -1,0 +1,160 @@
+import Image from "next/image";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { ArrowLeft, ExternalLink, Github } from "lucide-react";
+import { getProjectBySlug, getProjects } from "@/lib/strapi-queries";
+import { getStrapiMediaURL } from "@/lib/strapi";
+import { Button } from "@/components/ui/button";
+
+interface ProjectPageProps {
+  params: Promise<{
+    slug: string;
+  }>;
+}
+
+export async function generateStaticParams() {
+  const projects = await getProjects();
+
+  return projects.map((project) => ({
+    slug: project.attributes.slug,
+  }));
+}
+
+export default async function ProjectPage({ params }: ProjectPageProps) {
+  const { slug } = await params;
+  const project = await getProjectBySlug(slug);
+
+  if (!project) {
+    notFound();
+  }
+
+  const thumbnailUrl = getStrapiMediaURL(
+    project.attributes.thumbnail?.data?.attributes.url
+  );
+
+  const galleryImages =
+    project.attributes.gallery?.data?.map((image) => ({
+      url: getStrapiMediaURL(image.attributes.url),
+      alt: image.attributes.alternativeText || project.attributes.title,
+      width: image.attributes.width,
+      height: image.attributes.height,
+    })) || [];
+
+  return (
+    <div className="w-full">
+      <div className="max-w-4xl mx-auto px-5 py-16 md:py-24">
+        <Link
+          href="/portfolio"
+          className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 mb-8 transition-colors"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back to Portfolio
+        </Link>
+
+        <article>
+          <header className="mb-8">
+            <h1 className="text-4xl md:text-5xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
+              {project.attributes.title}
+            </h1>
+            <p className="text-xl text-gray-600 dark:text-gray-400">
+              {project.attributes.description}
+            </p>
+
+            <div className="flex flex-wrap gap-4 mt-6">
+              {project.attributes.projectUrl && (
+                <Button asChild variant="default">
+                  <a
+                    href={project.attributes.projectUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                    View Project
+                  </a>
+                </Button>
+              )}
+              {project.attributes.githubUrl && (
+                <Button asChild variant="outline">
+                  <a
+                    href={project.attributes.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Github className="w-4 h-4" />
+                    View Code
+                  </a>
+                </Button>
+              )}
+            </div>
+
+            {project.attributes.technologies &&
+              project.attributes.technologies.length > 0 && (
+                <div className="flex flex-wrap gap-2 mt-6">
+                  {project.attributes.technologies.map((tech) => (
+                    <span
+                      key={tech.id}
+                      className="text-sm px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300"
+                    >
+                      {tech.name}
+                    </span>
+                  ))}
+                </div>
+              )}
+          </header>
+
+          {thumbnailUrl && (
+            <div className="aspect-video relative rounded-lg overflow-hidden mb-8">
+              <Image
+                src={thumbnailUrl}
+                alt={
+                  project.attributes.thumbnail?.data?.attributes
+                    .alternativeText || project.attributes.title
+                }
+                fill
+                className="object-cover"
+                priority
+              />
+            </div>
+          )}
+
+          {project.attributes.content && (
+            <div className="prose prose-gray dark:prose-invert max-w-none mb-12">
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: project.attributes.content,
+                }}
+              />
+            </div>
+          )}
+
+          {galleryImages.length > 0 && (
+            <div className="space-y-8">
+              <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
+                Gallery
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {galleryImages.map((image, index) => (
+                  <div
+                    key={index}
+                    className="relative aspect-video rounded-lg overflow-hidden"
+                  >
+                    {image.url && (
+                      <Image
+                        src={image.url}
+                        alt={image.alt}
+                        fill
+                        className="object-cover"
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </article>
+      </div>
+    </div>
+  );
+}
+
+export const dynamic = "force-dynamic";

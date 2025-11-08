@@ -17,8 +17,5 @@
     "ui": "@/components/ui",
     "lib": "@/lib",
     "hooks": "@/hooks"
-  },
-  "registries": {
-    "@lloyd": "https://registry.lloydrichards.dev/r/{name}.json"
   }
 }

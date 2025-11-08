@@ -22,10 +22,7 @@ export default function Contact() {
 
             <Field>
               <FieldLabel htmlFor="message">Message</FieldLabel>
-              <Textarea id="message" name="message" placeholder="Tell me about your project..." rows={6} required />
-              <FieldDescription>
-                Let me know what you'd like to discuss or work on together.
-              </FieldDescription>
+              <Textarea id="message" name="message" placeholder="Let me know what you'd like to discuss or work on together" rows={6} required />
             </Field>
 
             <Button type="submit" size="lg">

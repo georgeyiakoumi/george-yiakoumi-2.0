@@ -16,7 +16,7 @@ export function SiteNavigation() {
 
   return (
     <NavigationMenu orientation="vertical" className="fixed box-border items-start left-8 bottom-8 sm:left-8 lg:left-16 md:top-8 lg:top-16 z-10">
-      <NavigationMenuList>
+      <NavigationMenuList className="md:gap-0">
         <NavigationMenuItem>
           <NavigationMenuLink asChild active={pathname === NAV_LINKS.about.href}>
             <Link href={NAV_LINKS.about.href} aria-label={NAV_LINKS.about.ariaLabel}>

@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# George Yiakoumi Portfolio
+
+Personal portfolio website built with Next.js, showcasing design and development work.
 
 ## Getting Started
 
-First, run the development server:
+### Development Server
+
+Run the Next.js development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the site.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### Storybook
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Run Storybook to view and develop UI components in isolation:
 
-## Learn More
+```bash
+npm run storybook
+```
 
-To learn more about Next.js, take a look at the following resources:
+Open [http://localhost:6006](http://localhost:6006) to view the component library.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Available Scripts
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `npm run dev` - Start Next.js development server (port 3000)
+- `npm run build` - Build the production application
+- `npm run start` - Start the production server
+- `npm run lint` - Run ESLint
+- `npm run storybook` - Start Storybook dev server (port 6006)
+- `npm run build-storybook` - Build Storybook for production
 
-## Deploy on Vercel
+## Tech Stack
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Framework**: Next.js 15.5.2 with React 19.1.0
+- **Styling**: Tailwind CSS 4.1.13
+- **UI Components**: shadcn/ui + Radix UI
+- **Animation**: GSAP 3.13.0
+- **Icons**: Lucide React
+- **Forms**: React Hook Form + Zod
+- **Theme**: next-themes (dark mode support)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+For detailed documentation, see [CLAUDE.md](CLAUDE.md).
