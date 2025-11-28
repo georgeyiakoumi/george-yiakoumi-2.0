@@ -15,6 +15,12 @@ export default function ScrollBlurEffect({ children }: { children: React.ReactNo
   useEffect(() => {
     if (!containerRef.current || !contentRef.current) return;
 
+    // Kill any existing ScrollSmoother instances first
+    const existingSmoother = ScrollSmoother.get();
+    if (existingSmoother) {
+      existingSmoother.kill();
+    }
+
     // Create ScrollSmoother instance
     smootherRef.current = ScrollSmoother.create({
       wrapper: containerRef.current,
@@ -26,7 +32,13 @@ export default function ScrollBlurEffect({ children }: { children: React.ReactNo
 
     const sections = contentRef.current.querySelectorAll("section");
 
-    if (!sections || sections.length === 0) return;
+    if (!sections || sections.length === 0) {
+      if (smootherRef.current) {
+        smootherRef.current.kill();
+        smootherRef.current = null;
+      }
+      return;
+    }
 
     sections.forEach((section) => {
       gsap.set(section, { opacity: 0, filter: 'blur(15px)' });
@@ -63,26 +75,57 @@ export default function ScrollBlurEffect({ children }: { children: React.ReactNo
     });
 
     return () => {
+      // Reset all sections to default state before cleanup
+      const sections = contentRef.current?.querySelectorAll("section");
+      if (sections) {
+        sections.forEach(section => {
+          gsap.set(section, { clearProps: "all" });
+        });
+      }
+
+      // Kill all ScrollTrigger instances
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+
+      // Kill ScrollSmoother
       if (smootherRef.current) {
         smootherRef.current.kill();
+        smootherRef.current = null;
       }
+
+      // Additional cleanup: kill any lingering ScrollSmoother instance
+      const existingSmoother = ScrollSmoother.get();
+      if (existingSmoother) {
+        existingSmoother.kill();
+      }
+
+      // Refresh ScrollTrigger to ensure clean state
+      ScrollTrigger.refresh();
     };
-  }, [children]);
+  }, []);
 
   return (
     <div
       ref={containerRef}
       id="smooth-wrapper"
       className="h-full overflow-hidden"
-      style={{
-        mask: "linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%)",
-        WebkitMask: "linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%)"
-      }}
     >
       <div ref={contentRef} id="smooth-content" className="w-full mx-auto">
         {children}
       </div>
+      <style jsx>{`
+        @media (max-width: 767px) {
+          #smooth-wrapper {
+            mask: linear-gradient(to bottom, transparent 0%, transparent 8%, black 20%, black 80%, transparent 90%, transparent 100%);
+            -webkit-mask: linear-gradient(to bottom, transparent 0%, transparent 8%, black 20%, black 80%, transparent 90%, transparent 100%);
+          }
+        }
+        @media (min-width: 768px) {
+          #smooth-wrapper {
+            mask: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+            -webkit-mask: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+          }
+        }
+      `}</style>
     </div>
   );
 }

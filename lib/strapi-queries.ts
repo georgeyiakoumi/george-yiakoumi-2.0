@@ -149,11 +149,6 @@ export async function getProjects(options?: {
   try {
     const query: Record<string, string | number | boolean> = {
       'populate': '*',
-      'populate[Challenge][populate]': 'Image',
-      'populate[Solution][populate]': 'Image',
-      'populate[Role][populate]': 'Image',
-      'populate[Impact][populate]': 'Image',
-      'populate[Takeaway][populate]': 'Image',
       'sort[0]': 'Date:desc',
     };
 
@@ -184,7 +179,12 @@ export async function getProjectBySlug(slug: string) {
       endpoint: '/projects',
       query: {
         'filters[slug][$eq]': slug,
-        'populate': '*',
+        'populate[Banner]': '*',
+        'populate[Thumbnail]': '*',
+        'populate[FeaturedImage]': '*',
+        'populate[Images]': '*',
+        'populate[Tags]': '*',
+        'populate[Tools]': '*',
         'populate[Challenge][populate]': 'Image',
         'populate[Solution][populate]': 'Image',
         'populate[Role][populate]': 'Image',

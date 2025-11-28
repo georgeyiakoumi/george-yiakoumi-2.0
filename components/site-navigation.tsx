@@ -15,7 +15,7 @@ export function SiteNavigation() {
   const pathname = usePathname();
 
   return (
-    <NavigationMenu orientation="vertical" className="fixed box-border items-start left-8 bottom-8 sm:left-8 lg:left-16 md:top-8 lg:top-16 z-10">
+    <NavigationMenu orientation="vertical" className="fixed box-border items-start left-1/2 -translate-x-1/2 md:left-8 lg:left-16 md:translate-x-0 bottom-8 md:top-8 lg:top-16 z-10">
       <NavigationMenuList className="md:gap-0">
         <NavigationMenuItem>
           <NavigationMenuLink asChild active={pathname === NAV_LINKS.about.href}>

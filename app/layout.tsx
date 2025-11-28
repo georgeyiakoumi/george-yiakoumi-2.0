@@ -25,7 +25,7 @@ export default function RootLayout({
       <body className={`${mulish.className} h-screen overflow-hidden`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <SiteNavigation />
-
+          
           <ModeToggle />
           
           <main className="h-full overflow-hidden relative">

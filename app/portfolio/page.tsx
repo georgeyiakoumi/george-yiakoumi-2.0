@@ -1,79 +1,85 @@
 import Link from "next/link";
 import { getProjects } from "@/lib/strapi-queries";
 
+import { SquareLibrary } from "lucide-react";
+
+import { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription } from "@/components/ui/empty";
+import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+
 export default async function Portfolio() {
   const projects = await getProjects();
 
   if (!projects || projects.length === 0) {
     return (
       <div className="w-full min-h-screen flex items-center justify-center px-5">
-        <div className="text-center">
-          <h1 className="text-2xl font-semibold mb-4">No projects found</h1>
-          <p className="text-gray-600 dark:text-gray-400">
-            Check back soon for updates!
-          </p>
-        </div>
+        <Empty>
+          <EmptyHeader>
+            <EmptyMedia variant="default">
+              <SquareLibrary />
+            </EmptyMedia>
+            <EmptyTitle>
+              No projects found  
+            </EmptyTitle>
+            <EmptyDescription>
+              Check back soon for updates!  
+            </EmptyDescription>
+          </EmptyHeader>
+        </Empty>
       </div>
     );
   }
 
   return (
     <div className="w-full">
-      <div className="max-w-7xl mx-auto px-5 py-16 md:py-24">
-        <header className="mb-16 text-center">
-          <h1 className="text-4xl md:text-5xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
+      <section className="flex flex-col gap-12 mx-auto px-8 py-24 xs:max-w-md md:max-w-lg lg:max-w-2xl xl:max-w-4xl 2xl:max-w-6xl">
+        <header className="flex flex-col gap-6 text-center">
+          <h1 className="text-3xl md:text-4xl font-semibold text-gray-900 dark:text-gray-100">
             Portfolio
           </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          <p className="text-xl md:text-lg text-gray-600 dark:text-gray-400">
             A collection of projects I've worked on
           </p>
         </header>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 xl:grid-cols-2 xl:auto-rows-fr 2xl:grid-cols-3 gap-4">
           {projects.map((project) => (
-            <Link
-              key={project.id}
-              href={`/portfolio/${project.slug}`}
-              className="group block rounded-lg overflow-hidden border border-gray-200 dark:border-gray-800 hover:border-gray-300 dark:hover:border-gray-700 transition-colors"
-            >
-              <div className="p-6">
-                <div className="text-sm text-gray-500 dark:text-gray-400 mb-2">
-                  {new Date(project.Date).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                  })}
-                </div>
-
-                <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                  {project.Title}
-                </h2>
-
-                <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
-                  {project.Description}
-                </p>
-
-                {project.Tags && project.Tags.length > 0 && (
-                  <div className="flex flex-wrap gap-2">
-                    {project.Tags.slice(0, 3).map((tag, index) => (
-                      <span
-                        key={index}
-                        className="text-xs px-2 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300"
-                      >
-                        {tag.name}
-                      </span>
-                    ))}
-                    {project.Tags.length > 3 && (
-                      <span className="text-xs px-2 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
-                        +{project.Tags.length - 3}
-                      </span>
-                    )}
-                  </div>
+            <Link key={project.id} href={`/portfolio/${project.slug}`} className="xl:h-full">
+              <Card className="xl:h-full flex flex-col">
+                <CardHeader className="flex-1 !flex !flex-col gap-3">
+                  <time dateTime={project.Date} className="text-xs text-gray-500 dark:text-gray-400">
+                    {new Date(project.Date).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                    })}
+                  </time>
+                  <CardTitle className="leading-snug">
+                    {project.Title}
+                  </CardTitle>
+                  <CardDescription>
+                    {project.Description}
+                  </CardDescription>
+                </CardHeader>
+                <CardFooter className="flex-wrap gap-1">
+                {project.Tags.slice(0, 3).map((tag, index) => (
+                  <Badge
+                    key={index}
+                    variant="secondary"
+                  >
+                    {tag.name}
+                  </Badge>
+                ))}
+                {project.Tags.length > 3 && (
+                  <Badge variant="secondary">
+                    +{project.Tags.length - 3}
+                  </Badge>
                 )}
-              </div>
+                </CardFooter>
+              </Card>
             </Link>
           ))}
         </div>
-      </div>
+      </section>
     </div>
   );
 }

@@ -1,13 +1,23 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { FieldSet, FieldDescription, FieldGroup, Field, FieldLabel } from "@/components/ui/field";
+
+import { FieldSet, FieldGroup, Field, FieldLabel } from "@/components/ui/field";
 
 export default function Contact() {
   return (
-    <div className="h-screen flex items-center justify-center">
-      
-        <FieldSet className="max-w-2xl mx-auto px-6 w-full">
+    <div className="w-full">
+      <section className="h-screen flex flex-col gap-12 px-8 py-24 items-center justify-center mx-auto xs:max-w-md md:max-w-lg lg:max-w-xl">
+        <header className="flex flex-col gap-6 text-center">
+          <h1 className="text-3xl md:text-4xl font-semibold text-gray-900 dark:text-gray-100">
+            Contact
+          </h1>
+          <p className="text-xl md:text-lg text-gray-600 dark:text-gray-400">
+            Leave your deetz and a message and I'll get back to ya.
+          </p>
+        </header>
+        
+        <FieldSet className="w-full">
           <FieldGroup>
 
             <Field>
@@ -22,16 +32,17 @@ export default function Contact() {
 
             <Field>
               <FieldLabel htmlFor="message">Message</FieldLabel>
-              <Textarea id="message" name="message" placeholder="Let me know what you'd like to discuss or work on together" rows={6} required />
+              <Textarea id="message" name="message" placeholder="Your message" rows={6} required />
             </Field>
 
             <Button type="submit" size="lg">
-              Send Message
+              Send message
             </Button>
 
           </FieldGroup>
         </FieldSet>
-      
+        
+      </section>
     </div>
   );
 }

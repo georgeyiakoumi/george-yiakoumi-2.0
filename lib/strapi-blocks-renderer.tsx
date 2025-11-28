@@ -78,30 +78,30 @@ function renderBlock(block: RichTextBlock, index: number): React.ReactNode {
   switch (block.type) {
     case 'paragraph':
       const paragraphChildren = block.children?.map((child, i) => renderChild(child, i));
-      return <p key={index}>{paragraphChildren}</p>;
+      return <p key={index} className="text-gray-600 dark:text-gray-400 mb-4">{paragraphChildren}</p>;
 
     case 'heading':
       const headingChildren = block.children?.map((child, i) => renderChild(child, i));
       const HeadingTag = `h${block.level || 2}` as keyof JSX.IntrinsicElements;
-      return <HeadingTag key={index}>{headingChildren}</HeadingTag>;
+      return <HeadingTag key={index} className="text-gray-600 dark:text-gray-400">{headingChildren}</HeadingTag>;
 
     case 'list':
       const listItems = block.children?.map((child, i) => renderChild(child, i));
       const ListTag = block.format === 'ordered' ? 'ol' : 'ul';
-      return <ListTag key={index} className={block.format === 'ordered' ? 'list-decimal list-inside' : 'list-disc list-inside'}>{listItems}</ListTag>;
+      return <ListTag key={index} className={`text-gray-600 dark:text-gray-400 ${block.format === 'ordered' ? 'list-decimal list-inside' : 'list-disc list-inside'}`}>{listItems}</ListTag>;
 
     case 'list-item':
       // This shouldn't normally be rendered directly as it's handled by renderChild
       const listItemChildren = block.children?.map((child, i) => renderChild(child, i));
-      return <li key={index}>{listItemChildren}</li>;
+      return <li key={index} className="text-gray-600 dark:text-gray-400">{listItemChildren}</li>;
 
     case 'quote':
       const quoteChildren = block.children?.map((child, i) => renderChild(child, i));
-      return <blockquote key={index} className="border-l-4 border-gray-300 dark:border-gray-700 pl-4 italic">{quoteChildren}</blockquote>;
+      return <blockquote key={index} className="border-l-4 border-gray-300 dark:border-gray-700 pl-4 italic text-gray-600 dark:text-gray-400">{quoteChildren}</blockquote>;
 
     case 'code':
       const codeChildren = block.children?.map((child, i) => renderChild(child, i));
-      return <pre key={index} className="bg-gray-100 dark:bg-gray-900 p-4 rounded-lg overflow-x-auto"><code>{codeChildren}</code></pre>;
+      return <pre key={index} className="bg-gray-100 dark:bg-gray-900 p-4 rounded-lg overflow-x-auto text-gray-600 dark:text-gray-400"><code>{codeChildren}</code></pre>;
 
     case 'link':
       const linkChildren = block.children?.map((child, i) => renderChild(child, i));
@@ -109,7 +109,7 @@ function renderBlock(block: RichTextBlock, index: number): React.ReactNode {
 
     default:
       const defaultChildren = block.children?.map((child, i) => renderChild(child, i));
-      return <p key={index}>{defaultChildren}</p>;
+      return <p key={index} className="text-gray-600 dark:text-gray-400">{defaultChildren}</p>;
   }
 }
 
@@ -123,12 +123,12 @@ export function renderStrapiRichText(richTextBlock: StrapiRichTextBlock | undefi
 
   return (
     <>
-      <div className="prose prose-lg prose-gray dark:prose-invert max-w-none mb-6">
+      <div className="prose prose-lg prose-gray dark:prose-invert max-w-none">
         {richTextBlock.content.map((block, index) => renderBlock(block, index))}
       </div>
 
       {imageUrl && (
-        <div className="relative aspect-video rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-900 mb-6">
+        <div className="relative aspect-video rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-900">
           <Image
             src={imageUrl}
             alt={richTextBlock.Image?.alternativeText || 'Section image'}

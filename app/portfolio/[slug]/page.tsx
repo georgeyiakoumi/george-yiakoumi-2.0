@@ -1,8 +1,13 @@
 import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ExternalLink, Github } from "lucide-react";
-import { getProjectBySlug, getProjects } from "@/lib/strapi-queries";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { AspectRatio } from "@/components/ui/aspect-ratio"
+
+import { ArrowLeft, ExternalLink, AlertCircle, CheckCircle, Wrench, TrendingUp, Lightbulb  } from "lucide-react";
+
+import { getProjects } from "@/lib/strapi-queries";
 import { getStrapiMediaURL } from "@/lib/strapi";
 import { renderStrapiRichText } from "@/lib/strapi-blocks-renderer";
 
@@ -31,25 +36,24 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
   return (
     <div className="w-full">
-      <div className="max-w-4xl mx-auto px-5 py-16 md:py-24">
-        <Link
-          href="/portfolio"
-          className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 mb-8 transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back to Portfolio
-        </Link>
+      <section className="flex flex-col gap-8 mx-auto px-8 py-24 items-start xs:max-w-md md:max-w-lg lg:max-w-2xl xl:max-w-4xl">
+        <Button href="/portfolio" variant="link">
+          <ArrowLeft />
+          Back to portfolio
+        </Button>
 
-        <article>
-          <header className="mb-8">
-            <div className="flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400 mb-4">
-              <time dateTime={project.Date}>
-                {new Date(project.Date).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </time>
+        <header className="flex flex-col gap-4">
+            <time 
+              dateTime={project.Date}
+              className="text-sm text-gray-500 dark:text-gray-400"
+              >
+              {new Date(project.Date).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </time>
+              
               {project.Client && (
                 <>
                   <span>•</span>
@@ -62,25 +66,24 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                   <span>{project.Role}</span>
                 </>
               )}
-            </div>
 
-            <h1 className="text-4xl md:text-5xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
+            <h1 className="text-3xl md:text-4xl font-semibold text-gray-900 dark:text-gray-100">
               {project.Title}
             </h1>
 
-            <p className="text-xl text-gray-600 dark:text-gray-400 mb-6">
+            <p className="text-xl md:text-lg text-gray-600 dark:text-gray-400">
               {project.Description}
             </p>
 
             {project.Tags && project.Tags.length > 0 && (
-              <div className="flex flex-wrap gap-2 mb-6">
+              <div className="flex flex-wrap gap-2">
                 {project.Tags.map((tag, index) => (
-                  <span
+                  <Badge
                     key={index}
-                    className="text-sm px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300"
+                    variant="secondary"
                   >
                     {typeof tag === 'string' ? tag : tag?.name || JSON.stringify(tag)}
-                  </span>
+                  </Badge>
                 ))}
               </div>
             )}
@@ -111,23 +114,29 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 )}
               </div>
             )}
-          </header>
 
-          {bannerImageUrl && (
-            <div className="aspect-video relative rounded-lg overflow-hidden mb-12 bg-gray-100 dark:bg-gray-900">
-              <Image
-                src={bannerImageUrl}
-                alt={project.Banner?.alternativeText || project.Title}
-                fill
-                className="object-cover"
-                priority
-              />
-            </div>
+            {bannerImageUrl && (
+            
+              <AspectRatio ratio={16 / 4}>
+                <Image
+                  src={bannerImageUrl}
+                  alt={project.Banner?.alternativeText || project.Title}
+                  fill
+                  
+                  className="object-cover border-border border"
+                  priority
+                />
+              </AspectRatio>
+            
           )}
+        </header>
 
+        <article className="flex flex-col gap-8">
           {project.Challenge && (
-            <section className="mb-12">
-              <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
+
+            <section className="flex flex-col gap-2">
+              <AlertCircle/>
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
                 Challenge
               </h2>
               {renderStrapiRichText(project.Challenge)}
@@ -135,8 +144,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           )}
 
           {project.Solution && (
-            <section className="mb-12">
-              <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
+            <section className="flex flex-col gap-2">
+              <CheckCircle/>
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
                 Solution
               </h2>
               {renderStrapiRichText(project.Solution)}
@@ -144,17 +154,19 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           )}
 
           {project.Role && typeof project.Role !== 'string' && (
-            <section className="mb-12">
-              <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
-                My Role
+            <section className="flex flex-col gap-2">
+              <Wrench/>
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+                My role
               </h2>
               {renderStrapiRichText(project.Role)}
             </section>
           )}
 
           {project.Impact && (
-            <section className="mb-12">
-              <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
+            <section className="flex flex-col gap-2">
+              <TrendingUp/>
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
                 Impact
               </h2>
               {renderStrapiRichText(project.Impact)}
@@ -162,8 +174,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           )}
 
           {project.Takeaway && (
-            <section className="mb-12">
-              <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
+            <section className="flex flex-col gap-2">
+              <Lightbulb/>
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
                 Key Takeaway
               </h2>
               {renderStrapiRichText(project.Takeaway)}
@@ -171,8 +184,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           )}
 
           {project.Images && project.Images.length > 0 && (
-            <section className="mb-12">
-              <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-6">
+            <section className="flex flex-col gap-2">
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
                 Project Gallery
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -198,17 +211,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             </section>
           )}
         </article>
-
-        <footer className="mt-16 pt-8 border-t border-gray-200 dark:border-gray-800">
-          <Link
-            href="/portfolio"
-            className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            View all projects
-          </Link>
-        </footer>
-      </div>
+      </section>
     </div>
   );
 }

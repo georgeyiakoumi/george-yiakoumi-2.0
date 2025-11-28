@@ -44,7 +44,6 @@ This is a personal portfolio website built with modern web technologies to showc
 ## Project Structure
 
 ```
-/Volumes/T7 Editing/Z_Work/George Yiakoumi/
 ├── app/                    # Next.js App Router pages
 │   ├── page.tsx           # Homepage
 │   ├── about/page.tsx     # About page
