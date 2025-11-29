@@ -125,15 +125,60 @@ export interface ContactInfoData {
   };
 }
 
+export interface AboutRichTextChild {
+  text: string;
+  type: string;
+}
+
+export interface AboutRichTextBlock {
+  type: string;
+  level?: number;
+  children?: AboutRichTextChild[];
+  image?: {
+    url: string;
+    alternativeText?: string;
+    width?: number;
+    height?: number;
+  };
+}
+
+export interface AboutBusiness {
+  id: number;
+  name: string;
+  imageWidth?: number;
+  ariaLabel: string;
+  classes?: string | null;
+  cssVariables?: Record<string, string> | null;
+  cssVariablesDark?: Record<string, string> | null;
+  image?: {
+    id: number;
+    documentId: string;
+    url: string;
+    alternativeText?: string;
+    width?: number;
+    height?: number;
+  };
+}
+
+export interface AboutData {
+  id: number;
+  documentId: string;
+  content: AboutRichTextBlock[];
+  businesses: AboutBusiness[];
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
 export async function getAboutPage() {
   try {
-    const data = await fetchAPI<AboutPageData>({
-      endpoint: '/about-page',
+    const data = await fetchAPI<AboutData>({
+      endpoint: '/about',
       query: {
-        populate: 'deep',
+        'populate[businesses][populate]': 'image',
       },
       cache: 'no-store',
-      tags: ['about-page'],
+      tags: ['about'],
     });
     return data;
   } catch (error) {

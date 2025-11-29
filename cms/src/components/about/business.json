@@ -26,6 +26,14 @@
     },
     "classes": {
       "type": "text"
+    },
+    "cssVariables": {
+      "type": "json",
+      "required": false
+    },
+    "cssVariablesDark": {
+      "type": "json",
+      "required": false
     }
   }
 }

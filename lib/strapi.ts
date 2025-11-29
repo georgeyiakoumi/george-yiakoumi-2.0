@@ -40,6 +40,8 @@ export async function fetchAPI<T>(
   }
 
   try {
+    console.log('Fetching from Strapi:', url.toString());
+
     const response = await fetch(url.toString(), {
       headers,
       cache,
@@ -47,6 +49,8 @@ export async function fetchAPI<T>(
     });
 
     if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Strapi API error response:', errorText);
       throw new Error(`Strapi API error: ${response.status} ${response.statusText}`);
     }
 
