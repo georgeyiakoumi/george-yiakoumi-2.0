@@ -3,11 +3,12 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
 import { FieldSet, FieldGroup, Field, FieldLabel } from "@/components/ui/field";
+import { Section } from "@/components/section";
 
 export default function Contact() {
   return (
-    <div className="w-full">
-      <section className="h-screen flex flex-col gap-12 px-8 py-24 items-center justify-center mx-auto xs:max-w-md md:max-w-lg lg:max-w-xl">
+    <>
+      <Section>
         <header className="flex flex-col gap-6 text-center">
           <h1 className="text-3xl md:text-4xl font-semibold text-gray-900 dark:text-gray-100">
             Contact
@@ -16,7 +17,7 @@ export default function Contact() {
             Leave your deetz and a message and I'll get back to ya.
           </p>
         </header>
-        
+
         <FieldSet className="w-full">
           <FieldGroup>
 
@@ -41,8 +42,8 @@ export default function Contact() {
 
           </FieldGroup>
         </FieldSet>
-        
-      </section>
-    </div>
+
+      </Section>
+    </>
   );
 }

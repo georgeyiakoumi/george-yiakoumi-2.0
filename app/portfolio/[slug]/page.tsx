@@ -5,11 +5,12 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { AspectRatio } from "@/components/ui/aspect-ratio"
 
-import { ArrowLeft, ExternalLink, AlertCircle, CheckCircle, Wrench, TrendingUp, Lightbulb  } from "lucide-react";
+import { ArrowLeft, ExternalLink, AlertCircle, CheckCircle, Wrench, TrendingUp, Lightbulb, Github  } from "lucide-react";
 
 import { getProjects } from "@/lib/strapi-queries";
 import { getStrapiMediaURL } from "@/lib/strapi";
 import { renderStrapiRichText } from "@/lib/strapi-blocks-renderer";
+import { Section } from "@/components/section";
 
 interface ProjectPageProps {
   params: Promise<{
@@ -35,12 +36,11 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     : null;
 
   return (
-    <div className="w-full">
-      <section className="flex flex-col gap-8 mx-auto px-8 py-24 items-start xs:max-w-md md:max-w-lg lg:max-w-2xl xl:max-w-4xl">
-        <Button href="/portfolio" variant="link">
-          <ArrowLeft />
-          Back to portfolio
-        </Button>
+    <Section className="!h-auto !justify-start !items-start py-32 md:py-16">
+      <Button href="/portfolio" variant="link">
+        <ArrowLeft />
+        Back to portfolio
+      </Button>
 
         <header className="flex flex-col gap-4">
             <time 
@@ -211,8 +211,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             </section>
           )}
         </article>
-      </section>
-    </div>
+    </Section>
   );
 }
 
