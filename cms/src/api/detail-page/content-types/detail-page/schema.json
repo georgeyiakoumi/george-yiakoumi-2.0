@@ -1,0 +1,24 @@
+{
+  "kind": "singleType",
+  "collectionName": "detail_pages",
+  "info": {
+    "singularName": "detail-page",
+    "pluralName": "detail-pages",
+    "displayName": "detailPage",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "content": {
+      "type": "blocks"
+    },
+    "tools": {
+      "type": "component",
+      "repeatable": true,
+      "component": "detail.tool"
+    }
+  }
+}

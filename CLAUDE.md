@@ -41,24 +41,46 @@ This is a personal portfolio website built with modern web technologies to showc
 - **embla-carousel-react** - Carousel component
 - **recharts** - Data visualization
 
+### CMS (Content Management)
+- **Strapi 5.8.1** - Headless CMS located in `/cms` folder
+- **PostgreSQL** - Database (hosted on Supabase)
+- **Cloudinary** - Media storage and optimization
+- Portfolio projects, images, and content managed through Strapi admin panel
+
 ## Project Structure
 
 ```
 ├── app/                    # Next.js App Router pages
-│   ├── page.tsx           # Homepage
-│   ├── about/page.tsx     # About page
+│   ├── page.tsx           # Homepage (redirects to /about)
+│   ├── about/page.tsx     # About page (main landing)
+│   ├── portfolio/         # Portfolio pages
+│   │   ├── page.tsx       # Portfolio listing
+│   │   └── [slug]/page.tsx # Individual project pages
+│   ├── contact/page.tsx   # Contact page
 │   ├── layout.tsx         # Root layout with navigation
 │   ├── globals.css        # Global styles and Tailwind directives
 │   └── components/        # App-specific components
 │       └── ScrollBlurEffect.tsx
 ├── components/            # Shared components
 │   ├── ui/               # shadcn/ui components (all .tsx files)
+│   ├── section.tsx       # Reusable section wrapper
+│   ├── logo-item.tsx     # Company/tool logo component
 │   ├── theme-provider.tsx
 │   └── mode-toggle.tsx
 ├── lib/                   # Utilities and helpers
-│   └── utils.tsx         # cn() utility for className merging
+│   ├── utils.tsx         # cn() utility for className merging
+│   ├── constants.ts      # Site-wide constants (companies, tools, author)
+│   ├── strapi.ts         # Strapi API connection utilities
+│   ├── strapi-queries.ts # Strapi data fetching functions
+│   └── strapi-blocks-renderer.tsx # Rich text rendering
 ├── hooks/                 # Custom React hooks
 │   └── use-mobile.ts
+├── cms/                   # Strapi CMS (separate Node.js app)
+│   ├── config/           # Strapi configuration
+│   ├── src/              # Content types, controllers, services
+│   ├── public/uploads/   # Uploaded media (gitignored)
+│   ├── database/         # Database files (gitignored)
+│   └── .env             # CMS environment variables (gitignored)
 └── public/               # Static assets
     └── logo.svg
 
@@ -83,6 +105,7 @@ This is a personal portfolio website built with modern web technologies to showc
 
 ## Development Commands
 
+### Frontend (Next.js)
 ```bash
 # Start development server
 npm run dev
@@ -97,12 +120,32 @@ npm run start
 npm run lint
 ```
 
+### CMS (Strapi)
+```bash
+# Start CMS in development mode (from project root)
+npm run cms:dev
+
+# Build CMS (from project root)
+npm run cms:build
+
+# Start CMS in production mode (from project root)
+npm run cms:start
+
+# Or run directly from cms folder
+cd cms
+npm run develop  # Development mode with auto-reload
+npm run build    # Build admin panel
+npm run start    # Production mode
+```
+
+**Note**: The CMS runs on port 1337 by default. Access the admin panel at `http://localhost:1337/admin`
+
 ## Important Notes
 
 ### Current Status
-- **Completed Pages**: Homepage (placeholder content), About page
-- **TODO Pages**: Portfolio page, Contact page
-- **Placeholder Content**: Company logos, tool icons on About page need actual assets
+- **Completed Pages**: About page (main landing), Portfolio listing, Portfolio detail pages, Contact page
+- **CMS Integration**: Fully integrated with Strapi for portfolio content management
+- **TODO**: Company logos and tool icons on About page need actual assets (currently placeholder text)
 
 ### Code Style
 - Use TypeScript exclusively (.tsx/.ts files) - no JavaScript files
@@ -127,13 +170,28 @@ npm run lint
 - npm package manager
 
 ## Git Repository
-Project uses Git for version control with .gitignore configured for Next.js projects.
+Project uses Git for version control with .gitignore configured for both Next.js and Strapi.
+
+### Monorepo Structure
+- Frontend and CMS are in the same repository
+- CMS lives in `/cms` folder with its own `package.json` and `node_modules`
+- CMS database, uploads, and build artifacts are gitignored
+- CMS `.env` file contains sensitive credentials and is gitignored
+
+## CMS Content Types
+The Strapi CMS includes the following content types:
+- **Projects** - Portfolio case studies with rich text, images, tags, dates, client info
+- **About** - About page content
+- **Contact Page** - Contact form configuration
+- **Global SEO** - Site-wide SEO metadata
+- **Navigation** - Site navigation structure
+- **Tools** - Skills and technologies
 
 ## Future Enhancements
-1. Complete Portfolio and Contact pages
-2. Add actual company logos and tool icons
-3. Implement contact form backend
-4. Add portfolio project case studies
-5. Consider adding blog/articles section
-6. Implement SEO optimizations
-7. Add analytics tracking
+1. Add actual company logos and tool icons (replace placeholder text)
+2. Implement contact form backend with email service
+3. Consider adding blog/articles section
+4. Implement SEO optimizations and meta tags
+5. Add analytics tracking (Google Analytics, Plausible, etc.)
+6. Add more portfolio projects through Strapi
+7. Implement image optimization for company/tool logos

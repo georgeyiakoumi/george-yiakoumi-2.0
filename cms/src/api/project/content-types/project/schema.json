@@ -1,0 +1,87 @@
+{
+  "kind": "collectionType",
+  "collectionName": "projects",
+  "info": {
+    "singularName": "project",
+    "pluralName": "projects",
+    "displayName": "Project",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "Title",
+      "required": true
+    },
+    "Thumbnail": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "Banner": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "Date": {
+      "type": "date"
+    },
+    "Tags": {
+      "type": "customField",
+      "customField": "plugin::tagsinput.tags"
+    },
+    "Description": {
+      "type": "text"
+    },
+    "Challenge": {
+      "type": "component",
+      "repeatable": false,
+      "component": "project-chapter.project-chapter"
+    },
+    "Solution": {
+      "type": "component",
+      "repeatable": false,
+      "component": "project-chapter.project-chapter"
+    },
+    "Role": {
+      "type": "component",
+      "repeatable": false,
+      "component": "project-chapter.project-chapter"
+    },
+    "Impact": {
+      "type": "component",
+      "repeatable": false,
+      "component": "project-chapter.project-chapter"
+    },
+    "Takeaway": {
+      "type": "component",
+      "repeatable": false,
+      "component": "project-chapter.project-chapter"
+    },
+    "Tools": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::tool.tool"
+    }
+  }
+}

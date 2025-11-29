@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_navlink_social_links",
+  "info": {
+    "displayName": "SocialLink",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Icon": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    },
+    "name": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    },
+    "ariaLabel": {
+      "type": "string"
+    }
+  }
+}

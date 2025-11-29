@@ -1,0 +1,27 @@
+{
+  "kind": "singleType",
+  "collectionName": "navigations",
+  "info": {
+    "singularName": "navigation",
+    "pluralName": "navigations",
+    "displayName": "navigation",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "NavLinks": {
+      "displayName": "NavLink",
+      "type": "component",
+      "repeatable": true,
+      "component": "navlink.nav-link"
+    },
+    "SocialLinks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "navlink.social-link"
+    }
+  }
+}

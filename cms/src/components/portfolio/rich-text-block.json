@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_portfolio_rich_text_blocks",
+  "info": {
+    "displayName": "Rich Text Block",
+    "icon": "write",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "rich_text": {
+      "type": "blocks"
+    }
+  }
+}

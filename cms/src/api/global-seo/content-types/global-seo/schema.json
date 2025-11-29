@@ -1,0 +1,65 @@
+{
+  "kind": "singleType",
+  "collectionName": "global_seos",
+  "info": {
+    "singularName": "global-seo",
+    "pluralName": "global-seos",
+    "displayName": "Global SEO",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "siteTitle": {
+      "type": "string"
+    },
+    "siteDescription": {
+      "type": "string"
+    },
+    "ogTitle": {
+      "type": "string"
+    },
+    "ogDescription": {
+      "type": "string"
+    },
+    "ogImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    },
+    "twitterCard": {
+      "type": "enumeration",
+      "enum": [
+        "summary",
+        "summary_large_image"
+      ]
+    },
+    "gtagId": {
+      "type": "string"
+    },
+    "favIcon": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    },
+    "appleTouchIcon": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    }
+  }
+}

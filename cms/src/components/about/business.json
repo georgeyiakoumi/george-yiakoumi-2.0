@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_about_businesses",
+  "info": {
+    "displayName": "business",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "ariaLabel": {
+      "type": "string"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    },
+    "name": {
+      "type": "string"
+    },
+    "imageWidth": {
+      "type": "decimal"
+    },
+    "classes": {
+      "type": "text"
+    }
+  }
+}

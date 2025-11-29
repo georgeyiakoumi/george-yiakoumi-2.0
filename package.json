@@ -9,7 +9,10 @@
     "lint": "eslint",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "test:strapi": "node scripts/test-strapi.mjs"
+    "test:strapi": "node scripts/test-strapi.mjs",
+    "cms:dev": "cd cms && npm run develop",
+    "cms:build": "cd cms && npm run build",
+    "cms:start": "cd cms && npm run start"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

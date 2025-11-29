@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_portfolio_slider_blocks",
+  "info": {
+    "displayName": "Slider Block",
+    "icon": "landscape",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "images": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  }
+}

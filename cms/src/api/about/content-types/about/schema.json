@@ -1,0 +1,24 @@
+{
+  "kind": "singleType",
+  "collectionName": "abouts",
+  "info": {
+    "singularName": "about",
+    "pluralName": "abouts",
+    "displayName": "aboutPage",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "content": {
+      "type": "blocks"
+    },
+    "businesses": {
+      "type": "component",
+      "repeatable": true,
+      "component": "about.business"
+    }
+  }
+}
