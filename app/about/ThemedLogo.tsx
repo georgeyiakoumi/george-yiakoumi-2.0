@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import { useTheme } from "next-themes";
 import { Item, ItemMedia } from "@/components/ui/item";
 import { getStrapiMediaURL } from "@/lib/strapi";
+import { useEffect, useState } from "react";
 
 interface LogoItemData {
   id: number;
@@ -18,6 +18,7 @@ interface LogoItemData {
     alternativeText?: string;
     width?: number;
     height?: number;
+    ext?: string;
   };
 }
 
@@ -27,34 +28,45 @@ interface ThemedLogoProps {
 
 export function ThemedLogo({ data }: ThemedLogoProps) {
   const { resolvedTheme } = useTheme();
+  const [svgContent, setSvgContent] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
   const imageUrl = data.image?.url ? getStrapiMediaURL(data.image.url) : null;
+  const isSvg = data.image?.ext === '.svg';
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!imageUrl || !isSvg) return;
+
+    // Fetch and inline SVG for CSS variable support
+    fetch(imageUrl)
+      .then(res => res.text())
+      .then(setSvgContent)
+      .catch(console.error);
+  }, [imageUrl, isSvg]);
 
   if (!imageUrl) return null;
 
   // Merge CSS variables based on current theme
-  const inlineStyles = {
+  // Only apply theme-specific variables after mounting to prevent hydration mismatch
+  const cssVariables = {
     ...(data.cssVariables || {}),
-    ...(resolvedTheme === 'dark' && data.cssVariablesDark ? data.cssVariablesDark : {}),
-    width: data.imageWidth ? `${data.imageWidth}rem` : 'auto',
-    height: 'auto',
+    ...(mounted && resolvedTheme === 'dark' && data.cssVariablesDark ? data.cssVariablesDark : {}),
   } as React.CSSProperties;
 
   return (
     <Item
-      variant="outline"
+      
       className="size-full justify-center aspect-square"
       aria-label={data.ariaLabel}
-      style={inlineStyles}
+      style={cssVariables}
     >
-      <ItemMedia>
-        <Image
-          src={imageUrl}
-          alt={data.image?.alternativeText || data.name}
-          width={data.image?.width || 100}
-          height={data.image?.height || 100}
-          className={data.classes || ""}
-        />
-      </ItemMedia>
+      <ItemMedia
+        className={`w-full h-full [&>svg]:w-full [&>svg]:h-full [&>svg]:object-contain ${data.classes || ""}`}
+        dangerouslySetInnerHTML={svgContent ? { __html: svgContent } : undefined}
+      />
     </Item>
   );
 }

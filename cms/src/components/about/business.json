@@ -1,14 +1,12 @@
 {
   "collectionName": "components_about_businesses",
   "info": {
-    "displayName": "business",
-    "description": ""
+    "displayName": "icon",
+    "description": "",
+    "icon": "bulletList"
   },
   "options": {},
   "attributes": {
-    "ariaLabel": {
-      "type": "string"
-    },
     "image": {
       "type": "media",
       "multiple": false,
@@ -20,9 +18,6 @@
     },
     "name": {
       "type": "string"
-    },
-    "imageWidth": {
-      "type": "decimal"
     },
     "classes": {
       "type": "text"

@@ -54,11 +54,11 @@ export default async function About() {
 
       {/* Companies Section */}
       <Section>
-        <h2 className="text-2xl md:text-3xl font-semibold text-gray-900 dark:text-gray-100">
+        <h2 className="text-center text-2xl md:text-3xl font-semibold text-gray-900 dark:text-gray-100">
           Had the pleasure of working with
         </h2>
         
-          <div className="w-full grid gap-8 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+          <div className="w-full grid gap-8 grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6">
             {aboutData.businesses.map((business) => (
               <ThemedLogo key={business.id} data={business} />
             ))}
@@ -86,7 +86,7 @@ export default async function About() {
 
       {/* Contact CTA Section */}
       <Section>
-        <h2 className="text-2xl md:text-3xl font-semibold text-gray-900 dark:text-gray-100">
+        <h2 className="text-center text-2xl md:text-3xl font-semibold text-gray-900 dark:text-gray-100">
           Ready to bring your ideas to life?
         </h2>
         <p className="text-center text-lg text-gray-600 dark:text-gray-400">

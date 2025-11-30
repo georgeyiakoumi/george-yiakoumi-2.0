@@ -4,15 +4,14 @@ export interface AboutBusiness extends Struct.ComponentSchema {
   collectionName: 'components_about_businesses';
   info: {
     description: '';
-    displayName: 'business';
+    displayName: 'icon';
+    icon: 'bulletList';
   };
   attributes: {
-    ariaLabel: Schema.Attribute.String;
     classes: Schema.Attribute.Text;
     cssVariables: Schema.Attribute.JSON;
     cssVariablesDark: Schema.Attribute.JSON;
     image: Schema.Attribute.Media<'images' | 'files'>;
-    imageWidth: Schema.Attribute.Decimal;
     name: Schema.Attribute.String;
   };
 }

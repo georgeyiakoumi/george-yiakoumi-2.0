@@ -6,6 +6,9 @@ import { ModeToggle } from "@/components/mode-toggle";
 import { SiteNavigation } from "@/components/site-navigation";
 import { SiteFooter } from "@/components/site-footer";
 
+// Import safelist to ensure Tailwind scans it for dynamic Strapi classes
+import "@/lib/tailwind-safelist";
+
 const mulish = Mulish({
   subsets: ["latin"],
 });
