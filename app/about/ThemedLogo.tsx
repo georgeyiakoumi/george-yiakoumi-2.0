@@ -58,9 +58,9 @@ export function ThemedLogo({ data }: ThemedLogoProps) {
 
   return (
     <Item
-      
+      variant="outline"
       className="size-full justify-center aspect-square"
-      aria-label={data.ariaLabel}
+      aria-label={`Logo for ${data.name}`}
       style={cssVariables}
     >
       <ItemMedia

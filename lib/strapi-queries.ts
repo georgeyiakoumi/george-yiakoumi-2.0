@@ -165,6 +165,7 @@ export interface AboutData {
   documentId: string;
   content: AboutRichTextBlock[];
   businesses: AboutBusiness[];
+  tools: AboutBusiness[];
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
@@ -176,6 +177,7 @@ export async function getAboutPage() {
       endpoint: '/about',
       query: {
         'populate[businesses][populate]': 'image',
+        'populate[tools][populate]': 'image',
       },
       cache: 'no-store',
       tags: ['about'],

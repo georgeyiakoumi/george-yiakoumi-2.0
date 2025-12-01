@@ -1,8 +1,6 @@
 import Image from "next/image";
 import { HandMetal } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { TOOLS } from "@/lib/constants";
-import { LogoItem } from "@/components/logo-item";
 import { Section } from "@/components/section";
 import { getAboutPage } from "@/lib/strapi-queries";
 import { ThemedLogo } from "./ThemedLogo";
@@ -58,7 +56,7 @@ export default async function About() {
           Had the pleasure of working with
         </h2>
         
-          <div className="w-full grid gap-8 grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6">
+          <div className="w-full grid gap-8 grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
             {aboutData.businesses.map((business) => (
               <ThemedLogo key={business.id} data={business} />
             ))}
@@ -68,18 +66,12 @@ export default async function About() {
 
       {/* Tools and Languages Section */}
       <Section>
-        <h2 className="text-2xl md:text-3xl font-semibold text-gray-900 dark:text-gray-100">
+        <h2 className="text-center text-2xl md:text-3xl font-semibold text-gray-900 dark:text-gray-100">
           I know my way around
         </h2>
-        <div className="w-full grid gap-8 grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8">
-          {TOOLS.map((tool) => (
-            <LogoItem
-              key={tool.name}
-              name={tool.name}
-              logo={tool.logo}
-              ariaLabel={tool.ariaLabel}
-              className={tool.className}
-            />
+        <div className="w-full grid gap-8 grid-cols-4 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8">
+          {aboutData.tools.map((tool) => (
+            <ThemedLogo key={tool.id} data={tool} />
           ))}
         </div>
       </Section>
