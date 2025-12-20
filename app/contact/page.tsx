@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { toast } from "sonner";
 import { Section } from "@/components/section";
 import { Button } from "@/components/ui/button";
@@ -12,27 +12,33 @@ import { FieldSet, FieldGroup, Field, FieldLabel } from "@/components/ui/field";
 export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
-  const iframeRef = useRef<HTMLIFrameElement>(null);
 
-  useEffect(() => {
-    const iframe = iframeRef.current;
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setIsSubmitting(true);
 
-    const handleLoad = () => {
-      if (isSubmitting) {
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    // Submit to Netlify
+    fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams(formData as any).toString(),
+    })
+      .then(() => {
         toast.success("Message sent!", {
           description: "Thanks for reaching out. I'll get back to you soon!",
         });
         setIsSubmitting(false);
-        formRef.current?.reset();
-      }
-    };
-
-    iframe?.addEventListener('load', handleLoad);
-    return () => iframe?.removeEventListener('load', handleLoad);
-  }, [isSubmitting]);
-
-  function handleSubmit() {
-    setIsSubmitting(true);
+        form.reset();
+      })
+      .catch(() => {
+        toast.error("Failed to send message", {
+          description: "Please try again or email me directly.",
+        });
+        setIsSubmitting(false);
+      });
   }
 
   return (
@@ -45,14 +51,6 @@ export default function Contact() {
         <textarea name="message"></textarea>
         <input type="text" name="bot-field" />
       </form>
-
-      {/* Hidden iframe to capture form submission without page redirect */}
-      <iframe
-        ref={iframeRef}
-        name="hidden-iframe"
-        style={{ display: 'none' }}
-        title="Form submission"
-      />
 
       <Section>
         <header className="flex flex-col gap-6 text-center">
@@ -68,8 +66,6 @@ export default function Contact() {
           ref={formRef}
           name="contact"
           method="POST"
-          action="/contact"
-          target="hidden-iframe"
           data-netlify="true"
           netlify-honeypot="bot-field"
           onSubmit={handleSubmit}
