@@ -14,7 +14,7 @@ export default function Contact() {
             Contact
           </h1>
           <p className="text-xl md:text-lg text-gray-600 dark:text-gray-400">
-            Leave your deetz and a message and I'll get back to ya.
+            Leave your deetz and a message and I&apos;ll get back to ya.
           </p>
         </header>
 
@@ -32,7 +32,7 @@ export default function Contact() {
               {/* Honeypot field for spam protection */}
               <p className="hidden">
                 <label>
-                  Don't fill this out if you're human: <input name="bot-field" />
+                  Don&apos;t fill this out if you&apos;re human: <input name="bot-field" />
                 </label>
               </p>
 

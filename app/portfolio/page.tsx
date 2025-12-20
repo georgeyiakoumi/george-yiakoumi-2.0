@@ -39,7 +39,7 @@ export default async function Portfolio() {
           Portfolio
         </h1>
         <p className="text-xl md:text-lg text-muted-foreground">
-          A collection of projects I've worked on
+          A collection of projects I&apos;ve worked on
         </p>
       </header>
 

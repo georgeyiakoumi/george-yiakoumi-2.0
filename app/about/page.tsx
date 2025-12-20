@@ -83,7 +83,7 @@ export default async function About() {
           Ready to bring your ideas to life?
         </Typography>
         <Typography variant="lead" align="center">
-          I'd love to hear about your project and explore how we can work together.
+          I&apos;d love to hear about your project and explore how we can work together.
         </Typography>
         <Button size="lg" href="/contact">
           <HandMetal />

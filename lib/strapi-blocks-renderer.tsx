@@ -82,7 +82,7 @@ function renderBlock(block: RichTextBlock, index: number): React.ReactNode {
 
     case 'heading':
       const headingChildren = block.children?.map((child, i) => renderChild(child, i));
-      const HeadingTag = `h${block.level || 2}` as keyof JSX.IntrinsicElements;
+      const HeadingTag = `h${block.level || 2}` as keyof React.JSX.IntrinsicElements;
       return <HeadingTag key={index} className="text-gray-600 dark:text-gray-400">{headingChildren}</HeadingTag>;
 
     case 'list':

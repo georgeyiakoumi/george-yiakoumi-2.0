@@ -57,7 +57,7 @@ function Button({
         href={href}
         data-slot="button"
         className={cn(buttonClassName)}
-        {...(props as React.ComponentProps<typeof Link>)}
+        {...(props as any)}
       >
         {props.children}
       </Link>
