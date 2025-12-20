@@ -1,8 +1,8 @@
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { FieldSet, FieldGroup, Field, FieldLabel } from "@/components/ui/field";
 import { Section } from "@/components/section";
-import { SubmitButton } from "./SubmitButton";
 
 export default function Contact() {
   return (
@@ -49,7 +49,9 @@ export default function Contact() {
               <Textarea id="message" name="message" placeholder="Your message" rows={6} required />
             </Field>
 
-            <SubmitButton />
+            <Button type="submit" size="lg">
+              Send message
+            </Button>
           </FieldGroup>
         </FieldSet>
       </form>
