@@ -22,15 +22,23 @@ export function ContactForm() {
   }
 
   return (
-    <form
-      name="contact"
-      method="POST"
-      action="/forms/contact.html"
-      data-netlify="true"
-      netlify-honeypot="bot-field"
-      onSubmit={handleSubmit}
-    >
-      <input type="hidden" name="form-name" value="contact" />
+    <>
+      {/* Hidden iframe to capture form submission without page redirect */}
+      <iframe
+        name="hidden-iframe"
+        style={{ display: 'none' }}
+        title="Form submission"
+      />
+
+      <form
+        name="contact"
+        method="POST"
+        target="hidden-iframe"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+        onSubmit={handleSubmit}
+      >
+        <input type="hidden" name="form-name" value="contact" />
 
       <FieldSet className="w-full sm:w-lg">
         <FieldGroup>
@@ -89,5 +97,6 @@ export function ContactForm() {
         </FieldGroup>
       </FieldSet>
     </form>
+    </>
   );
 }
