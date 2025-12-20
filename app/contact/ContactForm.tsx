@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,29 +10,47 @@ import { FieldSet, FieldGroup, Field, FieldLabel } from "@/components/ui/field";
 
 export function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  useEffect(() => {
+    const iframe = iframeRef.current;
+
+    const handleLoad = () => {
+      if (isSubmitting) {
+        // Form submission complete
+        toast.success("Message sent!", {
+          description: "Thanks for reaching out. I'll get back to you soon!",
+        });
+        setIsSubmitting(false);
+        formRef.current?.reset();
+      }
+    };
+
+    iframe?.addEventListener('load', handleLoad);
+    return () => iframe?.removeEventListener('load', handleLoad);
+  }, [isSubmitting]);
 
   function handleSubmit() {
     // Don't prevent default - let the form submit naturally to Netlify
     setIsSubmitting(true);
-
-    // Show optimistic success toast
-    toast.success("Message sent!", {
-      description: "Thanks for reaching out. I'll get back to you soon!",
-    });
   }
 
   return (
     <>
       {/* Hidden iframe to capture form submission without page redirect */}
       <iframe
+        ref={iframeRef}
         name="hidden-iframe"
         style={{ display: 'none' }}
         title="Form submission"
       />
 
       <form
+        ref={formRef}
         name="contact"
         method="POST"
+        action="/"
         target="hidden-iframe"
         data-netlify="true"
         netlify-honeypot="bot-field"
