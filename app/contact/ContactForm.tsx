@@ -50,7 +50,6 @@ export function ContactForm() {
         ref={formRef}
         name="contact"
         method="POST"
-        action="/"
         target="hidden-iframe"
         data-netlify="true"
         netlify-honeypot="bot-field"
