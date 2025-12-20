@@ -2,6 +2,7 @@ import Image from "next/image";
 import { HandMetal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Section } from "@/components/section";
+import { Typography } from "@/components/ui/typography";
 import { getAboutPage } from "@/lib/strapi-queries";
 import { ThemedLogo } from "./ThemedLogo";
 
@@ -40,11 +41,11 @@ export default async function About() {
             priority
           />
         )}
-        <h1 className="text-center text-3xl md:text-4xl font-semibold text-gray-900 dark:text-gray-100">
+        <Typography variant="h1">
           {headingText}
-        </h1>
+        </Typography>
         {paragraphs.map((para, index) => (
-          <p key={index} className="text-center text-xl md:text-lg text-gray-600 dark:text-gray-400">
+          <p key={index} className="text-center text-xl md:text-lg text-muted-foreground">
             {para.children?.[0]?.text || ''}
           </p>
         ))}
@@ -52,9 +53,9 @@ export default async function About() {
 
       {/* Companies Section */}
       <Section>
-        <h2 className="text-center text-2xl md:text-3xl font-semibold text-gray-900 dark:text-gray-100">
+        <Typography variant="h2" align="center">
           Had the pleasure of working with
-        </h2>
+        </Typography>
         
           <div className="w-full grid gap-8 grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
             {aboutData.businesses.map((business) => (
@@ -66,9 +67,9 @@ export default async function About() {
 
       {/* Tools and Languages Section */}
       <Section>
-        <h2 className="text-center text-2xl md:text-3xl font-semibold text-gray-900 dark:text-gray-100">
+        <Typography variant="h2" align="center">
           I know my way around
-        </h2>
+        </Typography>
         <div className="w-full grid gap-8 grid-cols-4 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8">
           {aboutData.tools.map((tool) => (
             <ThemedLogo key={tool.id} data={tool} />
@@ -78,12 +79,12 @@ export default async function About() {
 
       {/* Contact CTA Section */}
       <Section>
-        <h2 className="text-center text-2xl md:text-3xl font-semibold text-gray-900 dark:text-gray-100">
+        <Typography variant="h2" align="center">
           Ready to bring your ideas to life?
-        </h2>
-        <p className="text-center text-lg text-gray-600 dark:text-gray-400">
+        </Typography>
+        <Typography variant="lead" align="center">
           I'd love to hear about your project and explore how we can work together.
-        </p>
+        </Typography>
         <Button size="lg" href="/contact">
           <HandMetal />
           Get in touch

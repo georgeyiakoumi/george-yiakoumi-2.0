@@ -18,30 +18,46 @@ export default function Contact() {
           </p>
         </header>
 
-        <FieldSet className="w-full">
-          <FieldGroup>
+        <form
+          name="contact"
+          method="POST"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+        >
+          <input type="hidden" name="form-name" value="contact" />
 
-            <Field>
-              <FieldLabel htmlFor="name">Name</FieldLabel>
-              <Input id="name" name="name" placeholder="Your name" required />
-            </Field>
+          <FieldSet className="w-full sm:w-lg">
+            <FieldGroup>
 
-            <Field>
-              <FieldLabel htmlFor="email">Email</FieldLabel>
-              <Input id="email" name="email" type="email" placeholder="your.email@example.com" required />
-            </Field>
+              {/* Honeypot field for spam protection */}
+              <p className="hidden">
+                <label>
+                  Don't fill this out if you're human: <input name="bot-field" />
+                </label>
+              </p>
 
-            <Field>
-              <FieldLabel htmlFor="message">Message</FieldLabel>
-              <Textarea id="message" name="message" placeholder="Your message" rows={6} required />
-            </Field>
+              <Field>
+                <FieldLabel htmlFor="name">Name</FieldLabel>
+                <Input id="name" name="name" placeholder="Your name" required />
+              </Field>
 
-            <Button type="submit" size="lg">
-              Send message
-            </Button>
+              <Field>
+                <FieldLabel htmlFor="email">Email</FieldLabel>
+                <Input id="email" name="email" type="email" placeholder="your.email@example.com" required />
+              </Field>
 
-          </FieldGroup>
-        </FieldSet>
+              <Field>
+                <FieldLabel htmlFor="message">Message</FieldLabel>
+                <Textarea id="message" name="message" placeholder="Your message" rows={6} required />
+              </Field>
+
+              <Button type="submit" size="lg">
+                Send message
+              </Button>
+
+            </FieldGroup>
+          </FieldSet>
+        </form>
 
       </Section>
     </>

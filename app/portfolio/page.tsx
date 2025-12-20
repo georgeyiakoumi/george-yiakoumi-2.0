@@ -34,11 +34,11 @@ export default async function Portfolio() {
   return (
 
     <Section className="!h-auto !justify-start py-32 md:py-16">
-      <header className="flex flex-col gap-6">
-        <h1 className="text-3xl md:text-4xl font-semibold text-gray-900 dark:text-gray-100">
+      <header className="flex flex-col gap-6 text-center">
+        <h1 className="text-3xl md:text-4xl font-semibold text-foreground">
           Portfolio
         </h1>
-        <p className="text-xl md:text-lg text-gray-600 dark:text-gray-400">
+        <p className="text-xl md:text-lg text-muted-foreground">
           A collection of projects I've worked on
         </p>
       </header>
