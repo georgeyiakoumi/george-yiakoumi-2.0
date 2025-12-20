@@ -20,10 +20,6 @@ const nextConfig = {
       },
     ],
   },
-  eslint: {
-    ignoreDuringBuilds: false,
-    dirs: ['app', 'components', 'lib', 'hooks'], // Only lint these directories
-  },
 };
 
 export default nextConfig;
