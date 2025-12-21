@@ -110,10 +110,10 @@ export default function ScrollBlurEffect({ children }: { children: React.ReactNo
       className="h-full overflow-hidden relative"
     >
       {/* Top fade */}
-      <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-background to-background/0 pointer-events-none z-10" />
+      <div className="fixed top-0 left-0 w-full h-24 bg-gradient-to-b from-background to-background/0 pointer-events-none z-10" />
 
       {/* Bottom fade */}
-      <div className="absolute bottom-0 left-0 w-full pointer-events-none z-10 flex flex-col">
+      <div className="fixed bottom-0 left-0 w-full pointer-events-none z-10 flex flex-col">
         <div className="h-24 bg-gradient-to-t from-background to-background/0"/>
         <div className="md:hidden h-24 bg-background"/>
       </div>
