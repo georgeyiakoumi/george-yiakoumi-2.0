@@ -1,10 +1,34 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { FieldSet, FieldGroup, Field, FieldLabel } from "@/components/ui/field";
 import { Section } from "@/components/section";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { FormEvent } from "react";
 
 export default function Contact() {
+  const router = useRouter();
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+
+    try {
+      await fetch("/__forms.html", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(formData as any).toString(),
+      });
+
+      router.push("/forms/contact");
+    } catch (error) {
+      toast.error("Failed to send message. Please try again.");
+    }
+  };
+
   return (
     <Section>
       <header className="flex flex-col gap-6 text-center">
@@ -18,8 +42,7 @@ export default function Contact() {
 
       <form
         name="contact"
-        method="POST"
-        action="/forms/contact"
+        onSubmit={handleSubmit}
         data-netlify="true"
         netlify-honeypot="bot-field"
       >
