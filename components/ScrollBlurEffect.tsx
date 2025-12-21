@@ -107,25 +107,20 @@ export default function ScrollBlurEffect({ children }: { children: React.ReactNo
     <div
       ref={containerRef}
       id="smooth-wrapper"
-      className="h-full overflow-hidden"
+      className="h-full overflow-hidden relative"
     >
+      {/* Top fade */}
+      <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-background to-background/0 pointer-events-none z-10" />
+
+      {/* Bottom fade */}
+      <div className="absolute bottom-0 left-0 w-full pointer-events-none z-10 flex flex-col">
+        <div className="h-24 bg-gradient-to-t from-background to-background/0"/>
+        <div className="md:hidden h-24 bg-background"/>
+      </div>
+
       <div ref={contentRef} id="smooth-content" className="w-full mx-auto">
         {children}
       </div>
-      <style jsx>{`
-        @media (max-width: 767px) {
-          #smooth-wrapper {
-            mask: linear-gradient(to bottom, transparent 0%, transparent 8%, black 20%, black 80%, transparent 90%, transparent 100%);
-            -webkit-mask: linear-gradient(to bottom, transparent 0%, transparent 8%, black 20%, black 80%, transparent 90%, transparent 100%);
-          }
-        }
-        @media (min-width: 768px) {
-          #smooth-wrapper {
-            mask: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
-            -webkit-mask: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
-          }
-        }
-      `}</style>
     </div>
   );
 }

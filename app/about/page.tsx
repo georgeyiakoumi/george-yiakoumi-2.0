@@ -30,7 +30,7 @@ export default async function About() {
   return (
     <>
       {/* Avatar and Bio Section */}
-      <Section as="header">
+      <Section as="header" className="h-screen">
         {avatarUrl && (
           <Image
             src={avatarUrl}
@@ -78,7 +78,7 @@ export default async function About() {
       </Section>
 
       {/* Contact CTA Section */}
-      <Section>
+      <Section className="h-screen">
         <Typography variant="h2" align="center">
           Ready to bring your ideas to life?
         </Typography>
