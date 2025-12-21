@@ -1,2 +1,10 @@
 [[plugins]]
 package = "@netlify/plugin-nextjs"
+
+[build]
+  publish = ".next"
+
+[[forms]]
+  name = "contact"
+  action = "/forms/contact"
+  fields = ["name", "email", "message", "bot-field"]
