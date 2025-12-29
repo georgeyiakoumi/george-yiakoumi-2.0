@@ -32,15 +32,10 @@ export default function Contact() {
 
   return (
     <Section>
-      <header className="flex flex-col gap-6 text-center">
-        <Typography variant="h1" align="center">
-          Contact
-        </Typography>
-        <Typography variant="lead" align="center">
-          Leave your deetz and a message and I&apos;ll get back to ya.
-        </Typography>
-      </header>
-
+      <Typography variant="h1" align="center">
+        Contact
+      </Typography>
+      
       <form
         name="contact"
         onSubmit={handleSubmit}

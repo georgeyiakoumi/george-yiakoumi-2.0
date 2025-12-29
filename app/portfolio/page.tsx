@@ -35,14 +35,9 @@ export default async function Portfolio() {
   return (
 
     <Section className="!h-auto !justify-start py-32 md:py-16">
-      <header className="flex flex-col gap-6 text-center">
-        <Typography variant="h1" align="center">
-          Portfolio
-        </Typography>
-        <Typography variant="lead">
-          A collection of projects I&apos;ve worked on
-        </Typography>
-      </header>
+      <Typography variant="h1" align="center">
+        Portfolio
+      </Typography>
 
       <div className="grid grid-cols-1 xl:grid-cols-2 xl:auto-rows-fr 2xl:grid-cols-3 gap-4">
         {projects.map((project) => (
