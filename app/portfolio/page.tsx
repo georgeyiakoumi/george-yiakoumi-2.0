@@ -7,6 +7,7 @@ import { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription } from "@/
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Section } from "@/components/section";
+import { Typography } from "@/components/ui/typography";
 
 export default async function Portfolio() {
   const projects = await getProjects();
@@ -35,12 +36,12 @@ export default async function Portfolio() {
 
     <Section className="!h-auto !justify-start py-32 md:py-16">
       <header className="flex flex-col gap-6 text-center">
-        <h1 className="text-3xl md:text-4xl font-semibold text-foreground">
+        <Typography variant="h1" align="center">
           Portfolio
-        </h1>
-        <p className="text-xl md:text-lg text-muted-foreground">
+        </Typography>
+        <Typography variant="lead">
           A collection of projects I&apos;ve worked on
-        </p>
+        </Typography>
       </header>
 
       <div className="grid grid-cols-1 xl:grid-cols-2 xl:auto-rows-fr 2xl:grid-cols-3 gap-4">

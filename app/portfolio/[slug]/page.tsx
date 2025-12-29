@@ -11,11 +11,25 @@ import { getProjects } from "@/lib/strapi-queries";
 import { getStrapiMediaURL } from "@/lib/strapi";
 import { renderStrapiRichText } from "@/lib/strapi-blocks-renderer";
 import { Section } from "@/components/section";
+import { Typography } from "@/components/ui/typography";
 
 interface ProjectPageProps {
   params: Promise<{
     slug: string;
   }>;
+}
+
+function ContentSection({ title, content }: { title: string; content: any }) {
+  if (!content) return null;
+
+  return (
+    <Section>
+      <Typography variant="h2">
+        {title}
+      </Typography>
+      {renderStrapiRichText(content)}
+    </Section>
+  );
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
@@ -67,13 +81,13 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 </>
               )}
 
-            <h1 className="text-3xl md:text-4xl font-semibold text-gray-900 dark:text-gray-100">
+            <Typography variant="h1">
               {project.Title}
-            </h1>
+            </Typography>
 
-            <p className="text-xl md:text-lg text-gray-600 dark:text-gray-400">
+            <Typography variant="lead">
               {project.Description}
-            </p>
+            </Typography>
 
             {project.Tags && project.Tags.length > 0 && (
               <div className="flex flex-wrap gap-2">
@@ -131,60 +145,18 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           )}
         </header>
 
-        <article className="flex flex-col gap-8">
-          {project.Challenge && (
+        <article className="flex flex-col">
 
-            <section className="flex flex-col gap-2">
-              <AlertCircle/>
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-                Challenge
-              </h2>
-              {renderStrapiRichText(project.Challenge)}
-            </section>
-          )}
-
-          {project.Solution && (
-            <section className="flex flex-col gap-2">
-              <CheckCircle/>
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-                Solution
-              </h2>
-              {renderStrapiRichText(project.Solution)}
-            </section>
-          )}
-
+          <ContentSection title="Challenge" content={project.Challenge} />
+          <ContentSection title="Solution" content={project.Solution} />
           {project.Role && typeof project.Role !== 'string' && (
-            <section className="flex flex-col gap-2">
-              <Wrench/>
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-                My role
-              </h2>
-              {renderStrapiRichText(project.Role)}
-            </section>
+            <ContentSection title="My role" content={project.Role} />
           )}
-
-          {project.Impact && (
-            <section className="flex flex-col gap-2">
-              <TrendingUp/>
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-                Impact
-              </h2>
-              {renderStrapiRichText(project.Impact)}
-            </section>
-          )}
-
-          {project.Takeaway && (
-            <section className="flex flex-col gap-2">
-              <Lightbulb/>
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-                Key Takeaway
-              </h2>
-              {renderStrapiRichText(project.Takeaway)}
-            </section>
-          )}
+          <ContentSection title="Impact" content={project.Impact} />
+          <ContentSection title="Key Takeaway" content={project.Takeaway} />
 
           {project.Images && project.Images.length > 0 && (
-            <section className="flex flex-col gap-2">
+            <section className="flex flex-col gap-2 py-8">
               <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
                 Project Gallery
               </h2>

@@ -1,6 +1,5 @@
 import { Mulish } from "next/font/google";
 import "./globals.css";
-import ScrollBlurEffect from "@/components/ScrollBlurEffect";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ModeToggle } from "@/components/mode-toggle";
 import { SiteNavigation } from "@/components/site-navigation";
@@ -26,16 +25,23 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${mulish.className} h-screen overflow-hidden`}>
+      <body className={`${mulish.className} h-dvh overflow-hidden`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <SiteNavigation />
           
           <ModeToggle />
           
-          <main className="h-full overflow-hidden relative">
-            <ScrollBlurEffect>
-              {children}
-            </ScrollBlurEffect>
+          <main className="h-dvh overflow-y-auto relative">
+            {/* Top fade */}
+            <div className="fixed top-0 left-0 w-full h-24 bg-gradient-to-b from-background to-background/0 pointer-events-none z-[1]" />
+
+            {/* Bottom fade */}
+            <div className="fixed bottom-0 left-0 w-full pointer-events-none z-[1] flex flex-col">
+              <div className="h-24 bg-gradient-to-t from-background to-background/0"/>
+              <div className="md:hidden h-24 bg-background"/>
+            </div>
+
+            {children}
           </main>
 
           <SiteFooter />

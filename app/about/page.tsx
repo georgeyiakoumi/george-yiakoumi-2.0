@@ -30,7 +30,7 @@ export default async function About() {
   return (
     <>
       {/* Avatar and Bio Section */}
-      <Section as="header" className="h-screen">
+      <Section as="header">
         {avatarUrl && (
           <Image
             src={avatarUrl}
@@ -45,9 +45,9 @@ export default async function About() {
           {headingText}
         </Typography>
         {paragraphs.map((para, index) => (
-          <p key={index} className="text-center text-xl md:text-lg text-muted-foreground">
+          <Typography key={index} variant="lead" align="center">
             {para.children?.[0]?.text || ''}
-          </p>
+          </Typography>
         ))}
       </Section>
 
@@ -78,7 +78,7 @@ export default async function About() {
       </Section>
 
       {/* Contact CTA Section */}
-      <Section className="h-screen">
+      <Section>
         <Typography variant="h2" align="center">
           Ready to bring your ideas to life?
         </Typography>

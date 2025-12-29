@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { FieldSet, FieldGroup, Field, FieldLabel } from "@/components/ui/field";
 import { Section } from "@/components/section";
+import { Typography } from "@/components/ui/typography";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { FormEvent } from "react";
@@ -32,12 +33,12 @@ export default function Contact() {
   return (
     <Section>
       <header className="flex flex-col gap-6 text-center">
-        <h1 className="text-3xl md:text-4xl font-semibold text-gray-900 dark:text-gray-100">
+        <Typography variant="h1" align="center">
           Contact
-        </h1>
-        <p className="text-xl md:text-lg text-gray-600 dark:text-gray-400">
+        </Typography>
+        <Typography variant="lead" align="center">
           Leave your deetz and a message and I&apos;ll get back to ya.
-        </p>
+        </Typography>
       </header>
 
       <form
