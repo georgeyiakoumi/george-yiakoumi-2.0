@@ -50,10 +50,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     : null;
 
   return (
-    <Section className="!h-auto !justify-start !items-start py-32 md:py-16 md:pb-0">
-      <Button href="/portfolio" variant="link">
+    <Section className="!h-auto !justify-start !items-start pt-32 pb-0 md:pt-16 relative">
+      <Button href="/portfolio" variant="link" className="fixed top-8 left-8 md:bottom-8 md:top-auto md:left-8 lg:left-16 z-20">
         <ArrowLeft />
-        Back to portfolio
+        Back
       </Button>
 
         <header className="flex flex-col gap-4">

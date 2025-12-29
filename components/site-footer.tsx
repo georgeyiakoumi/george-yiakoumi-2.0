@@ -10,7 +10,7 @@ export function SiteFooter() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="fixed top-4 left-4 md:bottom-4 md:top-auto md:right-4 md:bottom-4 lg:bottom-12 lg:right-12 md:left-auto box-border flex flex-col gap-4 items-start lg:items-end z-10 p-4">
+    <footer className="fixed top-4 left-1/2 -translate-x-1/2 md:translate-x-0 md:bottom-4 md:top-auto md:right-4 md:bottom-4 lg:bottom-12 lg:right-12 md:left-auto box-border flex flex-col gap-4 items-start lg:items-end z-10 p-4">
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
