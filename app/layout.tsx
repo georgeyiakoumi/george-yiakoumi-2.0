@@ -33,7 +33,10 @@ export default function RootLayout({
           
           <main className="h-dvh overflow-y-auto relative">
             {/* Top fade */}
-            <div className="fixed top-0 left-0 w-full h-24 bg-gradient-to-b from-background to-background/0 pointer-events-none z-[1]" />
+            <div className="fixed top-0 left-0 w-full pointer-events-none z-[1] flex flex-col">
+              <div className="md:hidden h-24 bg-background"/>
+              <div className="h-8 md:h-24 bg-gradient-to-b from-background to-background/0"/>
+            </div>
 
             {/* Bottom fade */}
             <div className="fixed bottom-0 left-0 w-full pointer-events-none z-[1] flex flex-col">
