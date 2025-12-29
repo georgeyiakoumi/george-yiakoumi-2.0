@@ -71,7 +71,7 @@ export default function Contact() {
 
             <Field>
               <FieldLabel htmlFor="message">Message</FieldLabel>
-              <Textarea id="message" name="message" placeholder="Your message" rows={6} required />
+              <Textarea id="message" name="message" placeholder="Your message" rows={3} required />
             </Field>
 
             <Button type="submit" size="lg">

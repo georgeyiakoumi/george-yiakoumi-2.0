@@ -50,7 +50,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     : null;
 
   return (
-    <Section className="!h-auto !justify-start !items-start py-32 md:py-16">
+    <Section className="!h-auto !justify-start !items-start py-32 md:py-16 md:pb-0">
       <Button href="/portfolio" variant="link">
         <ArrowLeft />
         Back to portfolio
