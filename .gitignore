@@ -53,3 +53,6 @@ storybook-static
 /cms/database/
 /cms/public/uploads/*
 !/cms/public/uploads/.gitkeep
+
+# Local Netlify folder
+.netlify
