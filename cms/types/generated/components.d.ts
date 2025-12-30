@@ -11,8 +11,10 @@ export interface AboutBusiness extends Struct.ComponentSchema {
     classes: Schema.Attribute.Text;
     cssVariables: Schema.Attribute.JSON;
     cssVariablesDark: Schema.Attribute.JSON;
+    description: Schema.Attribute.Text;
     image: Schema.Attribute.Media<'images' | 'files'>;
     name: Schema.Attribute.String;
+    url: Schema.Attribute.String;
   };
 }
 
