@@ -1,14 +1,23 @@
+"use client";
+
 import Image from "next/image";
-import { HandMetal, AlertCircle } from "lucide-react";
+import { AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Section } from "@/components/section";
 import { Typography } from "@/components/ui/typography";
 import { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription } from "@/components/ui/empty";
+import { MessageCircleMore } from "@/components/animate-ui/icons/message-circle-more";
+import { AnimateIcon } from "@/components/animate-ui/icons/icon";
 import { getAboutPage } from "@/lib/strapi-queries";
 import { ThemedLogo } from "./ThemedLogo";
+import { useEffect, useState } from "react";
 
-export default async function About() {
-  const aboutData = await getAboutPage();
+export default function About() {
+  const [aboutData, setAboutData] = useState<Awaited<ReturnType<typeof getAboutPage>>>(null);
+
+  useEffect(() => {
+    getAboutPage().then(setAboutData);
+  }, []);
 
   if (!aboutData) {
     return (
@@ -93,10 +102,12 @@ export default async function About() {
         <Typography variant="lead" align="center">
           I&apos;d love to hear about your project and explore how we can work together.
         </Typography>
-        <Button size="lg" href="/contact">
-          <HandMetal />
-          Get in touch
-        </Button>
+        <AnimateIcon animateOnHover asChild>
+          <Button size="lg" href="/contact">
+            <MessageCircleMore />
+            Get in touch
+          </Button>
+        </AnimateIcon>
       </Section>
     </>
   );

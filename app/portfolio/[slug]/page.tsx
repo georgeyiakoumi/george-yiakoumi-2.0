@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
@@ -5,13 +7,16 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { AspectRatio } from "@/components/ui/aspect-ratio"
 
-import { ArrowLeft, ExternalLink, AlertCircle, CheckCircle, Wrench, TrendingUp, Lightbulb, Github  } from "lucide-react";
+import { ExternalLink, Github  } from "lucide-react";
+import { ArrowLeft } from "@/components/animate-ui/icons/arrow-left";
+import { AnimateIcon } from "@/components/animate-ui/icons/icon";
 
 import { getProjects } from "@/lib/strapi-queries";
 import { getStrapiMediaURL } from "@/lib/strapi";
 import { renderStrapiRichText } from "@/lib/strapi-blocks-renderer";
 import { Section } from "@/components/section";
 import { Typography } from "@/components/ui/typography";
+import { useEffect, useState } from "react";
 
 interface ProjectPageProps {
   params: Promise<{
@@ -32,13 +37,27 @@ function ContentSection({ title, content }: { title: string; content: any }) {
   );
 }
 
-export default async function ProjectPage({ params }: ProjectPageProps) {
-  const { slug} = await params;
-  const projects = await getProjects();
-  const project = projects.find((p) => p.slug === slug);
+export default function ProjectPage({ params }: ProjectPageProps) {
+  const [slug, setSlug] = useState<string>("");
+  const [project, setProject] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
-  if (!project) {
-    notFound();
+  useEffect(() => {
+    params.then(({ slug: resolvedSlug }) => {
+      setSlug(resolvedSlug);
+      getProjects().then((projects) => {
+        const foundProject = projects.find((p) => p.slug === resolvedSlug);
+        if (!foundProject) {
+          notFound();
+        }
+        setProject(foundProject);
+        setLoading(false);
+      });
+    });
+  }, [params]);
+
+  if (loading || !project) {
+    return null;
   }
 
   const featuredImageUrl = project.FeaturedImage
@@ -51,10 +70,12 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
   return (
     <Section className="!h-auto !justify-start !items-start pt-32 pb-0 md:pt-16 relative">
-      <Button href="/portfolio" variant="link" className="fixed top-8 left-8 md:bottom-8 md:top-auto md:left-8 lg:left-16 z-20">
-        <ArrowLeft />
-        Back
-      </Button>
+      <AnimateIcon animateOnHover asChild>
+        <Button href="/portfolio" variant="link" className="fixed top-8 left-8 md:bottom-8 md:top-auto md:left-8 lg:left-16 z-20">
+          <ArrowLeft />
+          Back
+        </Button>
+      </AnimateIcon>
 
         <header className="flex flex-col gap-4">
             <time 

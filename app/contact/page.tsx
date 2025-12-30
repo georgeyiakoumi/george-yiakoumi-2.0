@@ -6,6 +6,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { FieldSet, FieldGroup, Field, FieldLabel } from "@/components/ui/field";
 import { Section } from "@/components/section";
 import { Typography } from "@/components/ui/typography";
+import { Send } from "@/components/animate-ui/icons/send";
+import { AnimateIcon } from "@/components/animate-ui/icons/icon";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { FormEvent } from "react";
@@ -69,9 +71,12 @@ export default function Contact() {
               <Textarea id="message" name="message" placeholder="Your message" rows={3} required />
             </Field>
 
-            <Button type="submit" size="lg">
-              Send message
-            </Button>
+            <AnimateIcon animateOnHover asChild>
+              <Button type="submit" size="lg">
+                <Send />
+                Send message
+              </Button>
+            </AnimateIcon>
           </FieldGroup>
         </FieldSet>
       </form>

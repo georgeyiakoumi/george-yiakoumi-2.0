@@ -1,7 +1,13 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { User, Briefcase, Mail, Github, Linkedin } from "lucide-react";
+import { useRef } from "react";
+import { User } from "@/components/animate-ui/icons/user";
+import { GalleryHorizontalEnd } from "@/components/animate-ui/icons/gallery-vertical-end";
+import { MessageCircleMore } from "@/components/animate-ui/icons/message-circle-more";
+import { AnimateIcon } from "@/components/animate-ui/icons/icon";
+import { GithubIcon, type GithubIconHandle } from "@/components/ui/github";
+import { LinkedinIcon, type LinkedinIconHandle } from "@/components/ui/linkedin";
 import Link from "next/link";
 import {
   NavigationMenu,
@@ -13,46 +19,68 @@ import { NAV_LINKS, SOCIAL_LINKS } from "@/lib/constants";
 
 export function SiteNavigation() {
   const pathname = usePathname();
+  const linkedinIconRef = useRef<LinkedinIconHandle>(null);
+  const githubIconRef = useRef<GithubIconHandle>(null);
 
   return (
     <NavigationMenu orientation="vertical" className="fixed box-border items-start left-1/2 -translate-x-1/2 md:left-8 lg:left-16 md:translate-x-0 bottom-8 md:top-8 lg:top-16 z-10">
       <NavigationMenuList className="md:gap-0">
         <NavigationMenuItem>
           <NavigationMenuLink asChild active={pathname === NAV_LINKS.about.href}>
-            <Link href={NAV_LINKS.about.href} aria-label={NAV_LINKS.about.ariaLabel}>
-              <User />
-              <span>{NAV_LINKS.about.label}</span>
-            </Link>
+            <AnimateIcon animateOnHover asChild>
+              <Link href={NAV_LINKS.about.href} aria-label={NAV_LINKS.about.ariaLabel}>
+                <User />
+                <span>{NAV_LINKS.about.label}</span>
+              </Link>
+            </AnimateIcon>
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink asChild active={pathname === NAV_LINKS.portfolio.href}>
-            <Link href={NAV_LINKS.portfolio.href} aria-label={NAV_LINKS.portfolio.ariaLabel}>
-              <Briefcase />
-              <span>{NAV_LINKS.portfolio.label}</span>
-            </Link>
+            <AnimateIcon animateOnHover asChild>
+              <Link href={NAV_LINKS.portfolio.href} aria-label={NAV_LINKS.portfolio.ariaLabel}>
+                <GalleryHorizontalEnd />
+                <span>{NAV_LINKS.portfolio.label}</span>
+              </Link>
+            </AnimateIcon>
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink asChild active={pathname === NAV_LINKS.contact.href}>
-            <Link href={NAV_LINKS.contact.href} aria-label={NAV_LINKS.contact.ariaLabel}>
-              <Mail />
-              <span>{NAV_LINKS.contact.label}</span>
-            </Link>
+            <AnimateIcon animateOnHover asChild>
+              <Link href={NAV_LINKS.contact.href} aria-label={NAV_LINKS.contact.ariaLabel}>
+                <MessageCircleMore />
+                <span>{NAV_LINKS.contact.label}</span>
+              </Link>
+            </AnimateIcon>
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink asChild>
-            <a href={SOCIAL_LINKS.linkedin.url} target="_blank" rel="noopener noreferrer" aria-label={SOCIAL_LINKS.linkedin.ariaLabel}>
-              <Linkedin />
+            <a
+              href={SOCIAL_LINKS.linkedin.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={SOCIAL_LINKS.linkedin.ariaLabel}
+              onMouseEnter={() => linkedinIconRef.current?.startAnimation()}
+              onMouseLeave={() => linkedinIconRef.current?.stopAnimation()}
+            >
+              <LinkedinIcon ref={linkedinIconRef} />
               <span>{SOCIAL_LINKS.linkedin.label}</span>
             </a>
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink asChild>
-            <a href={SOCIAL_LINKS.github.url} target="_blank" rel="noopener noreferrer" aria-label={SOCIAL_LINKS.github.ariaLabel}>
-              <Github />
+            <a
+              href={SOCIAL_LINKS.github.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={SOCIAL_LINKS.github.ariaLabel}
+              onMouseEnter={() => githubIconRef.current?.startAnimation()}
+              onMouseLeave={() => githubIconRef.current?.stopAnimation()}
+            >
+              <GithubIcon ref={githubIconRef} />
               <span>{SOCIAL_LINKS.github.label}</span>
             </a>
           </NavigationMenuLink>
