@@ -1,8 +1,9 @@
 import Image from "next/image";
-import { HandMetal } from "lucide-react";
+import { HandMetal, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Section } from "@/components/section";
 import { Typography } from "@/components/ui/typography";
+import { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription } from "@/components/ui/empty";
 import { getAboutPage } from "@/lib/strapi-queries";
 import { ThemedLogo } from "./ThemedLogo";
 
@@ -12,8 +13,15 @@ export default async function About() {
   if (!aboutData) {
     return (
       <Section>
-        <h1>Unable to load about page</h1>
-        <p>Please try again later.</p>
+        <Empty>
+          <EmptyHeader>
+            <EmptyMedia variant="icon">
+              <AlertCircle />
+            </EmptyMedia>
+            <EmptyTitle>Unable to load about page</EmptyTitle>
+            <EmptyDescription>Please try again later.</EmptyDescription>
+          </EmptyHeader>
+        </Empty>
       </Section>
     );
   }
