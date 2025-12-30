@@ -30,10 +30,10 @@ function ContentSection({ title, content }: { title: string; content: any }) {
 
   return (
     <Section>
-      <Typography variant="h2">
+      <Typography variant="small" as="h2" align="center" className="uppercase">
         {title}
       </Typography>
-      {renderStrapiRichText(content)}
+      {renderStrapiRichText(content, "align-center max-w-2xl")}
     </Section>
   );
 }
@@ -179,12 +179,12 @@ export default function ProjectPage({ params }: ProjectPageProps) {
             <ContentSection title="My role" content={project.Role} />
           )}
           <ContentSection title="Impact" content={project.Impact} />
-          <ContentSection title="Key Takeaway" content={project.Takeaway} />
+          <ContentSection title="Key takeaway" content={project.Takeaway} />
 
           {project.Images && project.Images.length > 0 && (
             <section className="flex flex-col gap-2 py-8">
               <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-                Project Gallery
+                Project gallery
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {project.Images.map((image, index) => {

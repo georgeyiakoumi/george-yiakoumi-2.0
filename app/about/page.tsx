@@ -72,7 +72,7 @@ export default function About() {
           {headingText}
         </Typography>
         {paragraphs.map((para, index) => (
-          <Typography key={index} variant="lead" align="center">
+          <Typography key={index} variant="lead" align="center" className="max-w-xl">
             {para.children?.[0]?.text || ''}
           </Typography>
         ))}

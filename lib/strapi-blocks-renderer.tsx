@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { getStrapiMediaURL } from './strapi';
+import { cn } from './utils';
 
 interface RichTextChild {
   type: string;
@@ -113,7 +114,10 @@ function renderBlock(block: RichTextBlock, index: number): React.ReactNode {
   }
 }
 
-export function renderStrapiRichText(richTextBlock: StrapiRichTextBlock | undefined): React.ReactNode {
+export function renderStrapiRichText(
+  richTextBlock: StrapiRichTextBlock | undefined,
+  className?: string
+): React.ReactNode {
   if (!richTextBlock || !richTextBlock.content) {
     return null;
   }
@@ -123,7 +127,7 @@ export function renderStrapiRichText(richTextBlock: StrapiRichTextBlock | undefi
 
   return (
     <>
-      <div className="prose prose-lg prose-gray dark:prose-invert max-w-none">
+      <div className={cn("prose prose-lg prose-gray dark:prose-invert max-w-none", className)}>
         {richTextBlock.content.map((block, index) => renderBlock(block, index))}
       </div>
 
