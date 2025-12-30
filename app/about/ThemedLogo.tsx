@@ -60,6 +60,7 @@ export function ThemedLogo({ data }: ThemedLogoProps) {
     <Item
       variant="outline"
       className="size-full justify-center aspect-square"
+      role="img"
       aria-label={`Logo for ${data.name}`}
       style={cssVariables}
     >

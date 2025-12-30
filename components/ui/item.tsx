@@ -56,7 +56,6 @@ function Item({
   variant = "default",
   size = "default",
   asChild = false,
-  role,
   ...props
 }: React.ComponentProps<"div"> &
   VariantProps<typeof itemVariants> & { asChild?: boolean }) {
@@ -66,7 +65,6 @@ function Item({
       data-slot="item"
       data-variant={variant}
       data-size={size}
-      role={role}
       className={cn(itemVariants({ variant, size, className }))}
       {...props}
     />
