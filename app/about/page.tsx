@@ -11,15 +11,25 @@ import { AnimateIcon } from "@/components/animate-ui/icons/icon";
 import { getAboutPage } from "@/lib/strapi-queries";
 import { ThemedLogo } from "./ThemedLogo";
 import { useEffect, useState } from "react";
+import AboutLoading from "./loading";
 
 export default function About() {
   const [aboutData, setAboutData] = useState<Awaited<ReturnType<typeof getAboutPage>>>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
-    getAboutPage().then(setAboutData);
+    getAboutPage()
+      .then(setAboutData)
+      .catch(() => setError(true))
+      .finally(() => setLoading(false));
   }, []);
 
-  if (!aboutData) {
+  if (loading) {
+    return <AboutLoading />;
+  }
+
+  if (error || !aboutData) {
     return (
       <Section>
         <Empty>

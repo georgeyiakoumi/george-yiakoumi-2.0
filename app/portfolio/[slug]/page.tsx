@@ -17,6 +17,7 @@ import { renderStrapiRichText } from "@/lib/strapi-blocks-renderer";
 import { Section } from "@/components/section";
 import { Typography } from "@/components/ui/typography";
 import { useEffect, useState } from "react";
+import ProjectLoading from "./loading";
 
 interface ProjectPageProps {
   params: Promise<{
@@ -56,7 +57,11 @@ export default function ProjectPage({ params }: ProjectPageProps) {
     });
   }, [params]);
 
-  if (loading || !project) {
+  if (loading) {
+    return <ProjectLoading />;
+  }
+
+  if (!project) {
     return null;
   }
 
