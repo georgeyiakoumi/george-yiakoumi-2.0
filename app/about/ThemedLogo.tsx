@@ -66,7 +66,7 @@ export function ThemedLogo({ data }: ThemedLogoProps) {
 
   const logoItem = (
     <Item
-      variant="outline"
+      variant="default"
       className="size-full justify-center aspect-square cursor-pointer hover:border-primary/50 transition-colors"
       role="img"
       aria-label={`Logo for ${data.name}`}
@@ -92,16 +92,19 @@ export function ThemedLogo({ data }: ThemedLogoProps) {
           {logoItem}
         </DrawerTrigger>
         <DrawerContent>
-          <DrawerHeader className="gap-3">
-            <div
-              className="w-24 h-24 flex items-center justify-center border rounded-md p-3 mx-auto"
+          <DrawerHeader className="gap-3 pb-16">
+            <Item
+              variant="default"
+              className="max-w-[50%] size-full justify-center aspect-2/1 mx-auto"
+              role="img"
+              aria-label={`Logo for ${data.name}`}
               style={cssVariables}
             >
-              <div
-                className={`w-full h-full [&>svg]:w-full [&>svg]:h-full [&>svg]:object-contain ${data.classes || ""}`}
+              <ItemMedia
+                 className={`w-full h-full [&>svg]:w-full [&>svg]:h-full [&>svg]:object-contain ${data.classes || ""}`}
                 dangerouslySetInnerHTML={svgContent ? { __html: svgContent } : undefined}
               />
-            </div>
+            </Item>
             <DrawerTitle>{data.name}</DrawerTitle>
             {description && <DrawerDescription>{description}</DrawerDescription>}
           </DrawerHeader>
