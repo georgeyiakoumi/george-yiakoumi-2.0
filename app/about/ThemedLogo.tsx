@@ -95,7 +95,7 @@ export function ThemedLogo({ data }: ThemedLogoProps) {
           <DrawerHeader className="gap-3 pb-16">
             <Item
               variant="default"
-              className="max-w-[50%] size-full justify-center aspect-2/1 mx-auto"
+              className="max-w-[50%] sm:max-w-[30%] size-full justify-center aspect-2/1 mx-auto"
               role="img"
               aria-label={`Logo for ${data.name}`}
               style={cssVariables}
