@@ -115,7 +115,7 @@ export function ThemedLogo({ data }: ThemedLogoProps) {
                 dangerouslySetInnerHTML={svgContent ? { __html: svgContent } : undefined}
               />
             </Item>
-            <DrawerTitle >{data.name}</DrawerTitle>
+            <DrawerTitle className="pt-4">{data.name}</DrawerTitle>
             {description && <DrawerDescription>{description}</DrawerDescription>}
           </DrawerHeader>
         </DrawerContent>
