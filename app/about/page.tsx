@@ -50,7 +50,7 @@ export default function About() {
   const avatarBlock = aboutData.hero.find(block => block.type === 'image');
   const paragraphs = aboutData.hero.filter(block => block.type === 'paragraph');
 
-  const headingText = heading?.children?.[0]?.text || "Hello there 👋🏼";
+  const headingText = heading?.children?.[0]?.text;
   const avatarUrl = avatarBlock?.image?.url;
   const avatarAlt = avatarBlock?.image?.alternativeText || "Profile photo";
 
@@ -58,8 +58,8 @@ export default function About() {
   const contactHeading = aboutData.contact.find(block => block.type === 'heading');
   const contactParagraph = aboutData.contact.find(block => block.type === 'paragraph');
 
-  const contactHeadingText = contactHeading?.children?.[0]?.text || "Let's create together";
-  const contactDescription = contactParagraph?.children?.[0]?.text || "I'd love to hear about your project and explore how we can work together.";
+  const contactHeadingText = contactHeading?.children?.[0]?.text;
+  const contactDescription = contactParagraph?.children?.[0]?.text;
 
   return (
     <>
@@ -88,7 +88,7 @@ export default function About() {
       {/* Companies Section */}
       <Section>
         <Typography variant="h2" align="center">
-          {aboutData.heading_businesses || "Worked with"}
+          {aboutData.heading_businesses}
         </Typography>
 
           <div className="w-full grid gap-8 grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
@@ -102,7 +102,7 @@ export default function About() {
       {/* Tools and Languages Section */}
       <Section>
         <Typography variant="h2" align="center">
-          {aboutData.heading_tools || "Working with"}
+          {aboutData.heading_tools}
         </Typography>
         <div className="w-full grid gap-8 grid-cols-4 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8">
           {aboutData.tools.map((tool) => (
