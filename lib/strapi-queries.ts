@@ -163,7 +163,10 @@ export interface AboutBusiness {
 export interface AboutData {
   id: number;
   documentId: string;
-  content: AboutRichTextBlock[];
+  hero: AboutRichTextBlock[];
+  heading_businesses: string;
+  heading_tools: string;
+  contact: AboutRichTextBlock[];
   businesses: AboutBusiness[];
   tools: AboutBusiness[];
   createdAt: string;

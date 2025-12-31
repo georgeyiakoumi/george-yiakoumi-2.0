@@ -45,14 +45,21 @@ export default function About() {
     );
   }
 
-  // Extract heading, avatar, and paragraphs from content
-  const heading = aboutData.content.find(block => block.type === 'heading');
-  const avatarBlock = aboutData.content.find(block => block.type === 'image');
-  const paragraphs = aboutData.content.filter(block => block.type === 'paragraph');
+  // Extract heading, avatar, and paragraphs from hero
+  const heading = aboutData.hero.find(block => block.type === 'heading');
+  const avatarBlock = aboutData.hero.find(block => block.type === 'image');
+  const paragraphs = aboutData.hero.filter(block => block.type === 'paragraph');
 
   const headingText = heading?.children?.[0]?.text || "Hello there 👋🏼";
   const avatarUrl = avatarBlock?.image?.url;
   const avatarAlt = avatarBlock?.image?.alternativeText || "Profile photo";
+
+  // Extract contact section data
+  const contactHeading = aboutData.contact.find(block => block.type === 'heading');
+  const contactParagraph = aboutData.contact.find(block => block.type === 'paragraph');
+
+  const contactHeadingText = contactHeading?.children?.[0]?.text || "Let's create together";
+  const contactDescription = contactParagraph?.children?.[0]?.text || "I'd love to hear about your project and explore how we can work together.";
 
   return (
     <>
@@ -81,21 +88,21 @@ export default function About() {
       {/* Companies Section */}
       <Section>
         <Typography variant="h2" align="center">
-          Worked for / with
+          {aboutData.heading_businesses || "Worked with"}
         </Typography>
-        
+
           <div className="w-full grid gap-8 grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
             {aboutData.businesses.map((business) => (
               <ThemedLogo key={business.id} data={business} />
             ))}
           </div>
-        
+
       </Section>
 
       {/* Tools and Languages Section */}
       <Section>
         <Typography variant="h2" align="center">
-          I know my way around
+          {aboutData.heading_tools || "Working with"}
         </Typography>
         <div className="w-full grid gap-8 grid-cols-4 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8">
           {aboutData.tools.map((tool) => (
@@ -107,10 +114,10 @@ export default function About() {
       {/* Contact CTA Section */}
       <Section>
         <Typography variant="h2" align="center">
-          Ready to bring your ideas to life?
+          {contactHeadingText}
         </Typography>
         <Typography variant="lead" align="center">
-          I&apos;d love to hear about your project and explore how we can work together.
+          {contactDescription}
         </Typography>
         <AnimateIcon animateOnHover asChild>
           <Button size="lg" href="/contact">
