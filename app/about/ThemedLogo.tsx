@@ -6,7 +6,6 @@ import { getStrapiMediaURL } from "@/lib/strapi";
 import { useEffect, useState } from "react";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerTrigger } from "@/components/ui/drawer";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 interface LogoItemData {
   id: number;
@@ -35,12 +34,23 @@ export function ThemedLogo({ data }: ThemedLogoProps) {
   const { resolvedTheme } = useTheme();
   const [svgContent, setSvgContent] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
-  const isMobile = useIsMobile();
+  const [showDrawer, setShowDrawer] = useState<boolean | undefined>(undefined);
   const imageUrl = data.image?.url ? getStrapiMediaURL(data.image.url) : null;
   const isSvg = data.image?.ext === '.svg';
 
   useEffect(() => {
     setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    // xl breakpoint is 1280px
+    const mql = window.matchMedia('(max-width: 1279px)');
+    const onChange = () => {
+      setShowDrawer(window.innerWidth < 1280);
+    };
+    mql.addEventListener('change', onChange);
+    setShowDrawer(window.innerWidth < 1280);
+    return () => mql.removeEventListener('change', onChange);
   }, []);
 
   useEffect(() => {
@@ -84,8 +94,8 @@ export function ThemedLogo({ data }: ThemedLogoProps) {
     return logoItem;
   }
 
-  // Mobile/Tablet: Use Drawer
-  if (isMobile) {
+  // Below xl breakpoint: Use Drawer
+  if (showDrawer) {
     return (
       <Drawer>
         <DrawerTrigger asChild>
@@ -95,7 +105,7 @@ export function ThemedLogo({ data }: ThemedLogoProps) {
           <DrawerHeader className="gap-3 pb-16">
             <Item
               variant="default"
-              className="max-w-[50%] sm:max-w-[30%] size-full justify-center aspect-2/1 mx-auto"
+              className="max-w-[50%] sm:max-w-[30%] md:max-w-[20%] size-full justify-center aspect-2/1 mx-auto"
               role="img"
               aria-label={`Logo for ${data.name}`}
               style={cssVariables}
@@ -105,7 +115,7 @@ export function ThemedLogo({ data }: ThemedLogoProps) {
                 dangerouslySetInnerHTML={svgContent ? { __html: svgContent } : undefined}
               />
             </Item>
-            <DrawerTitle>{data.name}</DrawerTitle>
+            <DrawerTitle >{data.name}</DrawerTitle>
             {description && <DrawerDescription>{description}</DrawerDescription>}
           </DrawerHeader>
         </DrawerContent>
@@ -113,7 +123,7 @@ export function ThemedLogo({ data }: ThemedLogoProps) {
     );
   }
 
-  // Desktop: Use HoverCard
+  // xl breakpoint and above: Use HoverCard
   return (
     <HoverCard openDelay={200}>
       <HoverCardTrigger asChild>
