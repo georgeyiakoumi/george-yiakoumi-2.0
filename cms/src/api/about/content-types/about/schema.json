@@ -12,7 +12,7 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "content": {
+    "hero": {
       "type": "blocks"
     },
     "businesses": {
@@ -24,6 +24,15 @@
       "type": "component",
       "repeatable": true,
       "component": "about.business"
+    },
+    "heading_businesses": {
+      "type": "string"
+    },
+    "heading_tools": {
+      "type": "string"
+    },
+    "contact": {
+      "type": "blocks"
     }
   }
 }

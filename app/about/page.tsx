@@ -81,7 +81,7 @@ export default function About() {
       {/* Companies Section */}
       <Section>
         <Typography variant="h2" align="center">
-          Had the pleasure of working with
+          Worked for / with
         </Typography>
         
           <div className="w-full grid gap-8 grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">

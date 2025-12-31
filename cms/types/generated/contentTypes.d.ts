@@ -382,10 +382,13 @@ export interface ApiAboutAbout extends Struct.SingleTypeSchema {
   };
   attributes: {
     businesses: Schema.Attribute.Component<'about.business', true>;
-    content: Schema.Attribute.Blocks;
+    contact: Schema.Attribute.Blocks;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    heading_businesses: Schema.Attribute.String;
+    heading_tools: Schema.Attribute.String;
+    hero: Schema.Attribute.Blocks;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::about.about'> &
       Schema.Attribute.Private;
