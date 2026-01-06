@@ -5,9 +5,8 @@ import { notFound } from "next/navigation";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { AspectRatio } from "@/components/ui/aspect-ratio"
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
-import { ExternalLink, Github  } from "lucide-react";
 import { ArrowLeft } from "@/components/animate-ui/icons/arrow-left";
 import { AnimateIcon } from "@/components/animate-ui/icons/icon";
 
@@ -74,7 +73,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
     : null;
 
   return (
-    <Section className="!h-auto !justify-start !items-start pt-32 pb-0 md:pt-16 relative">
+    <Section className="!h-auto !justify-start !items-start !p-0 relative">
       <AnimateIcon animateOnHover asChild>
         <Button href="/portfolio" variant="link" className="fixed top-8 left-8 md:bottom-8 md:top-auto md:left-8 lg:left-16 z-20">
           <ArrowLeft />
@@ -82,133 +81,92 @@ export default function ProjectPage({ params }: ProjectPageProps) {
         </Button>
       </AnimateIcon>
 
-        <header className="flex flex-col gap-4">
-            <time 
-              dateTime={project.Date}
-              className="text-sm text-gray-500 dark:text-gray-400"
-              >
-              {new Date(project.Date).toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
+      <header className="flex flex-col gap-8 px-8 place-items-center justify-center w-full h-screen">
+          <Typography
+            variant="muted"
+            as="time"
+            dateTime={project.Date}
+          >
+            {new Date(project.Date).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </Typography>
+
+          <Typography variant="h1" className="max-w-xl text-center">
+            {project.Title}
+          </Typography>
+
+          <Typography variant="lead" className="max-w-xl text-center">
+            {project.Description}
+          </Typography>
+
+          {project.Tags && project.Tags.length > 0 && (
+            <div className="flex flex-wrap gap-2 justify-center">
+              {project.Tags.map((tag, index) => (
+                <Badge
+                  key={index}
+                  variant="secondary"
+                >
+                  {typeof tag === 'string' ? tag : tag?.name || JSON.stringify(tag)}
+                </Badge>
+              ))}
+            </div>
+          )}
+      </header>
+
+      {bannerImageUrl && (
+        <div className="relative w-full h-[calc(100vh-17rem)] md:h-[calc(100vh-12rem)] aspect-[9/12] md:aspect-[10/9]">
+          <Image
+            src={bannerImageUrl}
+            alt={project.Banner?.alternativeText || project.Title}
+            fill
+            
+            className="object-cover md:border-border md:border"
+            priority
+          />
+        </div>
+      )}
+
+      <article className="flex flex-col w-full">
+
+        <ContentSection title="Challenge" content={project.Challenge} />
+        <ContentSection title="Solution" content={project.Solution} />
+        {project.Role && typeof project.Role !== 'string' && (
+          <ContentSection title="My role" content={project.Role} />
+        )}
+        <ContentSection title="Impact" content={project.Impact} />
+        <ContentSection title="Key takeaway" content={project.Takeaway} />
+
+        {project.Images && project.Images.length > 0 && (
+          <section className="flex flex-col gap-2 py-8">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+              Project gallery
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {project.Images.map((image, index) => {
+                const imageUrl = getStrapiMediaURL(image.url);
+                if (!imageUrl) return null;
+
+                return (
+                  <div
+                    key={image.id || index}
+                    className="relative aspect-video rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-900"
+                  >
+                    <Image
+                      src={imageUrl}
+                      alt={image.alternativeText || `${project.Title} - Image ${index + 1}`}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                );
               })}
-            </time>
-              
-              {project.Client && (
-                <>
-                  <span>•</span>
-                  <span>{project.Client}</span>
-                </>
-              )}
-              {project.Role && typeof project.Role === 'string' && (
-                <>
-                  <span>•</span>
-                  <span>{project.Role}</span>
-                </>
-              )}
-
-            <Typography variant="h1">
-              {project.Title}
-            </Typography>
-
-            <Typography variant="lead">
-              {project.Description}
-            </Typography>
-
-            {project.Tags && project.Tags.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                {project.Tags.map((tag, index) => (
-                  <Badge
-                    key={index}
-                    variant="secondary"
-                  >
-                    {typeof tag === 'string' ? tag : tag?.name || JSON.stringify(tag)}
-                  </Badge>
-                ))}
-              </div>
-            )}
-
-            {(project.ProjectURL || project.GitHubURL) && (
-              <div className="flex flex-wrap gap-3">
-                {project.ProjectURL && (
-                  <a
-                    href={project.ProjectURL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors"
-                  >
-                    <ExternalLink className="w-4 h-4" />
-                    View Project
-                  </a>
-                )}
-                {project.GitHubURL && (
-                  <a
-                    href={project.GitHubURL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-                  >
-                    <Github className="w-4 h-4" />
-                    View Code
-                  </a>
-                )}
-              </div>
-            )}
-
-            {bannerImageUrl && (
-            
-              <AspectRatio ratio={16 / 4}>
-                <Image
-                  src={bannerImageUrl}
-                  alt={project.Banner?.alternativeText || project.Title}
-                  fill
-                  
-                  className="object-cover border-border border"
-                  priority
-                />
-              </AspectRatio>
-            
-          )}
-        </header>
-
-        <article className="flex flex-col">
-
-          <ContentSection title="Challenge" content={project.Challenge} />
-          <ContentSection title="Solution" content={project.Solution} />
-          {project.Role && typeof project.Role !== 'string' && (
-            <ContentSection title="My role" content={project.Role} />
-          )}
-          <ContentSection title="Impact" content={project.Impact} />
-          <ContentSection title="Key takeaway" content={project.Takeaway} />
-
-          {project.Images && project.Images.length > 0 && (
-            <section className="flex flex-col gap-2 py-8">
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-                Project gallery
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {project.Images.map((image, index) => {
-                  const imageUrl = getStrapiMediaURL(image.url);
-                  if (!imageUrl) return null;
-
-                  return (
-                    <div
-                      key={image.id || index}
-                      className="relative aspect-video rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-900"
-                    >
-                      <Image
-                        src={imageUrl}
-                        alt={image.alternativeText || `${project.Title} - Image ${index + 1}`}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-            </section>
-          )}
-        </article>
+            </div>
+          </section>
+        )}
+      </article>
     </Section>
   );
 }
