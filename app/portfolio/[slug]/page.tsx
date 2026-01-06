@@ -139,33 +139,6 @@ export default function ProjectPage({ params }: ProjectPageProps) {
         <ContentSection title="Impact" content={project.Impact} />
         <ContentSection title="Key takeaway" content={project.Takeaway} />
 
-        {project.Images && project.Images.length > 0 && (
-          <section className="flex flex-col gap-2 py-8">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-              Project gallery
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {project.Images.map((image, index) => {
-                const imageUrl = getStrapiMediaURL(image.url);
-                if (!imageUrl) return null;
-
-                return (
-                  <div
-                    key={image.id || index}
-                    className="relative aspect-video rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-900"
-                  >
-                    <Image
-                      src={imageUrl}
-                      alt={image.alternativeText || `${project.Title} - Image ${index + 1}`}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                );
-              })}
-            </div>
-          </section>
-        )}
       </article>
     </Section>
   );

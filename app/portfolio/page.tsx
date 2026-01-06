@@ -39,17 +39,21 @@ export default async function Portfolio() {
         Portfolio
       </Typography>
 
-      <div className="grid grid-cols-1 xl:grid-cols-2 xl:auto-rows-fr 2xl:grid-cols-3 gap-4">
+      <div className="w-full grid grid-cols-1 xl:grid-cols-2 xl:auto-rows-fr 2xl:grid-cols-3 gap-4">
         {projects.map((project) => (
           <Link key={project.id} href={`/portfolio/${project.slug}`} className="xl:h-full">
             <Card className="xl:h-full flex flex-col">
               <CardHeader className="flex-1 !flex !flex-col gap-3">
-                <time dateTime={project.Date} className="text-xs text-gray-500 dark:text-gray-400">
-                  {new Date(project.Date).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
+                <Typography
+                  variant="muted"
+                  as="time"
+                  dateTime={project.Date}
+                >
+                  {new Date(project.Date).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
                   })}
-                </time>
+                </Typography>
                 <CardTitle className="leading-snug">
                   {project.Title}
                 </CardTitle>

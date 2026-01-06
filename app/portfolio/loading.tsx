@@ -7,7 +7,7 @@ export default function PortfolioLoading() {
     <Section className="!h-auto !justify-start py-32 md:py-16">
       <Skeleton className="h-10 w-48" />
 
-      <div className="grid grid-cols-1 xl:grid-cols-2 xl:auto-rows-fr 2xl:grid-cols-3 gap-4">
+      <div className="w-full grid grid-cols-1 xl:grid-cols-2 xl:auto-rows-fr 2xl:grid-cols-3 gap-4">
         {Array.from({ length: 6 }).map((_, i) => (
           <Card key={i} className="xl:h-full flex flex-col">
             <CardHeader className="flex-1 !flex !flex-col gap-3">
