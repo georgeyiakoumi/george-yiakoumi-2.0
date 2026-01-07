@@ -17,13 +17,15 @@ This is a personal portfolio website built with modern web technologies to showc
 - **class-variance-authority** - Component variant management
 - **tailwind-merge** - Intelligent Tailwind class merging
 
-### Icons
-- **Lucide React** - Exclusive icon library (User, Briefcase, Mail, Github, LinkedIn, ArrowRight, etc.)
-  - No other icon libraries are used - maintain consistency with Lucide only
+### Icons & Animations
+- **Lucide React** - Primary icon library (User, Briefcase, Mail, Github, LinkedIn, etc.)
+- **@animate-ui/icons** - Animated icon components from shadcn (ArrowLeft, CheckCheck, etc.)
+  - Use AnimateIcon wrapper with animateOnHover and animateOnView props
 
 ### Animation
-- **GSAP 3.13.0** - Professional-grade animation library
-- **ScrollTrigger** - GSAP plugin for scroll-based animations
+- **@animate-ui/icons** - Interactive animated icons with hover and view triggers
+- **CSS Transitions** - Smooth theme transitions and UI state changes
+- **Tailwind Transitions** - Utility-based animation classes
 
 ### Theme & Dark Mode
 - **next-themes** - Theme management with dark mode support
@@ -90,13 +92,13 @@ This is a personal portfolio website built with modern web technologies to showc
 
 ### Navigation
 - Fixed navigation menu (bottom-left on mobile, top-left on desktop)
-- Links: About, Portfolio (TODO), Contact (TODO), LinkedIn, GitHub
-- Logo displayed top-left mobile, bottom-right desktop
+- Links: About, Portfolio, Contact, LinkedIn, GitHub
+- Logo displayed top-left mobile, bottom-right desktop (ThemedLogo component manages drawer visibility)
 
-### Scroll Effects
-- Custom ScrollBlurEffect wrapper that adds fade/blur at viewport edges
-- GSAP animations on scroll for About page elements
-- Smooth scroll-triggered content reveals
+### Animations
+- Animated icons with hover and view-trigger effects using @animate-ui
+- Smooth CSS transitions for theme switching and UI interactions
+- Loading states with skeleton components
 
 ### Dark Mode
 - System-aware dark mode with manual toggle
@@ -143,9 +145,11 @@ npm run start    # Production mode
 ## Important Notes
 
 ### Current Status
-- **Completed Pages**: About page (main landing), Portfolio listing, Portfolio detail pages, Contact page
-- **CMS Integration**: Fully integrated with Strapi for portfolio content management
-- **TODO**: Company logos and tool icons on About page need actual assets (currently placeholder text)
+- **Completed Pages**: All core pages complete - About, Portfolio (listing + detail pages), Contact, Contact Success
+- **CMS Integration**: Fully integrated with Strapi for all dynamic content
+- **Responsive Design**: Fully responsive across all breakpoints (mobile, tablet, desktop)
+- **Animations**: Interactive animated icons throughout, smooth CSS transitions
+- **Form Handling**: Contact form with validation, success page with animated confirmation
 
 ### Code Style
 - Use TypeScript exclusively (.tsx/.ts files) - no JavaScript files
@@ -155,9 +159,10 @@ npm run start    # Production mode
 - Keep animations smooth and performant
 
 ### Image Handling
-- Avatar hosted on Cloudinary
-- Use Next.js Image component for optimization
-- Store static assets in public folder
+- All media assets hosted on Cloudinary via Strapi
+- Use Next.js Image component with fill prop for responsive images
+- Aspect ratios controlled via wrapper divs with Tailwind aspect-* utilities
+- Support for responsive aspect ratios using breakpoint prefixes (sm:, md:, lg:, etc.)
 
 ### Testing & Validation
 - Always run `npm run lint` before committing
@@ -188,10 +193,10 @@ The Strapi CMS includes the following content types:
 - **Tools** - Skills and technologies
 
 ## Future Enhancements
-1. Add actual company logos and tool icons (replace placeholder text)
-2. Implement contact form backend with email service
+1. Implement contact form email backend (currently form submits to /forms/contact success page)
+2. Add SEO metadata and Open Graph tags for social sharing
 3. Consider adding blog/articles section
-4. Implement SEO optimizations and meta tags
-5. Add analytics tracking (Google Analytics, Plausible, etc.)
-6. Add more portfolio projects through Strapi
-7. Implement image optimization for company/tool logos
+4. Add analytics tracking (Google Analytics, Plausible, etc.)
+5. Add more portfolio projects through Strapi CMS
+6. Optimize loading states and skeleton components
+7. Add page transitions between routes

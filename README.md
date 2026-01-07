@@ -1,15 +1,16 @@
 # George Yiakoumi Portfolio
 
-Personal portfolio website built with Next.js and powered by Strapi CMS, showcasing design and development work.
+A modern, full-stack portfolio website showcasing design and development work. Built with Next.js 15 and powered by a headless Strapi CMS, featuring smooth animations, dark mode, and a fully responsive design.
 
 ## Features
 
-- Dynamic portfolio projects loaded from Strapi CMS
-- Rich text content with nested lists, formatting, and embedded images
-- Responsive design with dark mode support
-- Smooth scroll animations powered by GSAP
-- SEO-friendly with Next.js App Router
-- Type-safe integration with TypeScript
+- **Dynamic Content Management**: All portfolio projects, about page content, and contact information managed through Strapi CMS
+- **Rich Text Rendering**: Custom renderer supporting nested lists, formatting, embedded images, code blocks, and more
+- **Responsive Design**: Mobile-first approach with seamless adaptation across all screen sizes
+- **Dark Mode**: System-aware theme switching with persistent user preference
+- **Smooth Animations**: Interactive animated icons and smooth transitions throughout
+- **Type-Safe**: Full TypeScript integration across frontend and API layer
+- **Modern UI**: Built with shadcn/ui components and Tailwind CSS
 
 ## Getting Started
 
@@ -129,8 +130,8 @@ Open [http://localhost:6006](http://localhost:6006) to view the component librar
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS 4.1.13
 - **UI Components**: shadcn/ui + Radix UI
-- **Animation**: GSAP 3.13.0 with ScrollTrigger
-- **Icons**: Lucide React
+- **Icons**: Lucide React + @animate-ui/icons for animated components
+- **Animation**: CSS transitions and @animate-ui interactive animations
 - **Forms**: React Hook Form + Zod
 - **Theme**: next-themes (dark mode support)
 
@@ -180,10 +181,20 @@ The custom rich text renderer supports:
 
 ## Pages
 
-- **Home** (`/`) - Landing page
-- **About** (`/about`) - Personal information with scroll animations
-- **Portfolio** (`/portfolio`) - Grid of all projects
-- **Project Details** (`/portfolio/[slug]`) - Individual project case studies
-- **Contact** (`/contact`) - Contact information and form
+- **Home** (`/`) - Redirects to About page
+- **About** (`/about`) - Main landing page with bio, skills, and work experience featuring scroll-triggered animations
+- **Portfolio** (`/portfolio`) - Responsive grid showcasing all portfolio projects
+- **Project Details** (`/portfolio/[slug]`) - Individual case studies with rich content sections (Challenge, Solution, Role, Impact, Key Takeaway)
+- **Contact** (`/contact`) - Contact form with validation and success page
+- **Form Success** (`/forms/contact`) - Animated confirmation page after form submission
 
-For detailed technical documentation, see [CLAUDE.md](CLAUDE.md).
+## Deployment
+
+This project is designed to be deployed on modern hosting platforms:
+
+- **Frontend**: Vercel, Netlify, or any Node.js hosting
+- **CMS**: Railway, Render, DigitalOcean, or self-hosted
+- **Database**: Supabase (PostgreSQL)
+- **Media**: Cloudinary CDN
+
+For detailed technical documentation and development guidelines, see [CLAUDE.md](CLAUDE.md).
