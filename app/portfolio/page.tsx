@@ -47,22 +47,22 @@ export default async function Portfolio() {
                 <Typography
                   variant="muted"
                   as="time"
-                  dateTime={project.Date}
+                  dateTime={project.date}
                 >
-                  {new Date(project.Date).toLocaleDateString("en-US", {
+                  {new Date(project.date).toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "long",
                   })}
                 </Typography>
                 <CardTitle className="leading-snug">
-                  {project.Title}
+                  {project.title}
                 </CardTitle>
                 <CardDescription>
-                  {project.Description}
+                  {project.description}
                 </CardDescription>
               </CardHeader>
               <CardFooter className="flex-wrap gap-1">
-              {project.Tags.slice(0, 3).map((tag, index) => (
+              {project.tags.slice(0, 3).map((tag, index) => (
                 <Badge
                   key={index}
                   variant="secondary"
@@ -70,9 +70,9 @@ export default async function Portfolio() {
                   {tag.name}
                 </Badge>
               ))}
-              {project.Tags.length > 3 && (
+              {project.tags.length > 3 && (
                 <Badge variant="secondary">
-                  +{project.Tags.length - 3}
+                  +{project.tags.length - 3}
                 </Badge>
               )}
               </CardFooter>

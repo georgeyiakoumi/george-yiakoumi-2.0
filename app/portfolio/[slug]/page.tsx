@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 
@@ -68,8 +67,8 @@ export default function ProjectPage({ params }: ProjectPageProps) {
     ? getStrapiMediaURL(project.FeaturedImage.url)
     : null;
 
-  const bannerImageUrl = project.Banner
-    ? getStrapiMediaURL(project.Banner.url)
+  const HeroImageUrl = project.hero_image
+    ? getStrapiMediaURL(project.hero_image.url)
     : null;
 
   return (
@@ -82,18 +81,6 @@ export default function ProjectPage({ params }: ProjectPageProps) {
       </AnimateIcon>
 
       <header className="flex flex-col gap-8 px-8 place-items-center justify-center w-full h-screen">
-          <Typography
-            variant="muted"
-            as="time"
-            dateTime={project.Date}
-          >
-            {new Date(project.Date).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          </Typography>
-
           <Typography variant="h1" className="max-w-xl text-center">
             {project.Title}
           </Typography>
@@ -102,25 +89,38 @@ export default function ProjectPage({ params }: ProjectPageProps) {
             {project.Description}
           </Typography>
 
-          {project.Tags && project.Tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 justify-center">
-              {project.Tags.map((tag, index) => (
-                <Badge
-                  key={index}
-                  variant="secondary"
-                >
-                  {typeof tag === 'string' ? tag : tag?.name || JSON.stringify(tag)}
-                </Badge>
-              ))}
+          <dl className="flex flex-col sm:flex-row gap-4 sm:gap-8 text-sm text-muted-foreground">
+            {(project.client || project.Client) && (
+              <div className="flex gap-2">
+                <dt className="font-medium">Client:</dt>
+                <dd>{project.client || project.client}</dd>
+              </div>
+            )}
+            <div className="flex gap-2">
+              <dt className="font-medium">Date:</dt>
+              <dd>
+                <time dateTime={project.date}>
+                  {new Date(project.date).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "short",
+                  })}
+                </time>
+              </dd>
             </div>
-          )}
+            {project.my_role && (
+              <div className="flex gap-2">
+                <dt className="font-medium">Role:</dt>
+                <dd>{project.my_role}</dd>
+              </div>
+            )}
+          </dl>
       </header>
 
-      {bannerImageUrl && (
+      {heroImageUrl && (
         <div className="relative w-full h-[calc(100vh-17rem)] md:h-[calc(100vh-12rem)] aspect-[9/12] md:aspect-[10/9]">
           <Image
-            src={bannerImageUrl}
-            alt={project.Banner?.alternativeText || project.Title}
+            src={heroImageUrl}
+            alt={project.hero_image?.alternativeText || project.title}
             fill
             
             className="object-cover md:border-border md:border"
@@ -131,13 +131,13 @@ export default function ProjectPage({ params }: ProjectPageProps) {
 
       <article className="flex flex-col w-full">
 
-        <ContentSection title="Challenge" content={project.Challenge} />
-        <ContentSection title="Solution" content={project.Solution} />
-        {project.Role && typeof project.Role !== 'string' && (
-          <ContentSection title="My role" content={project.Role} />
+        <ContentSection title="Challenge" content={project.challenge} />
+        <ContentSection title="Solution" content={project.solution} />
+        {project.role && typeof project.Role !== 'string' && (
+          <ContentSection title="My role" content={project.role} />
         )}
-        <ContentSection title="Impact" content={project.Impact} />
-        <ContentSection title="Key takeaway" content={project.Takeaway} />
+        <ContentSection title="Impact" content={project.impact} />
+        <ContentSection title="Key takeaway" content={project.takeaway} />
 
       </article>
     </Section>

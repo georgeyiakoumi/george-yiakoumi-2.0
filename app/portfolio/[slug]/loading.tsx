@@ -7,14 +7,12 @@ export default function ProjectLoading() {
       <Skeleton className="h-10 w-24 fixed top-8 left-8 md:bottom-8 md:top-auto md:left-8 lg:left-16 z-20" />
 
       <header className="flex flex-col gap-8 px-8 place-items-center justify-center w-full h-screen">
-        <Skeleton className="h-4 w-32" />
         <Skeleton className="h-12 w-full max-w-xl" />
         <Skeleton className="h-6 w-full max-w-xl" />
-
-        <div className="flex flex-wrap gap-2 justify-center">
-          <Skeleton className="h-6 w-16" />
-          <Skeleton className="h-6 w-20" />
-          <Skeleton className="h-6 w-24" />
+        <div className="flex flex-col sm:flex-row gap-4 sm:gap-8">
+          <Skeleton className="h-5 w-32" />
+          <Skeleton className="h-5 w-28" />
+          <Skeleton className="h-5 w-36" />
         </div>
       </header>
 
