@@ -85,31 +85,26 @@ export default function ProjectPage({ params }: ProjectPageProps) {
             {project.project_description}
           </Typography>
 
-          <dl className="flex flex-col sm:flex-row gap-4 sm:gap-8 text-sm text-muted-foreground">
+          <Typography variant="muted" className="text-center flex items-center gap-2 flex-wrap justify-center">
             {project.project_client && (
-              <div className="flex gap-2">
-                <dt className="font-medium">Client:</dt>
-                <dd>{project.project_client}</dd>
-              </div>
+              <>
+                <span>{project.project_client}</span>
+                <span>•</span>
+              </>
             )}
-            <div className="flex gap-2">
-              <dt className="font-medium">Date:</dt>
-              <dd>
-                <time dateTime={project.date}>
-                  {new Date(project.date).toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "short",
-                  })}
-                </time>
-              </dd>
-            </div>
+            <time dateTime={project.date}>
+              {new Date(project.date).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "short",
+              })}
+            </time>
             {project.project_role && (
-              <div className="flex gap-2">
-                <dt className="font-medium">Role:</dt>
-                <dd>{project.project_role}</dd>
-              </div>
+              <>
+                <span>•</span>
+                <span>{project.project_role}</span>
+              </>
             )}
-          </dl>
+          </Typography>
       </header>
 
       {heroImageUrl && (
