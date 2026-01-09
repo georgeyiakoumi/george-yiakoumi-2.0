@@ -4,7 +4,6 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 import { ArrowLeft } from "@/components/animate-ui/icons/arrow-left";
 import { AnimateIcon } from "@/components/animate-ui/icons/icon";
@@ -28,7 +27,7 @@ function ContentSection({ title, content }: { title: string; content: any }) {
 
   return (
     <Section>
-      <Typography variant="small" as="h2" align="center" className="uppercase">
+      <Typography variant="h2" as="h2" align="center">
         {title}
       </Typography>
       {renderStrapiRichText(content, "align-center max-w-2xl")}
