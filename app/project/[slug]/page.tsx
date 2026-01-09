@@ -70,7 +70,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
   return (
     <Section className="!h-auto !justify-start !items-start !p-0 relative">
       <AnimateIcon animateOnHover asChild>
-        <Button href="/portfolio" variant="link" className="fixed top-8 left-8 md:bottom-8 md:top-auto md:left-8 lg:left-16 z-20">
+        <Button href="/projects" variant="link" className="fixed top-8 left-8 md:bottom-8 md:top-auto md:left-8 lg:left-16 z-20">
           <ArrowLeft />
           Back
         </Button>

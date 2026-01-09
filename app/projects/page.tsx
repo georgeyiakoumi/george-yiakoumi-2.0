@@ -36,12 +36,12 @@ export default async function Portfolio() {
 
     <Section className="!h-auto !justify-start py-32 md:py-16">
       <Typography variant="h1" align="center">
-        Portfolio
+        Projects
       </Typography>
 
       <div className="w-full grid grid-cols-1 xl:grid-cols-2 xl:auto-rows-fr 2xl:grid-cols-3 gap-4">
         {projects.map((project) => (
-          <Link key={project.id} href={`/portfolio/${project.slug}`} className="xl:h-full">
+          <Link key={project.id} href={`/project/${project.slug}`} className="xl:h-full">
             <Card className="xl:h-full flex flex-col">
               <CardHeader className="flex-1 !flex !flex-col gap-3">
                 <Typography

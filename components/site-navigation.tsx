@@ -36,11 +36,11 @@ export function SiteNavigation() {
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuLink asChild active={pathname === NAV_LINKS.portfolio.href}>
+          <NavigationMenuLink asChild active={pathname === NAV_LINKS.projects.href}>
             <AnimateIcon animateOnHover asChild>
-              <Link href={NAV_LINKS.portfolio.href} aria-label={NAV_LINKS.portfolio.ariaLabel}>
+              <Link href={NAV_LINKS.projects.href} aria-label={NAV_LINKS.projects.ariaLabel}>
                 <GalleryHorizontalEnd />
-                <span>{NAV_LINKS.portfolio.label}</span>
+                <span>{NAV_LINKS.projects.label}</span>
               </Link>
             </AnimateIcon>
           </NavigationMenuLink>

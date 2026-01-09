@@ -183,8 +183,8 @@ The custom rich text renderer supports:
 
 - **Home** (`/`) - Redirects to About page
 - **About** (`/about`) - Main landing page with bio, skills, and work experience featuring scroll-triggered animations
-- **Portfolio** (`/portfolio`) - Responsive grid showcasing all portfolio projects
-- **Project Details** (`/portfolio/[slug]`) - Individual case studies with rich content sections (Challenge, Solution, Role, Impact, Key Takeaway)
+- **Portfolio** (`/project`) - Responsive grid showcasing all portfolio projects
+- **Project Details** (`/project/[slug]`) - Individual case studies with rich content sections (Challenge, Solution, Role, Impact, Key Takeaway)
 - **Contact** (`/contact`) - Contact form with validation and success page
 - **Form Success** (`/forms/contact`) - Animated confirmation page after form submission
 

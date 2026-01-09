@@ -22,10 +22,10 @@ export const NAV_LINKS = {
     label: "About",
     ariaLabel: `About ${AUTHOR.firstName}`,
   },
-  portfolio: {
-    href: "/portfolio",
-    label: "Portfolio",
-    ariaLabel: `View ${AUTHOR.firstName}'s portfolio`,
+  projects: {
+    href: "/projects",
+    label: "Projects",
+    ariaLabel: `View ${AUTHOR.firstName}'s projects`,
   },
   contact: {
     href: "/contact",
