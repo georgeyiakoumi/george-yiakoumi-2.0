@@ -573,19 +573,10 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
       'project-chapter.project-chapter',
       false
     >;
-    client: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     date: Schema.Attribute.Date;
-    description: Schema.Attribute.Text;
-    hero_image: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios'
-    >;
-    hero_thumb: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios'
-    > &
-      Schema.Attribute.Required;
     impact: Schema.Attribute.Component<
       'project-chapter.project-chapter',
       false
@@ -596,7 +587,17 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
       'api::project.project'
     > &
       Schema.Attribute.Private;
-    my_role: Schema.Attribute.String;
+    project_client: Schema.Attribute.String;
+    project_description: Schema.Attribute.Text;
+    project_hero_image: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    project_role: Schema.Attribute.String;
+    project_thumb: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    > &
+      Schema.Attribute.Required;
+    project_title: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     role: Schema.Attribute.Component<'project-chapter.project-chapter', false>;
     slug: Schema.Attribute.UID & Schema.Attribute.Required;
@@ -604,13 +605,12 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
       'project-chapter.project-chapter',
       false
     >;
-    Tags: Schema.Attribute.JSON &
+    tags: Schema.Attribute.JSON &
       Schema.Attribute.CustomField<'plugin::tagsinput.tags'>;
     takeaway: Schema.Attribute.Component<
       'project-chapter.project-chapter',
       false
     >;
-    title: Schema.Attribute.String & Schema.Attribute.Required;
     tools: Schema.Attribute.Relation<'oneToMany', 'api::tool.tool'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

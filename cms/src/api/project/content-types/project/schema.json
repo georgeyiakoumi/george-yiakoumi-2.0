@@ -12,7 +12,7 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "title": {
+    "project_title": {
       "type": "string",
       "required": true
     },
@@ -20,7 +20,7 @@
       "type": "uid",
       "required": true
     },
-    "hero_thumb": {
+    "project_thumb": {
       "type": "media",
       "multiple": false,
       "required": true,
@@ -31,7 +31,7 @@
         "audios"
       ]
     },
-    "hero_image": {
+    "project_hero_image": {
       "type": "media",
       "multiple": false,
       "required": false,
@@ -45,11 +45,11 @@
     "date": {
       "type": "date"
     },
-    "Tags": {
+    "tags": {
       "type": "customField",
       "customField": "plugin::tagsinput.tags"
     },
-    "description": {
+    "project_description": {
       "type": "text"
     },
     "challenge": {
@@ -82,10 +82,10 @@
       "relation": "oneToMany",
       "target": "api::tool.tool"
     },
-    "client": {
+    "project_client": {
       "type": "string"
     },
-    "my_role": {
+    "project_role": {
       "type": "string"
     }
   }
