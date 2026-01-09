@@ -80,6 +80,8 @@ export interface ProjectData {
   ProjectURL?: string;
   GitHubURL?: string;
   Client?: string;
+  client?: string;
+  my_role?: string;
   Role?: StrapiRichTextBlock;
   Challenge?: StrapiRichTextBlock;
   Solution?: StrapiRichTextBlock;

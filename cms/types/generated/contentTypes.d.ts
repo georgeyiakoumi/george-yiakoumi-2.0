@@ -569,17 +569,24 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    Banner: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    Challenge: Schema.Attribute.Component<
+    challenge: Schema.Attribute.Component<
       'project-chapter.project-chapter',
       false
     >;
+    client: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    Date: Schema.Attribute.Date;
-    Description: Schema.Attribute.Text;
-    Impact: Schema.Attribute.Component<
+    date: Schema.Attribute.Date;
+    description: Schema.Attribute.Text;
+    hero_image: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    hero_thumb: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    > &
+      Schema.Attribute.Required;
+    impact: Schema.Attribute.Component<
       'project-chapter.project-chapter',
       false
     >;
@@ -589,25 +596,22 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
       'api::project.project'
     > &
       Schema.Attribute.Private;
+    my_role: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
-    Role: Schema.Attribute.Component<'project-chapter.project-chapter', false>;
-    slug: Schema.Attribute.UID<'Title'> & Schema.Attribute.Required;
-    Solution: Schema.Attribute.Component<
+    role: Schema.Attribute.Component<'project-chapter.project-chapter', false>;
+    slug: Schema.Attribute.UID & Schema.Attribute.Required;
+    solution: Schema.Attribute.Component<
       'project-chapter.project-chapter',
       false
     >;
     Tags: Schema.Attribute.JSON &
       Schema.Attribute.CustomField<'plugin::tagsinput.tags'>;
-    Takeaway: Schema.Attribute.Component<
+    takeaway: Schema.Attribute.Component<
       'project-chapter.project-chapter',
       false
     >;
-    Thumbnail: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios'
-    > &
-      Schema.Attribute.Required;
-    Title: Schema.Attribute.String & Schema.Attribute.Required;
-    Tools: Schema.Attribute.Relation<'oneToMany', 'api::tool.tool'>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    tools: Schema.Attribute.Relation<'oneToMany', 'api::tool.tool'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
