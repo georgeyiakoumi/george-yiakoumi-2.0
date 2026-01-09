@@ -67,7 +67,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
     ? getStrapiMediaURL(project.FeaturedImage.url)
     : null;
 
-  const HeroImageUrl = project.hero_image
+  const heroImageUrl = project.hero_image
     ? getStrapiMediaURL(project.hero_image.url)
     : null;
 
