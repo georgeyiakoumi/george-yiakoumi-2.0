@@ -55,58 +55,40 @@ interface StrapiRichTextBlock {
 export interface ProjectData {
   id: number;
   documentId: string;
-  Title: string;
+  project_title: string;
   slug: string;
-  Date: string;
-  Tags: Array<{
+  date: string;
+  tags: Array<{
     name: string;
   }>;
-  Description: string;
-  Content?: string | Array<{id: string; content: string}>;
-  FeaturedImage?: {
+  project_description: string;
+  project_thumb?: {
     id: number;
     url: string;
     alternativeText?: string;
     width?: number;
     height?: number;
   };
-  Images?: Array<{
+  project_hero_image?: {
     id: number;
     url: string;
     alternativeText?: string;
     width?: number;
     height?: number;
-  }>;
-  ProjectURL?: string;
-  GitHubURL?: string;
-  Client?: string;
-  client?: string;
-  my_role?: string;
-  Role?: StrapiRichTextBlock;
-  Challenge?: StrapiRichTextBlock;
-  Solution?: StrapiRichTextBlock;
-  Impact?: StrapiRichTextBlock;
-  Takeaway?: StrapiRichTextBlock;
-  Tools?: Array<{
+  };
+  project_client?: string;
+  project_role?: string;
+  role?: StrapiRichTextBlock;
+  challenge?: StrapiRichTextBlock;
+  solution?: StrapiRichTextBlock;
+  impact?: StrapiRichTextBlock;
+  takeaway?: StrapiRichTextBlock;
+  tools?: Array<{
     id: number;
     documentId: string;
-    Name: string;
-    Slug: string;
+    name: string;
+    slug: string;
   }>;
-  Thumbnail?: {
-    id: number;
-    url: string;
-    alternativeText?: string;
-    width?: number;
-    height?: number;
-  };
-  Banner?: {
-    id: number;
-    url: string;
-    alternativeText?: string;
-    width?: number;
-    height?: number;
-  };
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
@@ -201,11 +183,11 @@ export async function getProjects(options?: {
   try {
     const query: Record<string, string | number | boolean> = {
       'populate': '*',
-      'sort[0]': 'Date:desc',
+      'sort[0]': 'date:desc',
     };
 
     if (options?.tag) {
-      query['filters[Tags][name][$eq]'] = options.tag;
+      query['filters[tags][name][$eq]'] = options.tag;
     }
 
     if (options?.limit) {
@@ -231,17 +213,7 @@ export async function getProjectBySlug(slug: string) {
       endpoint: '/projects',
       query: {
         'filters[slug][$eq]': slug,
-        'populate[Banner]': '*',
-        'populate[Thumbnail]': '*',
-        'populate[FeaturedImage]': '*',
-        'populate[Images]': '*',
-        'populate[Tags]': '*',
-        'populate[Tools]': '*',
-        'populate[Challenge][populate]': 'Image',
-        'populate[Solution][populate]': 'Image',
-        'populate[Role][populate]': 'Image',
-        'populate[Impact][populate]': 'Image',
-        'populate[Takeaway][populate]': 'Image',
+        'populate': 'deep',
       },
       cache: 'no-store',
       tags: ['projects', `project-${slug}`],

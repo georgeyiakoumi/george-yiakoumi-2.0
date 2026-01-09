@@ -55,10 +55,10 @@ export default async function Portfolio() {
                   })}
                 </Typography>
                 <CardTitle className="leading-snug">
-                  {project.title}
+                  {project.project_title}
                 </CardTitle>
                 <CardDescription>
-                  {project.description}
+                  {project.project_description}
                 </CardDescription>
               </CardHeader>
               <CardFooter className="flex-wrap gap-1">

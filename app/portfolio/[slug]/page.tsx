@@ -63,12 +63,8 @@ export default function ProjectPage({ params }: ProjectPageProps) {
     return null;
   }
 
-  const featuredImageUrl = project.FeaturedImage
-    ? getStrapiMediaURL(project.FeaturedImage.url)
-    : null;
-
-  const heroImageUrl = project.hero_image
-    ? getStrapiMediaURL(project.hero_image.url)
+  const heroImageUrl = project.project_hero_image
+    ? getStrapiMediaURL(project.project_hero_image.url)
     : null;
 
   return (
@@ -82,18 +78,18 @@ export default function ProjectPage({ params }: ProjectPageProps) {
 
       <header className="flex flex-col gap-8 px-8 place-items-center justify-center w-full h-screen">
           <Typography variant="h1" className="max-w-xl text-center">
-            {project.Title}
+            {project.project_title}
           </Typography>
 
           <Typography variant="lead" className="max-w-xl text-center">
-            {project.Description}
+            {project.project_description}
           </Typography>
 
           <dl className="flex flex-col sm:flex-row gap-4 sm:gap-8 text-sm text-muted-foreground">
-            {(project.client || project.Client) && (
+            {project.project_client && (
               <div className="flex gap-2">
                 <dt className="font-medium">Client:</dt>
-                <dd>{project.client || project.client}</dd>
+                <dd>{project.project_client}</dd>
               </div>
             )}
             <div className="flex gap-2">
@@ -107,10 +103,10 @@ export default function ProjectPage({ params }: ProjectPageProps) {
                 </time>
               </dd>
             </div>
-            {project.my_role && (
+            {project.project_role && (
               <div className="flex gap-2">
                 <dt className="font-medium">Role:</dt>
-                <dd>{project.my_role}</dd>
+                <dd>{project.project_role}</dd>
               </div>
             )}
           </dl>
@@ -120,9 +116,9 @@ export default function ProjectPage({ params }: ProjectPageProps) {
         <div className="relative w-full h-[calc(100vh-17rem)] md:h-[calc(100vh-12rem)] aspect-[9/12] md:aspect-[10/9]">
           <Image
             src={heroImageUrl}
-            alt={project.hero_image?.alternativeText || project.title}
+            alt={project.project_hero_image?.alternativeText || project.project_title}
             fill
-            
+
             className="object-cover md:border-border md:border"
             priority
           />
