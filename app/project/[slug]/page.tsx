@@ -4,6 +4,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 
 import { ArrowLeft } from "@/components/animate-ui/icons/arrow-left";
 import { AnimateIcon } from "@/components/animate-ui/icons/icon";
@@ -13,6 +14,7 @@ import { getStrapiMediaURL } from "@/lib/strapi";
 import { renderStrapiRichText } from "@/lib/strapi-blocks-renderer";
 import { Section } from "@/components/section";
 import { Typography } from "@/components/ui/typography";
+import { ProjectCard } from "@/components/project-card";
 import { useEffect, useState } from "react";
 import ProjectLoading from "./loading";
 
@@ -26,8 +28,8 @@ function ContentSection({ title, content }: { title: string; content: any }) {
   if (!content) return null;
 
   return (
-    <Section>
-      <Typography variant="h2" as="h2" align="center">
+    <Section className="relative">
+      <Typography variant="h2">
         {title}
       </Typography>
       {renderStrapiRichText(content, "align-center max-w-2xl")}
@@ -38,6 +40,7 @@ function ContentSection({ title, content }: { title: string; content: any }) {
 export default function ProjectPage({ params }: ProjectPageProps) {
   const [slug, setSlug] = useState<string>("");
   const [project, setProject] = useState<any>(null);
+  const [otherProjects, setOtherProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -49,6 +52,8 @@ export default function ProjectPage({ params }: ProjectPageProps) {
           notFound();
         }
         setProject(foundProject);
+        // Filter out the current project from the list
+        setOtherProjects(projects.filter((p) => p.slug !== resolvedSlug));
         setLoading(false);
       });
     });
@@ -130,6 +135,32 @@ export default function ProjectPage({ params }: ProjectPageProps) {
         <ContentSection title="Key takeaway" content={project.takeaway} />
 
       </article>
+
+      {otherProjects.length > 0 && (
+        <Section className="!max-w-none !w-full px-8 md:px-16 lg:px-24">
+          <Typography variant="h2" align="center" className="mb-8">
+            Other projects
+          </Typography>
+
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full"
+          >
+            <CarouselContent>
+              {otherProjects.map((otherProject) => (
+                <CarouselItem key={otherProject.id} className="md:basis-1/2 lg:basis-1/3">
+                  <ProjectCard project={otherProject} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
+        </Section>
+      )}
     </Section>
   );
 }
