@@ -141,7 +141,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
       </article>
 
       {otherProjects.length > 0 && (
-        <Section className="!max-w-none !w-full px-8 md:px-16 lg:px-24">
+        <Section className="!max-w-none !w-full px-16 md:px-16 lg:px-24">
           <Typography variant="h2" align="center" className="mb-8">
             Other projects
           </Typography>
