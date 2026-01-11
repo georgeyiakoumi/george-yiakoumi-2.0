@@ -76,53 +76,53 @@ export default function ProjectPage({ params }: ProjectPageProps) {
   };
 
   return (
-    <Section className="!h-auto !justify-start !items-start !p-0 relative">
+    <section className="place-items-center relative">
       <AnimateIcon animateOnHover asChild>
-        <Button onClick={handleBack} variant="link" className="fixed top-8 left-8 md:bottom-8 md:top-auto md:left-8 lg:left-16 z-20">
+        <Button onClick={handleBack} variant="secondary" className="bg-background fixed top-8 left-8 md:bottom-8 md:top-auto md:left-8 lg:left-16 z-20">
           <ArrowLeft />
           Back
         </Button>
       </AnimateIcon>
 
-      <header className="flex flex-col gap-8 px-8 place-items-center justify-center w-full h-screen">
-          <Typography variant="h1" className="max-w-xl text-center">
-            {project.project_title}
-          </Typography>
+      <header className="flex flex-col gap-8 px-8 place-items-center justify-center w-full md:max-w-lg lg:max-w-2xl h-screen">
+        <Typography variant="h1" className="text-center">
+          {project.project_title}
+        </Typography>
 
-          <Typography variant="lead" className="max-w-xl text-center">
-            {project.project_description}
-          </Typography>
+        <Typography variant="lead" className="text-center">
+          {project.project_description}
+        </Typography>
 
-          <Typography variant="muted" className="text-center flex items-center gap-2 flex-wrap justify-center">
-            {project.project_client && (
-              <>
-                <span>{project.project_client}</span>
-                <span>•</span>
-              </>
-            )}
-            <time dateTime={project.date}>
-              {new Date(project.date).toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "short",
-              })}
-            </time>
-            {project.project_role && (
-              <>
-                <span>•</span>
-                <span>{project.project_role}</span>
-              </>
-            )}
-          </Typography>
+        <Typography variant="muted" className="flex items-center gap-2 flex-wrap justify-center">
+          {project.project_client && (
+            <>
+              <span>{project.project_client}</span>
+              <span>•</span>
+            </>
+          )}
+          <time dateTime={project.date}>
+            {new Date(project.date).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "short",
+            })}
+          </time>
+          {project.project_role && (
+            <>
+              <span>•</span>
+              <span>{project.project_role}</span>
+            </>
+          )}
+        </Typography>
       </header>
 
       {heroImageUrl && (
-        <div className="relative w-full h-[calc(100vh-17rem)] md:h-[calc(100vh-12rem)] aspect-[9/12] md:aspect-[10/9]">
+        <div className="relative w-full h-screen aspect-[9/12] md:aspect-[10/9] z-1">
           <Image
             src={heroImageUrl}
             alt={project.project_hero_image?.alternativeText || project.project_title}
             fill
 
-            className="object-cover md:border-border md:border"
+            className="project-image object-cover md:border-border md:border"
             priority
           />
         </div>
@@ -141,7 +141,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
       </article>
 
       {otherProjects.length > 0 && (
-        <Section className="!max-w-none !w-full px-16 md:px-16 lg:px-24">
+        <section className="flex flex-col mx-auto gap-8 md:max-w-sm lg:max-w-3xl xl:max-w-4xl 2xl:max-w-6xl min-h-dvh items-center justify-center md:px-0 py-32 w-full px-16 lg:px-24">
           <Typography variant="h2" align="center" className="mb-8">
             Other projects
           </Typography>
@@ -163,9 +163,9 @@ export default function ProjectPage({ params }: ProjectPageProps) {
             <CarouselPrevious />
             <CarouselNext />
           </Carousel>
-        </Section>
+        </section>
       )}
-    </Section>
+    </section>
   );
 }
 
