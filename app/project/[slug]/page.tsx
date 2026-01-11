@@ -84,7 +84,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
         </Button>
       </AnimateIcon>
 
-      <header className="flex flex-col gap-8 px-8 place-items-center justify-center w-full md:max-w-lg lg:max-w-2xl h-screen">
+      <header className="flex flex-col gap-8 px-8 items-center justify-center w-full md:max-w-lg lg:max-w-2xl h-screen mx-auto">
         <Typography variant="h1" className="text-center">
           {project.project_title}
         </Typography>
