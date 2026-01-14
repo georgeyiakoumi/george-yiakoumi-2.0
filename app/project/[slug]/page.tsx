@@ -4,6 +4,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 
 import { ArrowLeft } from "@/components/animate-ui/icons/arrow-left";
@@ -28,11 +29,14 @@ function ContentSection({ title, content }: { title: string; content: any }) {
   if (!content) return null;
 
   return (
-    <Section className="relative">
-      <Typography variant="h2">
+    <Section className="xl:grid xl:grid-cols-[auto_auto_1fr] xl:gap-x-16 [&:nth-child(even)>h2]:xl:order-2 [&:nth-child(even)>div:last-child]:xl:order-0">
+      <Typography variant="h2" className="xl:text-center xl:order-0">
         {title}
       </Typography>
-      {renderStrapiRichText(content, "align-center max-w-2xl")}
+      <Separator orientation="vertical" className="xl:h-full xl:order-1" />
+      <div className="xl:order-2">
+        {renderStrapiRichText(content, "align-center max-w-2xl")}
+      </div>
     </Section>
   );
 }

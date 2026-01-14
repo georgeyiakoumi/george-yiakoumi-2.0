@@ -79,7 +79,7 @@ function renderBlock(block: RichTextBlock, index: number): React.ReactNode {
   switch (block.type) {
     case 'paragraph':
       const paragraphChildren = block.children?.map((child, i) => renderChild(child, i));
-      return <p key={index} className="text-gray-600 dark:text-gray-400 mb-4">{paragraphChildren}</p>;
+      return <p key={index} className="text-gray-600 dark:text-gray-400 mb-4 last:mb-0">{paragraphChildren}</p>;
 
     case 'heading':
       const headingChildren = block.children?.map((child, i) => renderChild(child, i));
