@@ -1,5 +1,6 @@
 import { Mulish } from "next/font/google";
 import "./globals.css";
+import { ProgressiveBlur } from "@/components/ui/progressive-blur"
 import { ThemeProvider } from "@/components/theme-provider";
 import { ModeToggle } from "@/components/mode-toggle";
 import { SiteNavigation } from "@/components/site-navigation";
@@ -29,27 +30,17 @@ export default function RootLayout({
       <body className={`${mulish.className} h-dvh overflow-hidden`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <ScrollProgressProvider>
+            <ProgressiveBlur height="15%" position="bottom" />
+            <ProgressiveBlur height="15%" position="top" />
             <SiteNavigation />
 
             <ModeToggle />
 
             {/* Scroll progress indicator */}
             <ScrollProgress className="fixed top-0 left-0 h-1 bg-primary z-50 origin-left" />
-
+            
             <ScrollProgressContainer asChild>
               <main className="h-dvh overflow-y-auto relative scrollbar-hide">
-                {/* Top fade */}
-                <div className="fixed top-0 left-0 w-full pointer-events-none z-[1] flex flex-col">
-                  <div className="md:hidden h-24 bg-background"/>
-                  <div className="h-8 md:h-24 bg-gradient-to-b from-background to-background/0"/>
-                </div>
-
-                {/* Bottom fade */}
-                <div className="fixed bottom-0 left-0 w-full pointer-events-none z-[1] flex flex-col">
-                  <div className="h-8 md:h-24 bg-gradient-to-t from-background to-background/0"/>
-                  <div className="md:hidden h-28 bg-background"/>
-                </div>
-
                 {children}
               </main>
             </ScrollProgressContainer>
