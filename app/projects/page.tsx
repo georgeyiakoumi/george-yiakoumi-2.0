@@ -1,4 +1,5 @@
 import { getProjects } from "@/lib/strapi-queries";
+import { generatePageMetadata } from "@/lib/metadata";
 
 import { SquareLibrary } from "lucide-react";
 
@@ -7,6 +8,12 @@ import { Section } from "@/components/section";
 import { Typography } from "@/components/ui/typography";
 import { CursorProvider, CursorFollow } from "@/components/animate-ui/components/animate/cursor";
 import { ProjectCard } from "@/components/project-card";
+
+export const metadata = generatePageMetadata({
+  title: "Projects",
+  description: "Explore my portfolio of design projects, case studies, and UX/UI work. See how I solve complex problems through thoughtful design and user-centered solutions.",
+  path: "/projects",
+});
 
 export default async function Portfolio() {
   const projects = await getProjects();
