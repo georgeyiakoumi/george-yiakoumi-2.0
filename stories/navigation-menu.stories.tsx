@@ -106,7 +106,7 @@ export const Vertical: Story = {
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuLink asChild>
-            <a href="/about">
+            <a href="/">
               <User className="size-4" />
               <span>About</span>
             </a>

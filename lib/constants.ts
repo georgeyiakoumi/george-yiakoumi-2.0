@@ -18,7 +18,7 @@ export const SOCIAL_LINKS = {
 
 export const NAV_LINKS = {
   about: {
-    href: "/about",
+    href: "/",
     label: "About",
     ariaLabel: `About ${AUTHOR.firstName}`,
   },

@@ -1,7 +1,7 @@
 import { Section } from "@/components/section";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export default function AboutLoading() {
+export default function HomeLoading() {
   return (
     <>
       {/* Avatar and Bio Section */}
