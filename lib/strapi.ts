@@ -40,8 +40,6 @@ export async function fetchAPI<T>(
   }
 
   try {
-    console.log('Fetching from Strapi:', url.toString());
-
     const response = await fetch(url.toString(), {
       headers,
       cache,
