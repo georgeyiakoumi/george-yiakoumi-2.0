@@ -73,7 +73,7 @@ export default async function Portfolio() {
 
                 {/* Content */}
                 <div className="relative p-4 flex flex-col justify-start items-start">
-                  <div className="pointer-events-none z-10">
+                  <div className="pointer-events-none">
                     <div className="bg-muted p-2 border border-border rounded-lg">
                       <Typography variant="h6" as="h3">
                         {project.project_title}
