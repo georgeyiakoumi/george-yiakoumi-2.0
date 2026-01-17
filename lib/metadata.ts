@@ -1,15 +1,19 @@
 import { Metadata } from "next";
+import { getGlobalSEO } from "./strapi-queries";
+import { getStrapiMediaURL } from "./strapi";
 
+// Fallback configuration if Strapi is unavailable
 export const SITE_CONFIG = {
   name: "George Yiakoumi",
   title: "George Yiakoumi - Product Designer & UX/UI Specialist",
   description: "Product Designer specializing in user experience, interface design, and digital product strategy. View my portfolio of design work and case studies.",
-  url: "https://georgeyiakoumi.com",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://georgeyiakoumi.com",
   author: {
     name: "George Yiakoumi",
     url: "https://georgeyiakoumi.com",
     linkedin: "https://linkedin.com/in/georgeyiakoumi",
     github: "https://github.com/georgeyiakoumi",
+    jobTitle: "Product Designer",
   },
   keywords: [
     "Product Designer",
@@ -22,47 +26,72 @@ export const SITE_CONFIG = {
     "Digital Product Design",
     "George Yiakoumi",
   ] as string[],
-  ogImage: "/og-image.jpg", // We'll need to add this image
+  ogImage: "/og-image.jpg",
+  twitterHandle: "@georgeyiakoumi",
 };
 
-export function generateSiteMetadata(): Metadata {
-  return {
+export async function generateSiteMetadata(): Promise<Metadata> {
+  const seoData = await getGlobalSEO();
+
+  // Debug logging
+  console.log('[SEO] Global SEO data:', seoData ? 'Found' : 'Not found');
+  if (seoData?.ogImage) {
+    console.log('[SEO] OG Image URL from Strapi:', seoData.ogImage.url);
+  }
+
+  // Merge Strapi data with fallbacks
+  const siteName = seoData?.siteName || SITE_CONFIG.name;
+  const siteTitle = seoData?.siteTitle || SITE_CONFIG.title;
+  const siteDescription = seoData?.siteDescription || SITE_CONFIG.description;
+  const keywords = seoData?.keywords
+    ? seoData.keywords.split(',').map(k => k.trim())
+    : SITE_CONFIG.keywords;
+  const authorName = seoData?.authorName || SITE_CONFIG.author.name;
+  const authorUrl = SITE_CONFIG.url;
+  const twitterHandle = seoData?.twitterHandle || SITE_CONFIG.twitterHandle;
+  const ogImageUrl = seoData?.ogImage?.url
+    ? getStrapiMediaURL(seoData.ogImage.url)
+    : SITE_CONFIG.ogImage;
+
+  console.log('[SEO] Final OG Image URL:', ogImageUrl);
+
+  const metadata = {
     metadataBase: new URL(SITE_CONFIG.url),
     title: {
-      default: SITE_CONFIG.title,
-      template: `%s | ${SITE_CONFIG.name}`,
+      default: siteTitle,
+      template: `%s | ${siteName}`,
     },
-    description: SITE_CONFIG.description,
-    keywords: SITE_CONFIG.keywords,
+    description: siteDescription,
+    keywords: keywords,
     authors: [
       {
-        name: SITE_CONFIG.author.name,
-        url: SITE_CONFIG.author.url,
+        name: authorName,
+        url: authorUrl,
       },
     ],
-    creator: SITE_CONFIG.author.name,
+    creator: authorName,
     openGraph: {
       type: "website",
       locale: "en_US",
       url: SITE_CONFIG.url,
-      title: SITE_CONFIG.title,
-      description: SITE_CONFIG.description,
-      siteName: SITE_CONFIG.name,
+      title: seoData?.ogTitle || siteTitle,
+      description: seoData?.ogDescription || siteDescription,
+      siteName: siteName,
       images: [
         {
-          url: SITE_CONFIG.ogImage,
+          url: ogImageUrl || SITE_CONFIG.ogImage,
           width: 1200,
           height: 630,
-          alt: SITE_CONFIG.name,
+          alt: siteName,
         },
       ],
     },
     twitter: {
-      card: "summary_large_image",
-      title: SITE_CONFIG.title,
-      description: SITE_CONFIG.description,
-      images: [SITE_CONFIG.ogImage],
-      creator: "@georgeyiakoumi", // Update if you have a Twitter handle
+      card: seoData?.twitterCard || "summary_large_image",
+      title: seoData?.ogTitle || siteTitle,
+      description: seoData?.ogDescription || siteDescription,
+      images: [ogImageUrl || SITE_CONFIG.ogImage],
+      creator: twitterHandle,
     },
     robots: {
       index: true,
@@ -76,14 +105,24 @@ export function generateSiteMetadata(): Metadata {
       },
     },
     icons: {
-      icon: "/favicon.ico",
-      shortcut: "/favicon.ico",
-      apple: "/apple-touch-icon.png",
+      icon: seoData?.favIcon?.url
+        ? getStrapiMediaURL(seoData.favIcon.url)
+        : "/favicon.ico",
+      shortcut: seoData?.favIcon?.url
+        ? getStrapiMediaURL(seoData.favIcon.url)
+        : "/favicon.ico",
+      apple: seoData?.appleTouchIcon?.url
+        ? getStrapiMediaURL(seoData.appleTouchIcon.url)
+        : "/apple-touch-icon.png",
     },
   };
+
+  console.log('[SEO] Generated metadata object:', JSON.stringify(metadata, null, 2));
+
+  return metadata;
 }
 
-export function generatePageMetadata({
+export async function generatePageMetadata({
   title,
   description,
   path = "",
@@ -95,9 +134,16 @@ export function generatePageMetadata({
   path?: string;
   image?: string;
   noIndex?: boolean;
-}): Metadata {
+}): Promise<Metadata> {
   const url = `${SITE_CONFIG.url}${path}`;
-  const ogImage = image || SITE_CONFIG.ogImage;
+
+  // Fetch global SEO to get the default OG image if no custom image is provided
+  const seoData = await getGlobalSEO();
+  const defaultOgImage = seoData?.ogImage?.url
+    ? getStrapiMediaURL(seoData.ogImage.url)
+    : SITE_CONFIG.ogImage;
+
+  const ogImage = image || defaultOgImage;
 
   return {
     title,
@@ -133,31 +179,42 @@ export function generatePageMetadata({
   };
 }
 
-export function generatePersonJsonLd() {
+export async function generatePersonJsonLd() {
+  const seoData = await getGlobalSEO();
+
+  const authorName = seoData?.authorName || SITE_CONFIG.author.name;
+  const authorJobTitle = seoData?.authorJobTitle || SITE_CONFIG.author.jobTitle;
+  const authorBio = seoData?.authorBio || SITE_CONFIG.description;
+  const linkedinUrl = seoData?.linkedinUrl || SITE_CONFIG.author.linkedin;
+  const githubUrl = seoData?.githubUrl || SITE_CONFIG.author.github;
+
   return {
     "@context": "https://schema.org",
     "@type": "Person",
-    name: SITE_CONFIG.author.name,
+    name: authorName,
     url: SITE_CONFIG.url,
-    jobTitle: "Product Designer",
-    description: SITE_CONFIG.description,
-    sameAs: [
-      SITE_CONFIG.author.linkedin,
-      SITE_CONFIG.author.github,
-    ],
+    jobTitle: authorJobTitle,
+    description: authorBio,
+    sameAs: [linkedinUrl, githubUrl].filter(Boolean),
   };
 }
 
-export function generateWebsiteJsonLd() {
+export async function generateWebsiteJsonLd() {
+  const seoData = await getGlobalSEO();
+
+  const siteName = seoData?.siteName || SITE_CONFIG.name;
+  const siteDescription = seoData?.siteDescription || SITE_CONFIG.description;
+  const authorName = seoData?.authorName || SITE_CONFIG.author.name;
+
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: SITE_CONFIG.name,
+    name: siteName,
     url: SITE_CONFIG.url,
-    description: SITE_CONFIG.description,
+    description: siteDescription,
     author: {
       "@type": "Person",
-      name: SITE_CONFIG.author.name,
+      name: authorName,
     },
   };
 }

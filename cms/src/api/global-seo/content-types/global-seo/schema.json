@@ -5,32 +5,63 @@
     "singularName": "global-seo",
     "pluralName": "global-seos",
     "displayName": "Global SEO",
-    "description": ""
+    "description": "Global SEO settings for the entire website"
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
+    "siteName": {
+      "type": "string",
+      "required": true,
+      "default": "George Yiakoumi"
+    },
     "siteTitle": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "siteDescription": {
+      "type": "text",
+      "required": true
+    },
+    "keywords": {
+      "type": "text",
+      "description": "Comma-separated keywords"
+    },
+    "authorName": {
+      "type": "string",
+      "default": "George Yiakoumi"
+    },
+    "authorJobTitle": {
+      "type": "string",
+      "default": "Product Designer"
+    },
+    "authorBio": {
+      "type": "text"
+    },
+    "linkedinUrl": {
       "type": "string"
+    },
+    "githubUrl": {
+      "type": "string"
+    },
+    "twitterHandle": {
+      "type": "string",
+      "description": "Include @ symbol"
     },
     "ogTitle": {
       "type": "string"
     },
     "ogDescription": {
-      "type": "string"
+      "type": "text"
     },
     "ogImage": {
       "type": "media",
       "multiple": false,
       "required": false,
       "allowedTypes": [
-        "images",
-        "files"
+        "images"
       ]
     },
     "twitterCard": {
@@ -38,7 +69,8 @@
       "enum": [
         "summary",
         "summary_large_image"
-      ]
+      ],
+      "default": "summary_large_image"
     },
     "gtagId": {
       "type": "string"
@@ -48,8 +80,7 @@
       "multiple": false,
       "required": false,
       "allowedTypes": [
-        "images",
-        "files"
+        "images"
       ]
     },
     "appleTouchIcon": {
@@ -57,8 +88,7 @@
       "multiple": false,
       "required": false,
       "allowedTypes": [
-        "images",
-        "files"
+        "images"
       ]
     }
   }

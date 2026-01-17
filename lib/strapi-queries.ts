@@ -238,3 +238,66 @@ export async function getContactInfo() {
     return null;
   }
 }
+
+export interface GlobalSEOData {
+  id: number;
+  documentId: string;
+  siteName: string;
+  siteTitle: string;
+  siteDescription: string;
+  keywords?: string;
+  authorName?: string;
+  authorJobTitle?: string;
+  authorBio?: string;
+  linkedinUrl?: string;
+  githubUrl?: string;
+  twitterHandle?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: {
+    id: number;
+    url: string;
+    alternativeText?: string;
+    width?: number;
+    height?: number;
+  };
+  twitterCard?: 'summary' | 'summary_large_image';
+  gtagId?: string;
+  favIcon?: {
+    id: number;
+    url: string;
+    alternativeText?: string;
+  };
+  appleTouchIcon?: {
+    id: number;
+    url: string;
+    alternativeText?: string;
+  };
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
+export async function getGlobalSEO() {
+  try {
+    const data = await fetchAPI<GlobalSEOData>({
+      endpoint: '/global-seo',
+      query: {
+        'populate[ogImage][fields][0]': 'url',
+        'populate[ogImage][fields][1]': 'alternativeText',
+        'populate[ogImage][fields][2]': 'width',
+        'populate[ogImage][fields][3]': 'height',
+        'populate[favIcon][fields][0]': 'url',
+        'populate[favIcon][fields][1]': 'alternativeText',
+        'populate[appleTouchIcon][fields][0]': 'url',
+        'populate[appleTouchIcon][fields][1]': 'alternativeText',
+      },
+      cache: 'no-store',
+      tags: ['global-seo'],
+    });
+    return data;
+  } catch (error) {
+    console.error('Error fetching global SEO:', error);
+    return null;
+  }
+}
