@@ -8,7 +8,8 @@ import { SiteFooter } from "@/components/site-footer";
 import { Toaster } from "@/components/ui/sonner";
 import { ScrollProgressProvider, ScrollProgress, ScrollProgressContainer } from "@/components/animate-ui/primitives/animate/scroll-progress";
 import { GoogleAnalytics } from '@/components/google-analytics';
-import { generateSiteMetadata, generatePersonJsonLd, generateWebsiteJsonLd } from "@/lib/metadata";
+import { generateSiteMetadata } from "@/lib/metadata";
+import { SEOScripts } from "@/components/seo-scripts";
 
 // Import safelist to ensure Tailwind scans it for dynamic Strapi classes
 import "@/lib/tailwind-safelist";
@@ -17,7 +18,7 @@ const mulish = Mulish({
   subsets: ["latin"],
 });
 
-export const metadata = generateSiteMetadata();
+export const generateMetadata = generateSiteMetadata;
 
 export default function RootLayout({
   children,
@@ -29,12 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify([generatePersonJsonLd(), generateWebsiteJsonLd()]),
-          }}
-        />
+        <SEOScripts />
       </head>
       <body className={`${mulish.className} h-dvh overflow-hidden`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>

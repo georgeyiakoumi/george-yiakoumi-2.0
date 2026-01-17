@@ -461,7 +461,7 @@ export interface ApiDetailPageDetailPage extends Struct.SingleTypeSchema {
 export interface ApiGlobalSeoGlobalSeo extends Struct.SingleTypeSchema {
   collectionName: 'global_seos';
   info: {
-    description: '';
+    description: 'Global SEO settings for the entire website';
     displayName: 'Global SEO';
     pluralName: 'global-seos';
     singularName: 'global-seo';
@@ -470,27 +470,40 @@ export interface ApiGlobalSeoGlobalSeo extends Struct.SingleTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    appleTouchIcon: Schema.Attribute.Media<'images' | 'files'>;
+    appleTouchIcon: Schema.Attribute.Media<'images'>;
+    authorBio: Schema.Attribute.Text;
+    authorJobTitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Product Designer'>;
+    authorName: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'George Yiakoumi'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    favIcon: Schema.Attribute.Media<'images' | 'files'>;
+    favIcon: Schema.Attribute.Media<'images'>;
+    githubUrl: Schema.Attribute.String;
     gtagId: Schema.Attribute.String;
+    keywords: Schema.Attribute.Text;
+    linkedinUrl: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::global-seo.global-seo'
     > &
       Schema.Attribute.Private;
-    ogDescription: Schema.Attribute.String;
-    ogImage: Schema.Attribute.Media<'images' | 'files'>;
+    ogDescription: Schema.Attribute.Text;
+    ogImage: Schema.Attribute.Media<'images'>;
     ogTitle: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
-    siteDescription: Schema.Attribute.String;
-    siteTitle: Schema.Attribute.String;
+    siteDescription: Schema.Attribute.Text & Schema.Attribute.Required;
+    siteName: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'George Yiakoumi'>;
+    siteTitle: Schema.Attribute.String & Schema.Attribute.Required;
     twitterCard: Schema.Attribute.Enumeration<
       ['summary', 'summary_large_image']
-    >;
+    > &
+      Schema.Attribute.DefaultTo<'summary_large_image'>;
+    twitterHandle: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
