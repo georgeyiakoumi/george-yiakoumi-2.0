@@ -55,13 +55,15 @@ interface StrapiRichTextBlock {
 export interface ProjectData {
   id: number;
   documentId: string;
-  project_title: string;
+  title?: string;
+  project_title?: string; // Legacy field - fallback
   slug: string;
   date: string;
   tags: Array<{
     name: string;
   }>;
-  project_description: string;
+  description?: string;
+  project_description?: string; // Legacy field - fallback
   project_thumb?: {
     id: number;
     url: string;
