@@ -30,8 +30,9 @@ export default function RootLayout({
       <body className={`${mulish.className} h-dvh overflow-hidden`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <ScrollProgressProvider>
+            <ProgressiveBlur height="10%" position="top" />
             <ProgressiveBlur height="15%" position="bottom" />
-            <ProgressiveBlur height="15%" position="top" />
+            
             <SiteNavigation />
 
             <ModeToggle />
