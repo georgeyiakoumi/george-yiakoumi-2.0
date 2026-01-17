@@ -53,7 +53,8 @@ export default function RootLayout({
             <Toaster />
           </ScrollProgressProvider>
         </ThemeProvider>
-        {gaId && <GoogleAnalytics gaId={gaId} />}
+        {/* Temporarily disabled - causing 500 errors on Netlify */}
+        {/* {gaId && <GoogleAnalytics gaId={gaId} />} */}
       </body>
     </html>
   );
