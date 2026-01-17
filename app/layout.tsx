@@ -7,7 +7,7 @@ import { SiteNavigation } from "@/components/site-navigation";
 import { SiteFooter } from "@/components/site-footer";
 import { Toaster } from "@/components/ui/sonner";
 import { ScrollProgressProvider, ScrollProgress, ScrollProgressContainer } from "@/components/animate-ui/primitives/animate/scroll-progress";
-import { GoogleAnalytics } from '@next/third-parties/google';
+import { GoogleAnalytics } from '@/components/google-analytics';
 
 // Import safelist to ensure Tailwind scans it for dynamic Strapi classes
 import "@/lib/tailwind-safelist";
@@ -53,8 +53,7 @@ export default function RootLayout({
             <Toaster />
           </ScrollProgressProvider>
         </ThemeProvider>
-        {/* Temporarily disabled - causing 500 errors on Netlify */}
-        {/* {gaId && <GoogleAnalytics gaId={gaId} />} */}
+        {gaId && <GoogleAnalytics gaId={gaId} />}
       </body>
     </html>
   );
