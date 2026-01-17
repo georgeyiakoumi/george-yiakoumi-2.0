@@ -1,5 +1,7 @@
-[[plugins]]
-package = "@netlify/plugin-nextjs"
+# Next.js plugin disabled for Storybook-only deployment
+# [[plugins]]
+# package = "@netlify/plugin-nextjs"
 
 [build]
-  publish = ".next"
+  command = "npm run build-storybook"
+  publish = "storybook-static"
