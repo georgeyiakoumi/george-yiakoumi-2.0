@@ -8,6 +8,7 @@ import { Section } from "@/components/section";
 import { Typography } from "@/components/ui/typography";
 import { Send } from "@/components/animate-ui/icons/send";
 import { AnimateIcon } from "@/components/animate-ui/icons/icon";
+import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -147,7 +148,7 @@ export function ContactClient() {
 
             <AnimateIcon animateOnHover asChild>
               <Button type="submit" size="lg" disabled={isSubmitting}>
-                <Send />
+                {isSubmitting ? <Spinner /> : <Send />}
                 {isSubmitting ? "Sending..." : "Send message"}
               </Button>
             </AnimateIcon>
