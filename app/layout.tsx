@@ -7,6 +7,7 @@ import { SiteNavigation } from "@/components/site-navigation";
 import { SiteFooter } from "@/components/site-footer";
 import { Toaster } from "@/components/ui/sonner";
 import { ScrollProgressProvider, ScrollProgress, ScrollProgressContainer } from "@/components/animate-ui/primitives/animate/scroll-progress";
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 // Import safelist to ensure Tailwind scans it for dynamic Strapi classes
 import "@/lib/tailwind-safelist";
@@ -25,6 +26,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${mulish.className} h-dvh overflow-hidden`}>
@@ -32,14 +35,14 @@ export default function RootLayout({
           <ScrollProgressProvider>
             <ProgressiveBlur height="10%" position="top" />
             <ProgressiveBlur height="15%" position="bottom" />
-            
+
             <SiteNavigation />
 
             <ModeToggle />
-            
+
             {/* Scroll progress indicator */}
             <ScrollProgress className="fixed top-0 left-0 h-1 bg-primary z-50 origin-left" />
-            
+
             <ScrollProgressContainer asChild>
               <main className="h-dvh overflow-y-auto relative scrollbar-hide">
                 {children}
@@ -50,6 +53,7 @@ export default function RootLayout({
             <Toaster />
           </ScrollProgressProvider>
         </ThemeProvider>
+        {gaId && <GoogleAnalytics gaId={gaId} />}
       </body>
     </html>
   );
