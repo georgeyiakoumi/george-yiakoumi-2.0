@@ -83,11 +83,11 @@ export function ProjectClient({ slug }: ProjectClientProps) {
 
       <header className="flex flex-col gap-8 px-8 items-center justify-center w-full md:max-w-lg lg:max-w-2xl h-screen mx-auto">
         <Typography variant="h1" className="text-center">
-          {project.title || project.project_title}
+          {project.project_title}
         </Typography>
 
         <Typography variant="lead" className="text-center">
-          {project.description || project.project_description}
+          {project.project_description}
         </Typography>
 
         <Typography variant="muted" className="flex items-center gap-2 flex-wrap justify-center">
@@ -116,7 +116,7 @@ export function ProjectClient({ slug }: ProjectClientProps) {
         <div className="relative w-full h-screen aspect-[9/12] md:aspect-[10/9] z-1">
           <Image
             src={heroImageUrl}
-            alt={project.project_hero_image?.alternativeText || project.title || project.project_title || ''}
+            alt={project.project_hero_image?.alternativeText || project.project_title || ''}
             fill
 
             className="project-image object-cover md:border-border md:border"
