@@ -590,7 +590,6 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     date: Schema.Attribute.Date;
-    description: Schema.Attribute.Text;
     impact: Schema.Attribute.Component<
       'project-chapter.project-chapter',
       false
@@ -606,6 +605,7 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
       true
     >;
     project_client: Schema.Attribute.String;
+    project_description: Schema.Attribute.Text;
     project_hero_image: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios'
     >;
@@ -614,6 +614,7 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
       'images' | 'files' | 'videos' | 'audios'
     > &
       Schema.Attribute.Required;
+    project_title: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     role: Schema.Attribute.Component<'project-chapter.project-chapter', false>;
     slug: Schema.Attribute.UID & Schema.Attribute.Required;
@@ -627,7 +628,6 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
       'project-chapter.project-chapter',
       false
     >;
-    title: Schema.Attribute.String & Schema.Attribute.Required;
     tools: Schema.Attribute.Relation<'oneToMany', 'api::tool.tool'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
