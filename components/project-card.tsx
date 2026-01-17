@@ -1,7 +1,7 @@
+import Image from "next/image";
 import Link from "next/link";
-import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Typography } from "@/components/ui/typography";
+import { getStrapiMediaURL } from "@/lib/strapi";
 import type { ProjectData } from "@/lib/strapi-queries";
 
 interface ProjectCardProps {
@@ -9,43 +9,40 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project }: ProjectCardProps) {
+  const thumbnailUrl = project.project_thumb
+    ? getStrapiMediaURL(project.project_thumb.url)
+    : null;
+
   return (
-    <Link href={`/project/${project.slug}`} className="xl:h-full">
-      <Card className="xl:h-full flex flex-col">
-        <CardHeader className="flex-1 !flex !flex-col gap-3">
-          <Typography
-            variant="muted"
-            as="time"
-            dateTime={project.date}
-          >
-            {new Date(project.date).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-            })}
-          </Typography>
-          <CardTitle className="leading-snug">
-            {project.project_title}
-          </CardTitle>
-          <CardDescription>
-            {project.project_description}
-          </CardDescription>
-        </CardHeader>
-        <CardFooter className="flex-wrap gap-1">
-          {project.tags.slice(0, 3).map((tag, index) => (
-            <Badge
-              key={index}
-              variant="secondary"
-            >
-              {tag.name}
-            </Badge>
-          ))}
-          {project.tags.length > 3 && (
-            <Badge variant="secondary">
-              +{project.tags.length - 3}
-            </Badge>
-          )}
-        </CardFooter>
-      </Card>
+    <Link
+      href={`/project/${project.slug}`}
+      className="group relative overflow-hidden rounded-3xl bg-background border-border border block h-full w-full"
+      style={{ minHeight: '16rem' }}
+    >
+      {/* Background Image */}
+      {thumbnailUrl ? (
+        <div className="absolute inset-0 overflow-hidden">
+          <Image
+            src={thumbnailUrl}
+            alt={project.project_thumb?.alternativeText || project.project_title}
+            fill
+            className="object-cover lg:opacity-50 group-hover:opacity-100 transition-opacity duration-300"
+          />
+        </div>
+      ) : (
+        <div className="absolute inset-0 bg-gradient-to-br from-neutral-200 via-neutral-100 to-neutral-200 dark:from-neutral-800 dark:via-neutral-900 dark:to-neutral-800" />
+      )}
+
+      {/* Content */}
+      <div className="relative p-4 flex flex-col justify-start items-start">
+        <div className="pointer-events-none">
+          <div className="bg-muted p-2 border border-border rounded-lg">
+            <Typography variant="h6" as="h3">
+              {project.project_title}
+            </Typography>
+          </div>
+        </div>
+      </div>
     </Link>
   );
 }
