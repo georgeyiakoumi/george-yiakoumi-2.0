@@ -1,7 +1,9 @@
-# Next.js plugin disabled for Storybook-only deployment
-# [[plugins]]
-# package = "@netlify/plugin-nextjs"
+# Storybook-only deployment (no Next.js plugin)
 
 [build]
   command = "npm run build-storybook"
   publish = "storybook-static"
+
+[build.environment]
+  # Disable Next.js framework detection
+  NETLIFY_NEXT_PLUGIN_SKIP = "true"
