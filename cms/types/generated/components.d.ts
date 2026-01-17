@@ -103,7 +103,6 @@ export interface ProjectChapterProjectChapter extends Struct.ComponentSchema {
   };
   attributes: {
     content: Schema.Attribute.Blocks & Schema.Attribute.Required;
-    Image: Schema.Attribute.Media<'images' | 'files'>;
   };
 }
 
