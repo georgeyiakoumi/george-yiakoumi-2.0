@@ -58,5 +58,4 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   return <ProjectClient project={project} otherProjects={otherProjects} />;
 }
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 3600;

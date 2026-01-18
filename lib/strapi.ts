@@ -21,7 +21,7 @@ interface StrapiResponse<T> {
 }
 
 export async function fetchAPI<T>(
-  { endpoint, query, cache = 'no-store', tags }: StrapiRequestOptions
+  { endpoint, query, cache = 'force-cache', tags }: StrapiRequestOptions
 ): Promise<T> {
   const url = new URL(`/api${endpoint}`, STRAPI_API_URL);
 
