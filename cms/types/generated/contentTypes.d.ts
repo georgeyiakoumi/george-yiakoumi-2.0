@@ -400,64 +400,6 @@ export interface ApiAboutAbout extends Struct.SingleTypeSchema {
   };
 }
 
-export interface ApiContactPageContactPage extends Struct.SingleTypeSchema {
-  collectionName: 'contact_pages';
-  info: {
-    displayName: 'contactPage';
-    pluralName: 'contact-pages';
-    singularName: 'contact-page';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    content: Schema.Attribute.Blocks;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::contact-page.contact-page'
-    > &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
-export interface ApiDetailPageDetailPage extends Struct.SingleTypeSchema {
-  collectionName: 'detail_pages';
-  info: {
-    description: '';
-    displayName: 'detailPage';
-    pluralName: 'detail-pages';
-    singularName: 'detail-page';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    content: Schema.Attribute.Blocks;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::detail-page.detail-page'
-    > &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    tools: Schema.Attribute.Component<'detail.tool', true>;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface ApiGlobalSeoGlobalSeo extends Struct.SingleTypeSchema {
   collectionName: 'global_seos';
   info: {
@@ -510,66 +452,6 @@ export interface ApiGlobalSeoGlobalSeo extends Struct.SingleTypeSchema {
   };
 }
 
-export interface ApiNavigationNavigation extends Struct.SingleTypeSchema {
-  collectionName: 'navigations';
-  info: {
-    description: '';
-    displayName: 'navigation';
-    pluralName: 'navigations';
-    singularName: 'navigation';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::navigation.navigation'
-    > &
-      Schema.Attribute.Private;
-    NavLinks: Schema.Attribute.Component<'navlink.nav-link', true>;
-    publishedAt: Schema.Attribute.DateTime;
-    SocialLinks: Schema.Attribute.Component<'navlink.social-link', true>;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
-export interface ApiPortfolioPagePortfolioPage extends Struct.SingleTypeSchema {
-  collectionName: 'portfolio_pages';
-  info: {
-    description: '';
-    displayName: 'portfolioPage';
-    pluralName: 'portfolio-pages';
-    singularName: 'portfolio-page';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::portfolio-page.portfolio-page'
-    > &
-      Schema.Attribute.Private;
-    projectsContent: Schema.Attribute.Blocks;
-    publishedAt: Schema.Attribute.DateTime;
-    uiLabContent: Schema.Attribute.Blocks;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface ApiProjectProject extends Struct.CollectionTypeSchema {
   collectionName: 'projects';
   info: {
@@ -586,6 +468,7 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
       'project-chapter.project-chapter',
       false
     >;
+    challenge2: Schema.Attribute.Blocks;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -595,6 +478,7 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
       'project-chapter.project-chapter',
       false
     >;
+    impact2: Schema.Attribute.Blocks;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -616,17 +500,20 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
       Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     role: Schema.Attribute.Component<'project-chapter.project-chapter', false>;
+    role2: Schema.Attribute.Blocks;
     slug: Schema.Attribute.UID & Schema.Attribute.Required;
     solution: Schema.Attribute.Component<
       'project-chapter.project-chapter',
       false
     >;
+    solution2: Schema.Attribute.Blocks;
     tags: Schema.Attribute.JSON &
       Schema.Attribute.CustomField<'plugin::tagsinput.tags'>;
     takeaway: Schema.Attribute.Component<
       'project-chapter.project-chapter',
       false
     >;
+    takeaway2: Schema.Attribute.Blocks;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     tools: Schema.Attribute.Relation<'oneToMany', 'api::tool.tool'>;
     updatedAt: Schema.Attribute.DateTime;
@@ -1171,11 +1058,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::about.about': ApiAboutAbout;
-      'api::contact-page.contact-page': ApiContactPageContactPage;
-      'api::detail-page.detail-page': ApiDetailPageDetailPage;
       'api::global-seo.global-seo': ApiGlobalSeoGlobalSeo;
-      'api::navigation.navigation': ApiNavigationNavigation;
-      'api::portfolio-page.portfolio-page': ApiPortfolioPagePortfolioPage;
       'api::project.project': ApiProjectProject;
       'api::tool.tool': ApiToolTool;
       'plugin::content-releases.release': PluginContentReleasesRelease;

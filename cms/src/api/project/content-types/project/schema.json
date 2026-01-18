@@ -90,14 +90,30 @@
       "type": "string"
     },
     "media": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": true
+      ]
+    },
+    "challenge2": {
+      "type": "blocks"
+    },
+    "solution2": {
+      "type": "blocks"
+    },
+    "role2": {
+      "type": "blocks"
+    },
+    "impact2": {
+      "type": "blocks"
+    },
+    "takeaway2": {
+      "type": "blocks"
     }
   }
 }
