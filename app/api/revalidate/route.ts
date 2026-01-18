@@ -1,4 +1,4 @@
-import { revalidatePath, revalidateTag } from 'next/cache';
+import { revalidatePath } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
@@ -24,14 +24,13 @@ export async function POST(request: NextRequest) {
     const { model, slug } = body;
 
     if (model === 'project') {
-      revalidateTag('projects');
+      // Revalidate all projects pages
+      revalidatePath('/projects', 'page');
 
       if (slug) {
-        revalidateTag(`project-${slug}`);
-        revalidatePath(`/project/${slug}`);
+        // Revalidate specific project page
+        revalidatePath(`/project/${slug}`, 'page');
       }
-
-      revalidatePath('/projects');
 
       return NextResponse.json({
         revalidated: true,
