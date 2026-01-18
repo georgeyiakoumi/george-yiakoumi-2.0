@@ -21,27 +21,31 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
-    const { model, slug } = body;
 
-    if (model === 'project') {
+    // Strapi sends: { event: 'entry.publish', model: 'project', entry: {...} }
+    // Also accept: { model: 'project', slug: '...' }
+    const model = body.model || body.entry?.uid?.split('.')[1];
+    const slug = body.slug || body.entry?.slug;
+
+    // For projects, always revalidate everything to be safe
+    if (model === 'project' || body.event?.includes('project')) {
       // Revalidate all projects pages
       revalidatePath('/projects', 'page');
 
-      if (slug) {
-        // Revalidate specific project page
-        revalidatePath(`/project/${slug}`, 'page');
-      }
+      // Also revalidate all project detail pages by revalidating the layout
+      revalidatePath('/project', 'layout');
 
       return NextResponse.json({
         revalidated: true,
-        message: `Revalidated projects${slug ? ` and project/${slug}` : ''}`,
+        message: 'Revalidated all project pages',
         now: Date.now()
       });
     }
 
     return NextResponse.json({
       revalidated: false,
-      message: 'No revalidation performed'
+      message: 'No revalidation performed',
+      receivedBody: body
     });
   } catch (err) {
     return NextResponse.json(
