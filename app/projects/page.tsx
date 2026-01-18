@@ -61,4 +61,4 @@ export default async function Portfolio() {
   );
 }
 
-export const revalidate = 3600; // Revalidate every hour
+export const revalidate = 0; // Always fetch fresh data

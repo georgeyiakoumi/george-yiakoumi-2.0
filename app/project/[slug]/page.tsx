@@ -49,4 +49,4 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   return <ProjectClient slug={slug} />;
 }
 
-export const revalidate = 3600; // Revalidate every hour
+export const revalidate = 0; // Always fetch fresh data
