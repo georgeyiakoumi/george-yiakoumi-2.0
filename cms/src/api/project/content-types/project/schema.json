@@ -53,31 +53,6 @@
       "type": "customField",
       "customField": "plugin::tagsinput.tags"
     },
-    "challenge": {
-      "type": "component",
-      "repeatable": false,
-      "component": "project-chapter.project-chapter"
-    },
-    "solution": {
-      "type": "component",
-      "repeatable": false,
-      "component": "project-chapter.project-chapter"
-    },
-    "role": {
-      "type": "component",
-      "repeatable": false,
-      "component": "project-chapter.project-chapter"
-    },
-    "impact": {
-      "type": "component",
-      "repeatable": false,
-      "component": "project-chapter.project-chapter"
-    },
-    "takeaway": {
-      "type": "component",
-      "repeatable": false,
-      "component": "project-chapter.project-chapter"
-    },
     "tools": {
       "type": "relation",
       "relation": "oneToMany",
@@ -100,19 +75,19 @@
         "audios"
       ]
     },
-    "challenge2": {
+    "challenge": {
       "type": "blocks"
     },
-    "solution2": {
+    "solution": {
       "type": "blocks"
     },
-    "role2": {
+    "role": {
       "type": "blocks"
     },
-    "impact2": {
+    "impact": {
       "type": "blocks"
     },
-    "takeaway2": {
+    "takeaway": {
       "type": "blocks"
     }
   }
