@@ -46,7 +46,16 @@ export async function generateStaticParams() {
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { slug } = await params;
-  return <ProjectClient slug={slug} />;
+  const projects = await getProjects();
+  const project = projects.find((p) => p.slug === slug);
+
+  if (!project) {
+    notFound();
+  }
+
+  const otherProjects = projects.filter((p) => p.slug !== slug);
+
+  return <ProjectClient project={project} otherProjects={otherProjects} />;
 }
 
 export const revalidate = 0; // Always fetch fresh data

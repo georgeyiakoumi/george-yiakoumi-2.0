@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { notFound } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -10,17 +9,15 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { ArrowLeft } from "@/components/animate-ui/icons/arrow-left";
 import { AnimateIcon } from "@/components/animate-ui/icons/icon";
 
-import { getProjects } from "@/lib/strapi-queries";
 import { getStrapiMediaURL } from "@/lib/strapi";
 import { renderStrapiRichText } from "@/lib/strapi-blocks-renderer";
 import { Section } from "@/components/section";
 import { Typography } from "@/components/ui/typography";
 import { ProjectCard } from "@/components/project-card";
-import { useEffect, useState } from "react";
-import ProjectLoading from "@/app/project/[slug]/loading";
 
 interface ProjectClientProps {
-  slug: string;
+  project: any;
+  otherProjects: any[];
 }
 
 function ContentSection({ title, content }: { title: string; content: any }) {
@@ -39,30 +36,7 @@ function ContentSection({ title, content }: { title: string; content: any }) {
   );
 }
 
-export function ProjectClient({ slug }: ProjectClientProps) {
-  const [project, setProject] = useState<any>(null);
-  const [otherProjects, setOtherProjects] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    getProjects().then((projects) => {
-      const foundProject = projects.find((p) => p.slug === slug);
-      if (!foundProject) {
-        notFound();
-      }
-      setProject(foundProject);
-      setOtherProjects(projects.filter((p) => p.slug !== slug));
-      setLoading(false);
-    });
-  }, [slug]);
-
-  if (loading) {
-    return <ProjectLoading />;
-  }
-
-  if (!project) {
-    return null;
-  }
+export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
 
   const heroImageUrl = project.project_hero_image
     ? getStrapiMediaURL(project.project_hero_image.url)

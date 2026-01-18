@@ -241,7 +241,7 @@ export async function getProjectBySlug(slug: string) {
       endpoint: '/projects',
       query: {
         'filters[slug][$eq]': slug,
-        'populate': 'deep',
+        'populate': '*',
       },
       tags: ['projects', `project-${slug}`],
     });
