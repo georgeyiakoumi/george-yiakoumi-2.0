@@ -30,8 +30,8 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
     : undefined;
 
   return generatePageMetadata({
-    title: project.title || project.project_title,
-    description: project.description || project.project_description,
+    title: project.title,
+    description: project.description,
     path: `/project/${slug}`,
     image: projectImageUrl || SITE_CONFIG.ogImage,
   });

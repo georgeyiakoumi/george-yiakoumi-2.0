@@ -14,18 +14,11 @@
   "attributes": {
     "title": {
       "type": "string",
-      "required": false
+      "required": true
     },
     "description": {
       "type": "text",
       "required": false
-    },
-    "project_title": {
-      "type": "string",
-      "required": true
-    },
-    "project_description": {
-      "type": "text"
     },
     "slug": {
       "type": "uid",

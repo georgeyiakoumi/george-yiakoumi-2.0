@@ -55,10 +55,8 @@ interface StrapiRichTextBlock {
 export interface ProjectData {
   id: number;
   documentId: string;
-  title?: string;                    // New field
-  description?: string;               // New field
-  project_title?: string;             // Legacy field - will be removed after migration
-  project_description?: string;       // Legacy field - will be removed after migration
+  title: string;
+  description?: string;
   slug: string;
   date: string;
   tags: Array<{
