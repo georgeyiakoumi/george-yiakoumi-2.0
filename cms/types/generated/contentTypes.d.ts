@@ -482,9 +482,6 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
       true
     >;
     project_client: Schema.Attribute.String;
-    project_hero_image: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios'
-    >;
     project_role: Schema.Attribute.String;
     project_thumb: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios'
@@ -492,7 +489,7 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
       Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     role: Schema.Attribute.Blocks;
-    slug: Schema.Attribute.UID & Schema.Attribute.Required;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     solution: Schema.Attribute.Blocks;
     tags: Schema.Attribute.JSON &
       Schema.Attribute.CustomField<'plugin::tagsinput.tags'>;
