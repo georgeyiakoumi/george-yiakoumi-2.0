@@ -18,22 +18,10 @@ export interface AboutBusiness extends Struct.ComponentSchema {
   };
 }
 
-export interface ProjectChapterProjectChapter extends Struct.ComponentSchema {
-  collectionName: 'components_project_chapter_project_chapters';
-  info: {
-    description: '';
-    displayName: 'Project Chapter';
-  };
-  attributes: {
-    content: Schema.Attribute.Blocks & Schema.Attribute.Required;
-  };
-}
-
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
       'about.business': AboutBusiness;
-      'project-chapter.project-chapter': ProjectChapterProjectChapter;
     }
   }
 }
