@@ -203,13 +203,48 @@ The custom rich text renderer supports:
 - **Contact** (`/contact`) - Contact form with validation and success page
 - **Form Success** (`/forms/contact`) - Animated confirmation page after form submission
 
+## Caching Strategy
+
+This project uses an optimized caching strategy that balances performance with real-time content updates:
+
+### ISR with Webhook-Based Revalidation
+
+- **Server-Side Caching**: Pages are cached for 1 hour using Next.js ISR (`revalidate: 3600`)
+- **On-Demand Revalidation**: Strapi webhooks trigger instant cache clearing when content is published
+- **Browser Caching**: HTML pages use `Cache-Control: max-age=0, must-revalidate` to prevent stale browser cache
+- **Static Assets**: JS, CSS, and images cached for 1 year with `immutable` flag for optimal performance
+
+### Benefits
+
+✅ **Low server costs** - Most requests served from cache (minimal Netlify function usage)
+✅ **Real-time updates** - Content changes appear immediately after publishing in Strapi
+✅ **No manual cache clearing** - Webhooks handle cache invalidation automatically
+✅ **Optimal performance** - Static assets heavily cached while HTML stays fresh
+
+### How It Works
+
+1. Normal visitors see cached pages (served from CDN, no function calls)
+2. You publish content in Strapi → webhook fires to `/api/revalidate`
+3. Next.js clears cache for affected pages using `revalidatePath()`
+4. Next request regenerates page with fresh content from Strapi
+5. Subsequent visitors see the updated cached content
+
+For webhook setup instructions, see [WEBHOOK_SETUP.md](WEBHOOK_SETUP.md).
+
 ## Deployment
 
 This project is designed to be deployed on modern hosting platforms:
 
-- **Frontend**: Vercel, Netlify, or any Node.js hosting
-- **CMS**: Railway, Render, DigitalOcean, or self-hosted
+- **Frontend**: Netlify (with `@netlify/plugin-nextjs`)
+- **CMS**: Render (Strapi 5)
 - **Database**: Supabase (PostgreSQL)
 - **Media**: Cloudinary CDN
+
+### Environment Variables
+
+Frontend requires:
+- `NEXT_PUBLIC_STRAPI_API_URL` - Public Strapi API URL
+- `STRAPI_API_TOKEN` - Server-side API token
+- `REVALIDATE_SECRET` - Webhook authentication secret (mark as "contains secret values" in Netlify)
 
 For detailed technical documentation and development guidelines, see [CLAUDE.md](CLAUDE.md).
