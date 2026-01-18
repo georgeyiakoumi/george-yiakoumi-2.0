@@ -61,4 +61,5 @@ export default async function Portfolio() {
   );
 }
 
-export const revalidate = 0; // Always fetch fresh data
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;

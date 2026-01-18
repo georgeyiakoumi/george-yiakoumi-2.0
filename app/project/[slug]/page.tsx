@@ -58,4 +58,5 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   return <ProjectClient project={project} otherProjects={otherProjects} />;
 }
 
-export const revalidate = 0; // Always fetch fresh data
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
