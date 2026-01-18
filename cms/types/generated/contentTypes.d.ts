@@ -464,21 +464,13 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    challenge: Schema.Attribute.Component<
-      'project-chapter.project-chapter',
-      false
-    >;
-    challenge2: Schema.Attribute.Blocks;
+    challenge: Schema.Attribute.Blocks;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     date: Schema.Attribute.Date;
     description: Schema.Attribute.Text;
-    impact: Schema.Attribute.Component<
-      'project-chapter.project-chapter',
-      false
-    >;
-    impact2: Schema.Attribute.Blocks;
+    impact: Schema.Attribute.Blocks;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -499,21 +491,12 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
-    role: Schema.Attribute.Component<'project-chapter.project-chapter', false>;
-    role2: Schema.Attribute.Blocks;
+    role: Schema.Attribute.Blocks;
     slug: Schema.Attribute.UID & Schema.Attribute.Required;
-    solution: Schema.Attribute.Component<
-      'project-chapter.project-chapter',
-      false
-    >;
-    solution2: Schema.Attribute.Blocks;
+    solution: Schema.Attribute.Blocks;
     tags: Schema.Attribute.JSON &
       Schema.Attribute.CustomField<'plugin::tagsinput.tags'>;
-    takeaway: Schema.Attribute.Component<
-      'project-chapter.project-chapter',
-      false
-    >;
-    takeaway2: Schema.Attribute.Blocks;
+    takeaway: Schema.Attribute.Blocks;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     tools: Schema.Attribute.Relation<'oneToMany', 'api::tool.tool'>;
     updatedAt: Schema.Attribute.DateTime;

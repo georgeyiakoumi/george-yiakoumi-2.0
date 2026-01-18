@@ -129,7 +129,7 @@ export function ProjectClient({ slug }: ProjectClientProps) {
 
         <ContentSection title="Challenge" content={project.challenge} />
         <ContentSection title="Solution" content={project.solution} />
-        {project.role && typeof project.Role !== 'string' && (
+        {project.role && typeof project.role !== 'string' && (
           <ContentSection title="My role" content={project.role} />
         )}
         <ContentSection title="Impact" content={project.impact} />

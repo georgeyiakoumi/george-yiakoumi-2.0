@@ -106,6 +106,20 @@ npm run storybook
 
 Open [http://localhost:6006](http://localhost:6006) to view the component library.
 
+**Storybook includes:**
+- All shadcn/ui components with interactive controls
+- Custom components (Section, LogoItem, ProjectCard, etc.)
+- Theme switching for testing dark mode
+- Accessibility testing tools
+- Multiple viewports for responsive testing
+
+**Deployment:**
+Storybook can be deployed separately to showcase the component library:
+```bash
+npm run build-storybook
+netlify deploy --dir=storybook-static --prod
+```
+
 ## Available Scripts
 
 ### Frontend
@@ -134,6 +148,7 @@ Open [http://localhost:6006](http://localhost:6006) to view the component librar
 - **Animation**: CSS transitions and @animate-ui interactive animations
 - **Forms**: React Hook Form + Zod
 - **Theme**: next-themes (dark mode support)
+- **Development**: Storybook 8.5 for component development and documentation
 
 ### CMS
 - **Headless CMS**: Strapi 5.8.1

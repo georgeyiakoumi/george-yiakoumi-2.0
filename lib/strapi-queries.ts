@@ -78,11 +78,41 @@ export interface ProjectData {
   };
   project_client?: string;
   project_role?: string;
-  role?: StrapiRichTextBlock;
-  challenge?: StrapiRichTextBlock;
-  solution?: StrapiRichTextBlock;
-  impact?: StrapiRichTextBlock;
-  takeaway?: StrapiRichTextBlock;
+  role?: Array<{
+    type: string;
+    children?: Array<{
+      type: string;
+      text?: string;
+    }>;
+  }>;
+  challenge?: Array<{
+    type: string;
+    children?: Array<{
+      type: string;
+      text?: string;
+    }>;
+  }>;
+  solution?: Array<{
+    type: string;
+    children?: Array<{
+      type: string;
+      text?: string;
+    }>;
+  }>;
+  impact?: Array<{
+    type: string;
+    children?: Array<{
+      type: string;
+      text?: string;
+    }>;
+  }>;
+  takeaway?: Array<{
+    type: string;
+    children?: Array<{
+      type: string;
+      text?: string;
+    }>;
+  }>;
   tools?: Array<{
     id: number;
     documentId: string;

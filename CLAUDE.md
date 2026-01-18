@@ -144,6 +144,31 @@ npm run start    # Production mode
 
 ## Important Notes
 
+### Netlify Function Usage
+**CRITICAL: Always check Netlify function usage impact before implementing solutions**
+
+This project is hosted on Netlify Free Tier with limited serverless function invocations per month. Before implementing any solution, ALWAYS verify it won't cause excessive function usage:
+
+#### What Causes High Function Usage:
+- `export const dynamic = "force-dynamic"` in pages (forces SSR on every request)
+- `cache: 'no-store'` in fetch calls (bypasses caching, hits functions every time)
+- Missing `revalidate` exports (defaults to always dynamic)
+- Missing `generateStaticParams` for dynamic routes
+
+#### Best Practices:
+- Use ISR (Incremental Static Regeneration) with `revalidate: 3600` for most pages
+- Use `generateStaticParams` for dynamic routes to pre-render at build time
+- Default to `cache: 'force-cache'` for Strapi API calls
+- Only use `cache: 'no-store'` when absolutely necessary (real-time data)
+- Configure aggressive caching headers in [netlify.toml](netlify.toml) for static assets
+- Use Next.js tags and `revalidatePath`/`revalidateTag` for on-demand revalidation
+
+#### Current Configuration:
+- Pages use ISR with 1-hour revalidation
+- Strapi API calls default to `force-cache`
+- Static assets cached for 1 year with immutable headers
+- Using `@netlify/plugin-nextjs` (do NOT enable Netlify Prerender Extension)
+
 ### Current Status
 - **Completed Pages**: All core pages complete - About, Portfolio (listing + detail pages), Contact, Contact Success
 - **CMS Integration**: Fully integrated with Strapi for all dynamic content
