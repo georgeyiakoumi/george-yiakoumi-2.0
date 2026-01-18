@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect, useRef } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -36,20 +37,84 @@ function ContentSection({ title, content }: { title: string; content: any }) {
   );
 }
 
+function MediaItem({ media, title }: { media: any; title: string }) {
+  const mediaUrl = getStrapiMediaURL(media.url);
+  const isVideo = media.mime?.startsWith('video/');
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (!isVideo || !videoRef.current) return;
+
+    const video = videoRef.current;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            video.play().catch(() => {
+              // Auto-play was prevented, user interaction required
+            });
+          } else {
+            video.pause();
+          }
+        });
+      },
+      { threshold: 0.5 } // Play when 50% visible
+    );
+
+    observer.observe(video);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [isVideo]);
+
+  if (isVideo) {
+    return (
+      <div className="relative w-full h-screen aspect-[9/12] md:aspect-[10/9] z-1">
+        <video
+          ref={videoRef}
+          src={mediaUrl || ''}
+          className="project-image object-cover md:border-border md:border w-full h-full"
+          loop
+          muted
+          playsInline
+        >
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative w-full h-screen aspect-[9/12] md:aspect-[10/9] z-1">
+      <Image
+        src={mediaUrl || ''}
+        alt={media?.alternativeText || title || ''}
+        fill
+        sizes="100vw"
+        className="project-image object-cover md:border-border md:border"
+      />
+    </div>
+  );
+}
+
 export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
 
-  const heroImageUrl = project.project_hero_image
-    ? getStrapiMediaURL(project.project_hero_image.url)
+  const heroImageUrl = project.project_thumb
+    ? getStrapiMediaURL(project.project_thumb.url)
     : null;
 
   const handleBack = () => {
     window.history.back();
   };
 
+  // Only use first 5 media items
+  const displayMedia = project.media ? project.media.slice(0, 5) : [];
+
   return (
     <section className="place-items-center relative">
       <AnimateIcon animateOnHover asChild>
-        <Button onClick={handleBack} variant="secondary" className="bg-background fixed top-8 left-8 md:bottom-8 md:top-auto md:left-8 lg:left-16 z-20">
+        <Button onClick={handleBack} variant="secondary" className="bg-background fixed cursor-pointer top-8 left-8 md:bottom-8 md:top-auto md:left-8 lg:left-16 z-20">
           <ArrowLeft />
           Back
         </Button>
@@ -90,9 +155,9 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
         <div className="relative w-full h-screen aspect-[9/12] md:aspect-[10/9] z-1">
           <Image
             src={heroImageUrl}
-            alt={project.project_hero_image?.alternativeText || project.title || ''}
+            alt={project.project_thumb?.alternativeText || project.title || ''}
             fill
-
+            sizes="100vw"
             className="project-image object-cover md:border-border md:border"
             priority
           />
@@ -102,11 +167,33 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
       <article className="flex flex-col w-full">
 
         <ContentSection title="Challenge" content={project.challenge} />
-        <ContentSection title="Solution" content={project.solution} />
-        {project.role && typeof project.role !== 'string' && (
-          <ContentSection title="My role" content={project.role} />
+
+        {displayMedia[0] && (
+          <MediaItem media={displayMedia[0]} title={project.title} />
         )}
+
+        <ContentSection title="Solution" content={project.solution} />
+
+        {displayMedia[1] && (
+          <MediaItem media={displayMedia[1]} title={project.title} />
+        )}
+
+        {project.role && typeof project.role !== 'string' && (
+          <>
+            <ContentSection title="My role" content={project.role} />
+
+            {displayMedia[2] && (
+              <MediaItem media={displayMedia[2]} title={project.title} />
+            )}
+          </>
+        )}
+
         <ContentSection title="Impact" content={project.impact} />
+
+        {displayMedia[3] && (
+          <MediaItem media={displayMedia[3]} title={project.title} />
+        )}
+
         <ContentSection title="Key takeaway" content={project.takeaway} />
 
       </article>

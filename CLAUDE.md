@@ -183,11 +183,18 @@ This project is hosted on Netlify Free Tier with limited serverless function inv
 - No unnecessary comments in code
 - Keep animations smooth and performant
 
-### Image Handling
+### Media Handling
 - All media assets hosted on Cloudinary via Strapi
-- Use Next.js Image component with fill prop for responsive images
+- **Images**: Use Next.js Image component with fill prop and sizes="100vw" for responsive images
+- **Videos**: Use native HTML5 video element with Intersection Observer for auto-play on scroll
+  - Videos auto-play when 50% visible, pause when out of view
+  - Muted and looped for smooth background effect
+  - No controls displayed for immersive experience
 - Aspect ratios controlled via wrapper divs with Tailwind aspect-* utilities
 - Support for responsive aspect ratios using breakpoint prefixes (sm:, md:, lg:, etc.)
+- **Media Gallery**: Projects support mixed media (images + videos) distributed between content sections
+  - Media items alternate between Challenge, Solution, Role, Impact sections
+  - Gracefully handles variable number of media items (1-4+)
 
 ### Testing & Validation
 - Always run `npm run lint` before committing
@@ -210,7 +217,11 @@ Project uses Git for version control with .gitignore configured for both Next.js
 
 ## CMS Content Types
 The Strapi CMS includes the following content types:
-- **Projects** - Portfolio case studies with rich text, images, tags, dates, client info
+- **Projects** - Portfolio case studies with:
+  - Rich text content sections (Challenge, Solution, Role, Impact, Takeaway)
+  - Media gallery field supporting multiple images and videos
+  - Hero image, thumbnail, tags, dates, client info
+  - Slug for URL routing
 - **About** - About page content
 - **Contact Page** - Contact form configuration
 - **Global SEO** - Site-wide SEO metadata

@@ -5,12 +5,14 @@ A modern, full-stack portfolio website showcasing design and development work. B
 ## Features
 
 - **Dynamic Content Management**: All portfolio projects, about page content, and contact information managed through Strapi CMS
+- **Media Gallery**: Projects support mixed media galleries with images and auto-playing videos distributed between content sections
 - **Rich Text Rendering**: Custom renderer supporting nested lists, formatting, embedded images, code blocks, and more
 - **Responsive Design**: Mobile-first approach with seamless adaptation across all screen sizes
 - **Dark Mode**: System-aware theme switching with persistent user preference
-- **Smooth Animations**: Interactive animated icons and smooth transitions throughout
+- **Smooth Animations**: Interactive animated icons, smooth transitions, and scroll-triggered video playback
 - **Type-Safe**: Full TypeScript integration across frontend and API layer
 - **Modern UI**: Built with shadcn/ui components and Tailwind CSS
+- **Optimized Performance**: ISR caching with webhook-based revalidation for low server costs and real-time updates
 
 ## Getting Started
 
@@ -199,7 +201,7 @@ The custom rich text renderer supports:
 - **Home** (`/`) - Redirects to About page
 - **About** (`/about`) - Main landing page with bio, skills, and work experience featuring scroll-triggered animations
 - **Portfolio** (`/project`) - Responsive grid showcasing all portfolio projects
-- **Project Details** (`/project/[slug]`) - Individual case studies with rich content sections (Challenge, Solution, Role, Impact, Key Takeaway)
+- **Project Details** (`/project/[slug]`) - Individual case studies with rich content sections (Challenge, Solution, Role, Impact, Key Takeaway) featuring interspersed media galleries with auto-playing videos
 - **Contact** (`/contact`) - Contact form with validation and success page
 - **Form Success** (`/forms/contact`) - Animated confirmation page after form submission
 

@@ -34,10 +34,10 @@ export function ProjectCard({ project }: ProjectCardProps) {
       )}
 
       {/* Content */}
-      <div className="relative p-4 flex flex-col justify-start items-start">
-        <div className="pointer-events-none">
-          <div className="bg-muted p-2 border border-border rounded-lg">
-            <Typography variant="h6" as="h3">
+      <div className="relative p-4 flex flex-col justify-center items-center h-full">
+        <div className="pointer-events-none max-w-3xs">
+          <div className="bg-muted/80 backdrop-blur-sm px-3 py-2 border border-border rounded-lg">
+            <Typography variant="small" as="h3" className="text-center">
               {project.title}
             </Typography>
           </div>
