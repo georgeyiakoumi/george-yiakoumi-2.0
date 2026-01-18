@@ -24,7 +24,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         <div className="absolute inset-0 overflow-hidden">
           <Image
             src={thumbnailUrl}
-            alt={project.project_thumb?.alternativeText || project.project_title || ''}
+            alt={project.project_thumb?.alternativeText || project.title || project.project_title || ''}
             fill
             className="object-cover lg:opacity-50 group-hover:opacity-100 transition-opacity duration-300"
           />
@@ -38,7 +38,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         <div className="pointer-events-none">
           <div className="bg-muted p-2 border border-border rounded-lg">
             <Typography variant="h6" as="h3">
-              {project.project_title}
+              {project.title || project.project_title}
             </Typography>
           </div>
         </div>
