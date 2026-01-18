@@ -108,6 +108,9 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
     window.history.back();
   };
 
+  // Only use first 5 media items
+  const displayMedia = project.media ? project.media.slice(0, 5) : [];
+
   return (
     <section className="place-items-center relative">
       <AnimateIcon animateOnHover asChild>
@@ -165,30 +168,30 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
 
         <ContentSection title="Challenge" content={project.challenge} />
 
-        {project.media && project.media[0] && (
-          <MediaItem media={project.media[0]} title={project.title} />
+        {displayMedia[0] && (
+          <MediaItem media={displayMedia[0]} title={project.title} />
         )}
 
         <ContentSection title="Solution" content={project.solution} />
 
-        {project.media && project.media[1] && (
-          <MediaItem media={project.media[1]} title={project.title} />
+        {displayMedia[1] && (
+          <MediaItem media={displayMedia[1]} title={project.title} />
         )}
 
         {project.role && typeof project.role !== 'string' && (
           <>
             <ContentSection title="My role" content={project.role} />
 
-            {project.media && project.media[2] && (
-              <MediaItem media={project.media[2]} title={project.title} />
+            {displayMedia[2] && (
+              <MediaItem media={displayMedia[2]} title={project.title} />
             )}
           </>
         )}
 
         <ContentSection title="Impact" content={project.impact} />
 
-        {project.media && project.media[3] && (
-          <MediaItem media={project.media[3]} title={project.title} />
+        {displayMedia[3] && (
+          <MediaItem media={displayMedia[3]} title={project.title} />
         )}
 
         <ContentSection title="Key takeaway" content={project.takeaway} />
