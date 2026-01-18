@@ -590,6 +590,7 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     date: Schema.Attribute.Date;
+    description: Schema.Attribute.Text;
     impact: Schema.Attribute.Component<
       'project-chapter.project-chapter',
       false
@@ -628,6 +629,7 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
       'project-chapter.project-chapter',
       false
     >;
+    title: Schema.Attribute.String;
     tools: Schema.Attribute.Relation<'oneToMany', 'api::tool.tool'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

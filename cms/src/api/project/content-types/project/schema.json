@@ -12,9 +12,20 @@
   },
   "pluginOptions": {},
   "attributes": {
+    "title": {
+      "type": "string",
+      "required": false
+    },
+    "description": {
+      "type": "text",
+      "required": false
+    },
     "project_title": {
       "type": "string",
       "required": true
+    },
+    "project_description": {
+      "type": "text"
     },
     "slug": {
       "type": "uid",
@@ -48,9 +59,6 @@
     "tags": {
       "type": "customField",
       "customField": "plugin::tagsinput.tags"
-    },
-    "project_description": {
-      "type": "text"
     },
     "challenge": {
       "type": "component",
