@@ -115,10 +115,24 @@ function renderBlock(block: RichTextBlock, index: number): React.ReactNode {
 }
 
 export function renderStrapiRichText(
-  richTextBlock: StrapiRichTextBlock | undefined,
+  richTextBlock: StrapiRichTextBlock | RichTextBlock[] | undefined,
   className?: string
 ): React.ReactNode {
-  if (!richTextBlock || !richTextBlock.content) {
+  if (!richTextBlock) {
+    return null;
+  }
+
+  // Handle new blocks format (direct array)
+  if (Array.isArray(richTextBlock)) {
+    return (
+      <div className={cn("prose prose-lg prose-gray dark:prose-invert max-w-none", className)}>
+        {richTextBlock.map((block, index) => renderBlock(block, index))}
+      </div>
+    );
+  }
+
+  // Handle old component-based format (object with content and Image)
+  if (!richTextBlock.content) {
     return null;
   }
 
