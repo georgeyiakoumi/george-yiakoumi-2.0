@@ -166,7 +166,6 @@ export async function getAboutPage() {
         'populate[businesses][populate]': 'image',
         'populate[tools][populate]': 'image',
       },
-      cache: 'no-store',
       tags: ['about'],
     });
     return data;
@@ -197,7 +196,6 @@ export async function getProjects(options?: {
     const data = await fetchAPI<ProjectData[]>({
       endpoint: '/projects',
       query,
-      cache: 'no-store',
       tags: ['projects'],
     });
     return data;
@@ -215,7 +213,6 @@ export async function getProjectBySlug(slug: string) {
         'filters[slug][$eq]': slug,
         'populate': 'deep',
       },
-      cache: 'no-store',
       tags: ['projects', `project-${slug}`],
     });
     return data[0] || null;
@@ -229,7 +226,6 @@ export async function getContactInfo() {
   try {
     const data = await fetchAPI<ContactInfoData>({
       endpoint: '/contact-info',
-      cache: 'no-store',
       tags: ['contact-info'],
     });
     return data;
@@ -286,7 +282,6 @@ export async function getGlobalSEO() {
         'populate[favIcon][fields][0]': 'url',
         'populate[appleTouchIcon][fields][0]': 'url',
       },
-      cache: 'no-store',
       tags: ['global-seo'],
     });
     return data;

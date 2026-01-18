@@ -37,9 +37,16 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   });
 }
 
+export async function generateStaticParams() {
+  const projects = await getProjects();
+  return projects.map((project) => ({
+    slug: project.slug,
+  }));
+}
+
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { slug } = await params;
   return <ProjectClient slug={slug} />;
 }
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600; // Revalidate every hour
