@@ -1,13 +1,16 @@
 "use client";
 
+import { useRef } from "react";
 import Image from "next/image";
 import { Card } from "@/components/ui/card";
 import { Typography } from "@/components/ui/typography";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Mail, Phone, Globe, Linkedin } from "lucide-react";
+import { CVExportControls } from "@/components/cv-export-controls";
 
 export function CVClient() {
+  const contentRef = useRef<HTMLDivElement>(null);
   // TODO: Replace with CMS data
   const cvData = {
     profile: {
@@ -92,7 +95,9 @@ export function CVClient() {
 
   return (
     <div className="min-h-screen bg-muted/30">
-      <div className="container max-w-4xl mx-auto px-4 py-12 space-y-8">
+      <CVExportControls contentRef={contentRef} />
+
+      <div ref={contentRef} className="container max-w-4xl mx-auto px-4 py-12 space-y-8">
         {/* Header Section */}
         <Card className="overflow-hidden">
           <div className="p-8 space-y-6">
