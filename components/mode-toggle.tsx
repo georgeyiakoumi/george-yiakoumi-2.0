@@ -32,7 +32,7 @@ export function ModeToggle() {
             <span className="sr-only">Toggle theme</span>
           </Button>
         </TooltipTrigger>
-        <TooltipContent side="left">
+        <TooltipContent side="left" className="hidden lg:block">
           {theme === "dark" ? (
             <><strong>Too dark?</strong> Turn on the lights!</>
           ) : (
