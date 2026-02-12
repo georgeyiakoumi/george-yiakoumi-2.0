@@ -86,15 +86,14 @@ function MediaItem({ media, title }: { media: any; title: string }) {
   }
 
   return (
-    <div className="relative w-full h-screen aspect-[9/12] md:aspect-[10/9] z-1">
-      <Image
-        src={mediaUrl || ''}
-        alt={media?.alternativeText || title || ''}
-        fill
-        sizes="100vw"
-        className="project-image object-cover md:border-border md:border"
-      />
-    </div>
+    <Image
+      src={mediaUrl || ''}
+      alt={media?.alternativeText || title || ''}
+      width={1920}
+      height={1080}
+      sizes="100vw"
+      className="project-image w-full h-auto md:max-w-lg lg:max-w-2xl mx-auto md:border-border md:border"
+    />
   );
 }
 
@@ -152,16 +151,15 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
       </header>
 
       {heroImageUrl && (
-        <div className="relative w-full h-screen aspect-[9/12] md:aspect-[10/9] z-1">
-          <Image
-            src={heroImageUrl}
-            alt={project.project_thumb?.alternativeText || project.title || ''}
-            fill
-            sizes="100vw"
-            className="project-image object-cover md:border-border md:border"
-            priority
-          />
-        </div>
+        <Image
+          src={heroImageUrl}
+          alt={project.project_thumb?.alternativeText || project.title || ''}
+          width={1920}
+          height={1080}
+          sizes="100vw"
+          className="project-image w-full h-auto md:rounded-lg md:max-w-lg lg:max-w-3xl mx-auto md:border-border md:border"
+          priority
+        />
       )}
 
       <article className="flex flex-col w-full">

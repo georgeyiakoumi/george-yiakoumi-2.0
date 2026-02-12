@@ -41,7 +41,7 @@ export default async function Portfolio() {
   }
 
   return (
-    <Section className="!h-auto !justify-start py-32 md:py-16">
+    <Section className="!h-auto !justify-start py-32 md:py-24 lg:py-32 2xl:py-0 2xl:!justify-center">
       <Typography variant="h1" align="center" className="mb-8">
         Projects
       </Typography>
@@ -51,7 +51,7 @@ export default async function Portfolio() {
           View project
         </CursorFollow>
 
-        <div className="grid w-full xl:grid-cols-2 2xl:grid-cols-3 auto-rows-[16rem] gap-8">
+        <div className="grid w-full lg:grid-cols-2 2xl:grid-cols-3 auto-rows-[16rem] gap-8">
           {projects.map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}
