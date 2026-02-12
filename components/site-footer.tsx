@@ -64,7 +64,7 @@ export function SiteFooter() {
             <DrawerHeader>
               <DrawerTitle>© {currentYear} {AUTHOR.fullName}</DrawerTitle>
               <DrawerDescription>
-                All rights reserved.
+                A designer who codes. Built with Next.js & shadcn/ui.
               </DrawerDescription>
             </DrawerHeader>
             <DrawerFooter>
