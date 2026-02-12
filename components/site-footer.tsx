@@ -87,6 +87,7 @@ export function SiteFooter() {
             </TooltipTrigger>
             <TooltipContent side="left">
               <p>© {currentYear} {AUTHOR.fullName}</p>
+              <p className="text-xs opacity-80 mt-1">A designer who codes. Built with Next.js & shadcn/ui.</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
