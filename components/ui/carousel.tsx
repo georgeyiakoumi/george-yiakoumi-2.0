@@ -231,6 +231,56 @@ function CarouselNext({
   )
 }
 
+function CarouselPagination({ className, ...props }: React.ComponentProps<"div">) {
+  const { api } = useCarousel()
+  const [selectedIndex, setSelectedIndex] = React.useState(0)
+  const [scrollSnaps, setScrollSnaps] = React.useState<number[]>([])
+
+  React.useEffect(() => {
+    if (!api) return
+
+    setScrollSnaps(api.scrollSnapList())
+    setSelectedIndex(api.selectedScrollSnap())
+
+    const onSelect = () => {
+      setSelectedIndex(api.selectedScrollSnap())
+    }
+
+    api.on("select", onSelect)
+    api.on("reInit", () => {
+      setScrollSnaps(api.scrollSnapList())
+      setSelectedIndex(api.selectedScrollSnap())
+    })
+
+    return () => {
+      api.off("select", onSelect)
+    }
+  }, [api])
+
+  return (
+    <div
+      className={cn("flex gap-2 justify-center mt-4", className)}
+      data-slot="carousel-pagination"
+      {...props}
+    >
+      {scrollSnaps.map((_, index) => (
+        <button
+          key={index}
+          type="button"
+          className={cn(
+            "size-2 rounded-full transition-all",
+            index === selectedIndex
+              ? "bg-primary w-6"
+              : "bg-muted-foreground/30"
+          )}
+          onClick={() => api?.scrollTo(index)}
+          aria-label={`Go to slide ${index + 1}`}
+        />
+      ))}
+    </div>
+  )
+}
+
 export {
   type CarouselApi,
   Carousel,
@@ -238,4 +288,5 @@ export {
   CarouselItem,
   CarouselPrevious,
   CarouselNext,
+  CarouselPagination,
 }

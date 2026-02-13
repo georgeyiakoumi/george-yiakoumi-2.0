@@ -5,7 +5,8 @@ import { useEffect, useRef } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, CarouselPagination } from "@/components/ui/carousel";
+import { ProgressiveBlur } from "@/components/ui/progressive-blur";
 
 import { ArrowLeft } from "@/components/animate-ui/icons/arrow-left";
 import { AnimateIcon } from "@/components/animate-ui/icons/icon";
@@ -197,28 +198,40 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
       </article>
 
       {otherProjects.length > 0 && (
-        <section className="flex flex-col mx-auto gap-8 md:max-w-sm lg:max-w-3xl xl:max-w-4xl 2xl:max-w-6xl min-h-dvh items-center justify-center md:px-0 py-32 w-full px-16 lg:px-24">
+        <section className="flex flex-col gap-8 min-h-dvh items-center justify-center w-full lg:max-w-2xl xl:max-w-4xl 2xl:max-w-7xl">
           <Typography variant="h2" align="center" className="mb-8">
             Other projects
           </Typography>
 
-          <Carousel
-            opts={{
-              align: "start",
-              loop: true,
-            }}
-            className="w-full"
-          >
-            <CarouselContent>
-              {otherProjects.map((otherProject) => (
-                <CarouselItem key={otherProject.id} className="xl:basis-1/2 2xl:basis-1/3">
-                  <ProjectCard project={otherProject} />
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-          </Carousel>
+          <div className="relative w-full">
+            <ProgressiveBlur orientation="horizontal" position="left" width="5%" className="hidden lg:block z-[5]" />
+            <ProgressiveBlur orientation="horizontal" position="right" width="5%" className="hidden lg:block z-[5]" />
+
+            {/* Gradient fade overlays */}
+            <div className="hidden lg:block absolute left-0 top-0 bottom-0 w-[15%] bg-gradient-to-r from-background to-background/0 pointer-events-none z-[5]" />
+            <div className="hidden lg:block absolute right-0 top-0 bottom-0 w-[15%] bg-gradient-to-l from-background to-background/0 pointer-events-none z-[5]" />
+
+            <div className="mx-auto w-full">
+              <Carousel
+                opts={{
+                  align: "center",
+                  loop: true,
+                }}
+                className="w-full"
+              >
+                <CarouselContent className="ml-0">
+                  {otherProjects.map((otherProject) => (
+                    <CarouselItem key={otherProject.id} className="md:basis-1/3 lg:basis-1/1 xl:basis-1/3 2xl:basis-1/3 px-4">
+                      <ProjectCard project={otherProject} />
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious className="hidden lg:flex left-4 md:left-[-64] z-5 lg:cursor-pointer" />
+                <CarouselNext className="hidden lg:flex right-4 md:right-[-64] z-5 lg:cursor-pointer" />
+                <CarouselPagination className="absolute left-0 right-0 bottom-[-48]" />
+              </Carousel>
+            </div>
+          </div>
         </section>
       )}
     </section>
