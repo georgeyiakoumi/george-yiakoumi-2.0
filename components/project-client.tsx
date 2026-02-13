@@ -198,18 +198,18 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
       </article>
 
       {otherProjects.length > 0 && (
-        <section className="flex flex-col gap-8 min-h-dvh items-center justify-center w-full lg:max-w-2xl xl:max-w-4xl 2xl:max-w-7xl">
+        <section className="flex flex-col gap-8 min-h-dvh items-center justify-center w-full mx-auto md:max-w-xl lg:max-w-2xl xl:max-w-4xl 2xl:max-w-7xl">
           <Typography variant="h2" align="center" className="mb-8">
             Other projects
           </Typography>
 
           <div className="relative w-full">
-            <ProgressiveBlur orientation="horizontal" position="left" width="5%" className="hidden lg:block z-[5]" />
-            <ProgressiveBlur orientation="horizontal" position="right" width="5%" className="hidden lg:block z-[5]" />
+            <ProgressiveBlur orientation="horizontal" position="left" width="5%" className="hidden md:block z-[5]" />
+            <ProgressiveBlur orientation="horizontal" position="right" width="5%" className="hidden md:block z-[5]" />
 
             {/* Gradient fade overlays */}
-            <div className="hidden lg:block absolute left-0 top-0 bottom-0 w-[15%] bg-gradient-to-r from-background to-background/0 pointer-events-none z-[5]" />
-            <div className="hidden lg:block absolute right-0 top-0 bottom-0 w-[15%] bg-gradient-to-l from-background to-background/0 pointer-events-none z-[5]" />
+            <div className="hidden md:block absolute left-0 top-0 bottom-0 w-[15%] bg-gradient-to-r from-background to-background/0 pointer-events-none z-[5]" />
+            <div className="hidden md:block absolute right-0 top-0 bottom-0 w-[15%] bg-gradient-to-l from-background to-background/0 pointer-events-none z-[5]" />
 
             <div className="mx-auto w-full">
               <Carousel
@@ -221,13 +221,13 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
               >
                 <CarouselContent className="ml-0">
                   {otherProjects.map((otherProject) => (
-                    <CarouselItem key={otherProject.id} className="md:basis-1/3 lg:basis-1/1 xl:basis-1/3 2xl:basis-1/3 px-4">
+                    <CarouselItem key={otherProject.id} className=" lg:basis-1/1 xl:basis-1/3 2xl:basis-1/3 px-4">
                       <ProjectCard project={otherProject} />
                     </CarouselItem>
                   ))}
                 </CarouselContent>
-                <CarouselPrevious className="hidden lg:flex left-4 md:left-[-64] z-5 lg:cursor-pointer" />
-                <CarouselNext className="hidden lg:flex right-4 md:right-[-64] z-5 lg:cursor-pointer" />
+                <CarouselPrevious className="hidden md:flex left-4 md:left-[-64] z-5 lg:cursor-pointer" />
+                <CarouselNext className="hidden md:flex right-4 md:right-[-64] z-5 lg:cursor-pointer" />
                 <CarouselPagination className="absolute left-0 right-0 bottom-[-48]" />
               </Carousel>
             </div>
