@@ -18,19 +18,6 @@ export interface AboutBusiness extends Struct.ComponentSchema {
   };
 }
 
-export interface CvCertification extends Struct.ComponentSchema {
-  collectionName: 'components_cv_certifications';
-  info: {
-    description: '';
-    displayName: 'certifications';
-  };
-  attributes: {
-    name: Schema.Attribute.String;
-    thumbnail: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    url: Schema.Attribute.String;
-  };
-}
-
 export interface CvChapter extends Struct.ComponentSchema {
   collectionName: 'components_cv_chapters';
   info: {
@@ -43,6 +30,7 @@ export interface CvChapter extends Struct.ComponentSchema {
     end_date: Schema.Attribute.Date;
     experience: Schema.Attribute.Blocks & Schema.Attribute.Required;
     hybrid: Schema.Attribute.Boolean;
+    role: Schema.Attribute.String & Schema.Attribute.Required;
     start_date: Schema.Attribute.Date & Schema.Attribute.Required;
   };
 }
@@ -75,7 +63,6 @@ declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
       'about.business': AboutBusiness;
-      'cv.certification': CvCertification;
       'cv.chapter': CvChapter;
       'cv.history': CvHistory;
       'cv.languages': CvLanguages;

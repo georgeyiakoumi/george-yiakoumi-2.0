@@ -25,6 +25,10 @@
     "experience": {
       "type": "blocks",
       "required": true
+    },
+    "role": {
+      "type": "string",
+      "required": true
     }
   }
 }

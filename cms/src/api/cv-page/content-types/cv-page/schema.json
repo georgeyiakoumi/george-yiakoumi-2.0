@@ -12,7 +12,7 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Bio": {
+    "description": {
       "type": "blocks"
     },
     "email": {
@@ -35,17 +35,6 @@
         "audios"
       ]
     },
-    "tools": {
-      "type": "component",
-      "repeatable": true,
-      "component": "about.business"
-    },
-    "certificate": {
-      "displayName": "certification",
-      "type": "component",
-      "repeatable": true,
-      "component": "cv.certification"
-    },
     "language": {
       "displayName": "languages",
       "type": "component",
@@ -57,6 +46,12 @@
       "type": "component",
       "repeatable": true,
       "component": "cv.history"
+    },
+    "heading": {
+      "type": "string"
+    },
+    "tagline": {
+      "type": "string"
     }
   }
 }

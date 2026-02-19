@@ -373,7 +373,7 @@ export interface ApiAboutAbout extends Struct.SingleTypeSchema {
   collectionName: 'abouts';
   info: {
     description: '';
-    displayName: 'aboutPage';
+    displayName: 'About';
     pluralName: 'abouts';
     singularName: 'about';
   };
@@ -400,6 +400,75 @@ export interface ApiAboutAbout extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiCertificateSupplierCertificateSupplier
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'certificate_suppliers';
+  info: {
+    description: '';
+    displayName: 'Certificate Supplier';
+    pluralName: 'certificate-suppliers';
+    singularName: 'certificate-supplier';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    certificates: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::certificate.certificate'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::certificate-supplier.certificate-supplier'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    thumbnail: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiCertificateCertificate extends Struct.CollectionTypeSchema {
+  collectionName: 'certificates';
+  info: {
+    description: '';
+    displayName: 'Certificate';
+    pluralName: 'certificates';
+    singularName: 'certificate';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    certificate_supplier: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::certificate-supplier.certificate-supplier'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::certificate.certificate'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    url: Schema.Attribute.String;
+  };
+}
+
 export interface ApiCvPageCvPage extends Struct.SingleTypeSchema {
   collectionName: 'cv_pages';
   info: {
@@ -413,13 +482,13 @@ export interface ApiCvPageCvPage extends Struct.SingleTypeSchema {
   };
   attributes: {
     avatar: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    Bio: Schema.Attribute.Blocks;
-    certificate: Schema.Attribute.Component<'cv.certification', true>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    description: Schema.Attribute.Blocks;
     email: Schema.Attribute.String;
     Experience: Schema.Attribute.Component<'cv.history', true>;
+    heading: Schema.Attribute.String;
     language: Schema.Attribute.Component<'cv.languages', true>;
     linkedin: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -429,7 +498,7 @@ export interface ApiCvPageCvPage extends Struct.SingleTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    tools: Schema.Attribute.Component<'about.business', true>;
+    tagline: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -542,6 +611,7 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
 export interface ApiToolTool extends Struct.CollectionTypeSchema {
   collectionName: 'tools';
   info: {
+    description: '';
     displayName: 'Tool';
     pluralName: 'tools';
     singularName: 'tool';
@@ -550,18 +620,23 @@ export interface ApiToolTool extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    classes: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    cssVariables: Schema.Attribute.JSON;
+    cssVariablesDark: Schema.Attribute.JSON;
+    description: Schema.Attribute.Text;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::tool.tool'> &
       Schema.Attribute.Private;
-    Name: Schema.Attribute.String;
+    name: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
-    Slug: Schema.Attribute.UID;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    url: Schema.Attribute.String;
   };
 }
 
@@ -1075,6 +1150,8 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::about.about': ApiAboutAbout;
+      'api::certificate-supplier.certificate-supplier': ApiCertificateSupplierCertificateSupplier;
+      'api::certificate.certificate': ApiCertificateCertificate;
       'api::cv-page.cv-page': ApiCvPageCvPage;
       'api::global-seo.global-seo': ApiGlobalSeoGlobalSeo;
       'api::project.project': ApiProjectProject;
