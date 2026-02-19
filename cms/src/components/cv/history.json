@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_cv_histories",
+  "info": {
+    "displayName": "history"
+  },
+  "options": {},
+  "attributes": {
+    "logo": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "Chapter": {
+      "displayName": "Chapter",
+      "type": "component",
+      "repeatable": true,
+      "component": "cv.chapter"
+    }
+  }
+}

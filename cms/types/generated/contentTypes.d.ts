@@ -400,6 +400,43 @@ export interface ApiAboutAbout extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiCvPageCvPage extends Struct.SingleTypeSchema {
+  collectionName: 'cv_pages';
+  info: {
+    description: '';
+    displayName: 'CV Page';
+    pluralName: 'cv-pages';
+    singularName: 'cv-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    avatar: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    Bio: Schema.Attribute.Blocks;
+    certificate: Schema.Attribute.Component<'cv.certification', true>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    email: Schema.Attribute.String;
+    Experience: Schema.Attribute.Component<'cv.history', true>;
+    language: Schema.Attribute.Component<'cv.languages', true>;
+    linkedin: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::cv-page.cv-page'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    tools: Schema.Attribute.Component<'about.business', true>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    website: Schema.Attribute.String;
+  };
+}
+
 export interface ApiGlobalSeoGlobalSeo extends Struct.SingleTypeSchema {
   collectionName: 'global_seos';
   info: {
@@ -1038,6 +1075,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::about.about': ApiAboutAbout;
+      'api::cv-page.cv-page': ApiCvPageCvPage;
       'api::global-seo.global-seo': ApiGlobalSeoGlobalSeo;
       'api::project.project': ApiProjectProject;
       'api::tool.tool': ApiToolTool;

@@ -1,15 +1,12 @@
 import { Mulish } from "next/font/google";
 import "./globals.css";
-import { ProgressiveBlur } from "@/components/ui/progressive-blur"
 import { ThemeProvider } from "@/components/theme-provider";
 import { ModeToggle } from "@/components/mode-toggle";
-import { SiteNavigation } from "@/components/site-navigation";
-import { SiteFooter } from "@/components/site-footer";
 import { Toaster } from "@/components/ui/sonner";
-import { ScrollProgressProvider, ScrollProgress, ScrollProgressContainer } from "@/components/animate-ui/primitives/animate/scroll-progress";
 import { GoogleAnalytics } from '@/components/google-analytics';
 import { generateSiteMetadata } from "@/lib/metadata";
 import { SEOScripts } from "@/components/seo-scripts";
+import { ConditionalLayout } from "@/components/conditional-layout";
 
 // Import safelist to ensure Tailwind scans it for dynamic Strapi classes
 import "@/lib/tailwind-safelist";
@@ -32,28 +29,15 @@ export default function RootLayout({
       <head>
         <SEOScripts />
       </head>
-      <body className={`${mulish.className} h-dvh overflow-hidden`}>
+      <body className={`${mulish.className}`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <ScrollProgressProvider>
-            <ProgressiveBlur height="10%" position="top" />
-            <ProgressiveBlur height="15%" position="bottom" />
+          <ModeToggle />
 
-            <SiteNavigation />
+          <ConditionalLayout>
+            {children}
+          </ConditionalLayout>
 
-            <ModeToggle />
-
-            {/* Scroll progress indicator */}
-            <ScrollProgress className="fixed top-0 left-0 h-1 bg-primary z-50 origin-left" />
-
-            <ScrollProgressContainer asChild>
-              <main className="h-dvh overflow-y-auto relative scrollbar-hide">
-                {children}
-              </main>
-            </ScrollProgressContainer>
-
-            <SiteFooter />
-            <Toaster />
-          </ScrollProgressProvider>
+          <Toaster />
         </ThemeProvider>
         {gaId && <GoogleAnalytics gaId={gaId} />}
       </body>
