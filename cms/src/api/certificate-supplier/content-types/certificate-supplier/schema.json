@@ -1,10 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "tools",
+  "collectionName": "certificate_suppliers",
   "info": {
-    "singularName": "tool",
-    "pluralName": "tools",
-    "displayName": "Tool",
+    "singularName": "certificate-supplier",
+    "pluralName": "certificate-suppliers",
+    "displayName": "Certificate Supplier",
     "description": ""
   },
   "options": {
@@ -15,7 +15,7 @@
     "name": {
       "type": "string"
     },
-    "image": {
+    "thumbnail": {
       "type": "media",
       "multiple": false,
       "required": false,
@@ -26,20 +26,11 @@
         "audios"
       ]
     },
-    "url": {
-      "type": "string"
-    },
-    "description": {
-      "type": "text"
-    },
-    "cssVariables": {
-      "type": "json"
-    },
-    "cssVariablesDark": {
-      "type": "json"
-    },
-    "classes": {
-      "type": "string"
+    "certificates": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::certificate.certificate",
+      "mappedBy": "certificate_supplier"
     }
   }
 }
