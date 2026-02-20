@@ -320,3 +320,44 @@ export async function getGlobalSEO() {
     return null;
   }
 }
+
+export interface ToolData {
+  id: number;
+  documentId: string;
+  name: string;
+  ariaLabel: string;
+  imageWidth?: number;
+  url?: string;
+  description?: string;
+  cssVariables?: Record<string, string> | null;
+  cssVariablesDark?: Record<string, string> | null;
+  classes?: string | null;
+  image?: {
+    id: number;
+    documentId: string;
+    url: string;
+    alternativeText?: string;
+    width?: number;
+    height?: number;
+    ext?: string;
+  };
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
+export async function getTools() {
+  try {
+    const data = await fetchAPI<ToolData[]>({
+      endpoint: '/tools',
+      query: {
+        'populate': '*',
+      },
+      tags: ['tools'],
+    });
+    return data;
+  } catch (error) {
+    console.error('Error fetching tools:', error);
+    return [];
+  }
+}

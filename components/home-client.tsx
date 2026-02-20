@@ -8,19 +8,26 @@ import { Typography } from "@/components/ui/typography";
 import { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription } from "@/components/ui/empty";
 import { MessageCircleMore } from "@/components/animate-ui/icons/message-circle-more";
 import { AnimateIcon } from "@/components/animate-ui/icons/icon";
-import { getAboutPage } from "@/lib/strapi-queries";
+import { getAboutPage, getTools, type ToolData } from "@/lib/strapi-queries";
 import { ThemedLogo } from "@/components/themed-logo";
 import { useEffect, useState } from "react";
 import HomeLoading from "@/app/loading";
 
 export function HomeClient() {
   const [aboutData, setAboutData] = useState<Awaited<ReturnType<typeof getAboutPage>>>(null);
+  const [tools, setTools] = useState<ToolData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    getAboutPage()
-      .then(setAboutData)
+    Promise.all([
+      getAboutPage(),
+      getTools()
+    ])
+      .then(([about, toolsData]) => {
+        setAboutData(about);
+        setTools(toolsData);
+      })
       .catch(() => setError(true))
       .finally(() => setLoading(false));
   }, []);
@@ -100,7 +107,7 @@ export function HomeClient() {
           {aboutData.heading_tools}
         </Typography>
         <div className="w-full grid gap-8 grid-cols-4 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8">
-          {aboutData.tools.map((tool) => (
+          {tools.map((tool) => (
             <ThemedLogo key={tool.id} data={tool} />
           ))}
         </div>
