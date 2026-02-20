@@ -194,7 +194,6 @@ export async function getAboutPage() {
       endpoint: '/about',
       query: {
         'populate[businesses][populate]': 'image',
-        'populate[tools][populate]': 'image',
       },
       tags: ['about'],
     });
