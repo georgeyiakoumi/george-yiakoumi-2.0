@@ -433,6 +433,40 @@ export interface ApiBusinessBusiness extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiCareerChapterCareerChapter
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'career_chapters';
+  info: {
+    description: '';
+    displayName: 'Career Chapter';
+    pluralName: 'career-chapters';
+    singularName: 'career-chapter';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    business_name: Schema.Attribute.String;
+    Chapter: Schema.Attribute.Component<'cv.chapter', true>;
+    city: Schema.Attribute.String;
+    country: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::career-chapter.career-chapter'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    thumbnail: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiCertificateSupplierCertificateSupplier
   extends Struct.CollectionTypeSchema {
   collectionName: 'certificate_suppliers';
@@ -520,7 +554,6 @@ export interface ApiCvPageCvPage extends Struct.SingleTypeSchema {
       Schema.Attribute.Private;
     description: Schema.Attribute.Blocks;
     email: Schema.Attribute.String;
-    Experience: Schema.Attribute.Component<'cv.history', true>;
     heading: Schema.Attribute.String;
     language: Schema.Attribute.Component<'cv.languages', true>;
     linkedin: Schema.Attribute.String;
@@ -1184,6 +1217,7 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::about.about': ApiAboutAbout;
       'api::business.business': ApiBusinessBusiness;
+      'api::career-chapter.career-chapter': ApiCareerChapterCareerChapter;
       'api::certificate-supplier.certificate-supplier': ApiCertificateSupplierCertificateSupplier;
       'api::certificate.certificate': ApiCertificateCertificate;
       'api::cv-page.cv-page': ApiCvPageCvPage;

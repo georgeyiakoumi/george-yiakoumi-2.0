@@ -41,12 +41,6 @@
       "repeatable": true,
       "component": "cv.languages"
     },
-    "Experience": {
-      "displayName": "history",
-      "type": "component",
-      "repeatable": true,
-      "component": "cv.history"
-    },
     "heading": {
       "type": "string"
     },

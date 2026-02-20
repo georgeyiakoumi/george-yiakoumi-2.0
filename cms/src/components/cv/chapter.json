@@ -20,7 +20,8 @@
       "type": "string"
     },
     "hybrid": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false
     },
     "experience": {
       "type": "blocks",
@@ -29,6 +30,10 @@
     "role": {
       "type": "string",
       "required": true
+    },
+    "Remote": {
+      "type": "boolean",
+      "default": false
     }
   }
 }
