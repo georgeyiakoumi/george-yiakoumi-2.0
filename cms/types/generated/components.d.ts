@@ -29,22 +29,10 @@ export interface CvChapter extends Struct.ComponentSchema {
     country: Schema.Attribute.String;
     end_date: Schema.Attribute.Date;
     experience: Schema.Attribute.Blocks & Schema.Attribute.Required;
-    hybrid: Schema.Attribute.Boolean;
+    hybrid: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    Remote: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     role: Schema.Attribute.String & Schema.Attribute.Required;
     start_date: Schema.Attribute.Date & Schema.Attribute.Required;
-  };
-}
-
-export interface CvHistory extends Struct.ComponentSchema {
-  collectionName: 'components_cv_histories';
-  info: {
-    displayName: 'history';
-  };
-  attributes: {
-    Chapter: Schema.Attribute.Component<'cv.chapter', true>;
-    description: Schema.Attribute.Text;
-    logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    name: Schema.Attribute.String;
   };
 }
 
@@ -64,7 +52,6 @@ declare module '@strapi/strapi' {
     export interface ComponentSchemas {
       'about.business': AboutBusiness;
       'cv.chapter': CvChapter;
-      'cv.history': CvHistory;
       'cv.languages': CvLanguages;
     }
   }
