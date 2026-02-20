@@ -50,6 +50,22 @@ const animations = {
       },
     },
   } satisfies Record<string, Variants>,
+  gentle: {
+    path: {
+      initial: {
+        opacity: 1,
+        scale: 1,
+      },
+      animate: {
+        opacity: [0.4, 1],
+        scale: [0.8, 1],
+        transition: {
+          duration: 0.6,
+          ease: 'easeOut',
+        },
+      },
+    },
+  } satisfies Record<string, Variants>,
 } as const;
 
 function IconComponent({ size, ...props }: MoonProps) {
