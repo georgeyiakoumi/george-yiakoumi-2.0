@@ -46,8 +46,7 @@
       "default": false
     },
     "description": {
-      "type": "blocks",
-      "required": true
+      "type": "text"
     }
   }
 }
