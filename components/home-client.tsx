@@ -8,7 +8,7 @@ import { Typography } from "@/components/ui/typography";
 import { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription } from "@/components/ui/empty";
 import { MessageCircleMore } from "@/components/animate-ui/icons/message-circle-more";
 import { AnimateIcon } from "@/components/animate-ui/icons/icon";
-import { getAboutPage, getTools, type ToolData } from "@/lib/strapi-queries";
+import { getAboutPage, getTools, getBusinesses, type ToolData, type BusinessData } from "@/lib/strapi-queries";
 import { ThemedLogo } from "@/components/themed-logo";
 import { useEffect, useState } from "react";
 import HomeLoading from "@/app/loading";
@@ -16,17 +16,20 @@ import HomeLoading from "@/app/loading";
 export function HomeClient() {
   const [aboutData, setAboutData] = useState<Awaited<ReturnType<typeof getAboutPage>>>(null);
   const [tools, setTools] = useState<ToolData[]>([]);
+  const [businesses, setBusinesses] = useState<BusinessData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
   useEffect(() => {
     Promise.all([
       getAboutPage(),
-      getTools()
+      getTools(),
+      getBusinesses()
     ])
-      .then(([about, toolsData]) => {
+      .then(([about, toolsData, businessesData]) => {
         setAboutData(about);
         setTools(toolsData);
+        setBusinesses(businessesData);
       })
       .catch(() => setError(true))
       .finally(() => setLoading(false));
@@ -95,7 +98,7 @@ export function HomeClient() {
         </Typography>
 
           <div className="w-full grid gap-8 grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-            {aboutData.businesses.map((business) => (
+            {businesses.map((business) => (
               <ThemedLogo key={business.id} data={business} />
             ))}
           </div>

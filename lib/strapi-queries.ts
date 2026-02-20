@@ -192,9 +192,6 @@ export async function getAboutPage() {
   try {
     const data = await fetchAPI<AboutData>({
       endpoint: '/about',
-      query: {
-        'populate[businesses][populate]': 'image',
-      },
       tags: ['about'],
     });
     return data;
@@ -358,6 +355,48 @@ export async function getTools() {
     return data;
   } catch (error) {
     console.error('Error fetching tools:', error);
+    return [];
+  }
+}
+
+export interface BusinessData {
+  id: number;
+  documentId: string;
+  name: string;
+  ariaLabel: string;
+  imageWidth?: number;
+  classes?: string | null;
+  cssVariables?: Record<string, string> | null;
+  cssVariablesDark?: Record<string, string> | null;
+  description?: string;
+  url?: string;
+  image?: {
+    id: number;
+    documentId: string;
+    url: string;
+    alternativeText?: string;
+    width?: number;
+    height?: number;
+    ext?: string;
+  };
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
+export async function getBusinesses() {
+  try {
+    const data = await fetchAPI<BusinessData[]>({
+      endpoint: '/businesses',
+      query: {
+        'populate': '*',
+      },
+      cache: 'no-store',
+      tags: ['businesses'],
+    });
+    return data;
+  } catch (error) {
+    console.error('Error fetching businesses:', error);
     return [];
   }
 }
