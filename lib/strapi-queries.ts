@@ -348,7 +348,7 @@ export async function getTools() {
       endpoint: '/tools',
       query: {
         'populate': '*',
-        'pagination': false,
+        'pagination[pageSize]': 1000,
       },
       cache: 'no-store',
       tags: ['tools'],
@@ -391,7 +391,7 @@ export async function getBusinesses() {
       endpoint: '/businesses',
       query: {
         'populate': '*',
-        'pagination': false,
+        'pagination[pageSize]': 1000,
       },
       cache: 'no-store',
       tags: ['businesses'],
