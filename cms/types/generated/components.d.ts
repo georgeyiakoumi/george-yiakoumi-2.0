@@ -25,12 +25,8 @@ export interface CvChapter extends Struct.ComponentSchema {
     displayName: 'Chapter';
   };
   attributes: {
-    city: Schema.Attribute.String;
-    country: Schema.Attribute.String;
     end_date: Schema.Attribute.Date;
     experience: Schema.Attribute.Blocks & Schema.Attribute.Required;
-    hybrid: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-    Remote: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     role: Schema.Attribute.String & Schema.Attribute.Required;
     start_date: Schema.Attribute.Date & Schema.Attribute.Required;
   };

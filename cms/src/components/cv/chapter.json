@@ -13,16 +13,6 @@
     "end_date": {
       "type": "date"
     },
-    "city": {
-      "type": "string"
-    },
-    "country": {
-      "type": "string"
-    },
-    "hybrid": {
-      "type": "boolean",
-      "default": false
-    },
     "experience": {
       "type": "blocks",
       "required": true
@@ -30,10 +20,6 @@
     "role": {
       "type": "string",
       "required": true
-    },
-    "Remote": {
-      "type": "boolean",
-      "default": false
     }
   }
 }
