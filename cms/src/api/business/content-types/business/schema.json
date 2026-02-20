@@ -4,7 +4,8 @@
   "info": {
     "singularName": "business",
     "pluralName": "businesses",
-    "displayName": "Business"
+    "displayName": "Business",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -28,6 +29,16 @@
     },
     "url": {
       "type": "string"
+    },
+    "image": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }

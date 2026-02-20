@@ -20,11 +20,6 @@
       "repeatable": true,
       "component": "about.business"
     },
-    "tools": {
-      "type": "component",
-      "repeatable": true,
-      "component": "about.business"
-    },
     "heading_businesses": {
       "type": "string"
     },

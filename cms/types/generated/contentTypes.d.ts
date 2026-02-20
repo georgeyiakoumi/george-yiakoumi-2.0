@@ -393,7 +393,6 @@ export interface ApiAboutAbout extends Struct.SingleTypeSchema {
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::about.about'> &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    tools: Schema.Attribute.Component<'about.business', true>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -403,6 +402,7 @@ export interface ApiAboutAbout extends Struct.SingleTypeSchema {
 export interface ApiBusinessBusiness extends Struct.CollectionTypeSchema {
   collectionName: 'businesses';
   info: {
+    description: '';
     displayName: 'Business';
     pluralName: 'businesses';
     singularName: 'business';
@@ -418,6 +418,7 @@ export interface ApiBusinessBusiness extends Struct.CollectionTypeSchema {
     cssVariables: Schema.Attribute.JSON;
     cssVariablesDark: Schema.Attribute.JSON;
     description: Schema.Attribute.Text;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
