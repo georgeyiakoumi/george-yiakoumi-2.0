@@ -11,11 +11,16 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 export function ModeToggle() {
   const { theme, setTheme } = useTheme()
   const [animate, setAnimate] = React.useState(false)
+  const [animateMoon, setAnimateMoon] = React.useState(false)
 
   const toggleTheme = () => {
     setAnimate(true)
+    setAnimateMoon(true)
     setTheme(theme === "light" ? "dark" : "light")
-    setTimeout(() => setAnimate(false), 600)
+    setTimeout(() => {
+      setAnimate(false)
+      setAnimateMoon(false)
+    }, 600)
   }
 
   return (
@@ -26,9 +31,7 @@ export function ModeToggle() {
             <AnimateIcon animate={animate} asChild>
               <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-transform dark:-rotate-90 dark:scale-0" />
             </AnimateIcon>
-            <AnimateIcon animate={animate} asChild>
-              <Moon animation="gentle" className="absolute h-[1.2rem] w-[1.2rem] scale-0 transition-transform dark:scale-100" />
-            </AnimateIcon>
+            <Moon className={`absolute h-[1.2rem] w-[1.2rem] scale-0 transition-transform dark:scale-100 ${animateMoon ? 'animate-spin-once' : ''}`} />
             <span className="sr-only">Toggle theme</span>
           </Button>
         </TooltipTrigger>
