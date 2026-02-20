@@ -400,6 +400,39 @@ export interface ApiAboutAbout extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiBusinessBusiness extends Struct.CollectionTypeSchema {
+  collectionName: 'businesses';
+  info: {
+    displayName: 'Business';
+    pluralName: 'businesses';
+    singularName: 'business';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    classes: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    cssVariables: Schema.Attribute.JSON;
+    cssVariablesDark: Schema.Attribute.JSON;
+    description: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::business.business'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    url: Schema.Attribute.String;
+  };
+}
+
 export interface ApiCertificateSupplierCertificateSupplier
   extends Struct.CollectionTypeSchema {
   collectionName: 'certificate_suppliers';
@@ -1150,6 +1183,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::about.about': ApiAboutAbout;
+      'api::business.business': ApiBusinessBusiness;
       'api::certificate-supplier.certificate-supplier': ApiCertificateSupplierCertificateSupplier;
       'api::certificate.certificate': ApiCertificateCertificate;
       'api::cv-page.cv-page': ApiCvPageCvPage;
