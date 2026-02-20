@@ -402,3 +402,145 @@ export async function getBusinesses() {
     return [];
   }
 }
+
+export interface CVPageData {
+  id: number;
+  documentId: string;
+  heading: string;
+  tagline: string;
+  email: string;
+  linkedin: string;
+  website: string;
+  description: Array<{
+    type: string;
+    children?: Array<{
+      type: string;
+      text?: string;
+    }>;
+  }>;
+  avatar?: {
+    id: number;
+    documentId: string;
+    url: string;
+    alternativeText?: string;
+    width?: number;
+    height?: number;
+    formats?: {
+      small?: { url: string };
+      medium?: { url: string };
+      thumbnail?: { url: string };
+    };
+  };
+  language?: Array<{
+    id: number;
+    region: string;
+    level: string;
+  }>;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
+export interface CareerChapterData {
+  id: number;
+  documentId: string;
+  business_name: string;
+  country: string;
+  city: string;
+  hybrid: boolean;
+  remote: boolean;
+  description: string;
+  Chapter: Array<{
+    id: number;
+    role: string;
+    start_date: string;
+    end_date: string | null;
+    experience: Array<{
+      type: string;
+      format?: string;
+      children?: Array<{
+        type: string;
+        children?: Array<{
+          type: string;
+          text?: string;
+        }>;
+      }>;
+    }>;
+  }>;
+  thumbnail?: {
+    id: number;
+    documentId: string;
+    url: string;
+    alternativeText?: string;
+    width?: number;
+    height?: number;
+  };
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
+export interface CertificateData {
+  id: number;
+  documentId: string;
+  name: string;
+  url: string;
+  certificate_supplier?: {
+    id: number;
+    documentId: string;
+    name: string;
+  };
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
+export async function getCVPage() {
+  try {
+    const data = await fetchAPI<CVPageData>({
+      endpoint: '/cv-page',
+      query: {
+        'populate': '*',
+      },
+      tags: ['cv-page'],
+    });
+    return data;
+  } catch (error) {
+    console.error('Error fetching CV page:', error);
+    return null;
+  }
+}
+
+export async function getCareerChapters() {
+  try {
+    const data = await fetchAPI<CareerChapterData[]>({
+      endpoint: '/career-chapters',
+      query: {
+        'populate': '*',
+        'pagination[pageSize]': 1000,
+      },
+      tags: ['career-chapters'],
+    });
+    return data;
+  } catch (error) {
+    console.error('Error fetching career chapters:', error);
+    return [];
+  }
+}
+
+export async function getCertificates() {
+  try {
+    const data = await fetchAPI<CertificateData[]>({
+      endpoint: '/certificates',
+      query: {
+        'populate': '*',
+        'pagination[pageSize]': 1000,
+      },
+      tags: ['certificates'],
+    });
+    return data;
+  } catch (error) {
+    console.error('Error fetching certificates:', error);
+    return [];
+  }
+}

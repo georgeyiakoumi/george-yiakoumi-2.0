@@ -1,5 +1,8 @@
 import { generatePageMetadata } from "@/lib/metadata";
 import { CVClient } from "@/components/cv-client";
+import { getCVPage, getCareerChapters, getCertificates } from "@/lib/strapi-queries";
+
+export const revalidate = 3600;
 
 export const generateMetadata = async () => {
   return generatePageMetadata({
@@ -9,6 +12,20 @@ export const generateMetadata = async () => {
   });
 };
 
-export default function CVPage() {
-  return <CVClient />;
+export default async function CVPage() {
+  const [cvData, careerChapters, certificates] = await Promise.all([
+    getCVPage(),
+    getCareerChapters(),
+    getCertificates(),
+  ]);
+
+  if (!cvData) {
+    return (
+      <div className="container max-w-4xl mx-auto px-4 py-12">
+        <p>CV data not available</p>
+      </div>
+    );
+  }
+
+  return <CVClient cvData={cvData} careerChapters={careerChapters} certificates={certificates} />;
 }
