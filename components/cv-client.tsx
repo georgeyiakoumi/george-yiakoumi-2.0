@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Typography } from "@/components/ui/typography";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { Mail, Globe, Linkedin, MapPin } from "lucide-react";
 import { CVExportControls } from "@/components/cv-export-controls";
 import type { CVPageData, CareerChapterData, CertificateData } from "@/lib/strapi-queries";
@@ -45,71 +46,86 @@ export function CVClient({ cvData, careerChapters, certificates }: CVClientProps
 
       <div ref={contentRef} className="container max-w-4xl mx-auto px-4 py-12 space-y-8">
         {/* Header Section */}
-        <Card className="overflow-hidden">
-          <div className="p-8 space-y-6">
-            {/* Profile Image and Name */}
-            <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
-              {cvData.avatar && (
-                <Avatar className="size-32">
-                  <AvatarImage
-                    src={cvData.avatar.formats?.medium?.url || cvData.avatar.url}
-                    alt={cvData.avatar.alternativeText || cvData.heading}
-                  />
-                  <AvatarFallback>
-                    {cvData.heading.split(" ").map(n => n[0]).join("")}
-                  </AvatarFallback>
-                </Avatar>
-              )}
+        <div className="space-y-8">
+          {/* Profile Section - Centered */}
+          <div className="flex flex-col items-center space-y-4">
+            {/* Avatar */}
+            {cvData.avatar && (
+              <Avatar className="size-32">
+                <AvatarImage
+                  src={cvData.avatar.formats?.medium?.url || cvData.avatar.url}
+                  alt={cvData.avatar.alternativeText || cvData.heading}
+                />
+                <AvatarFallback>
+                  {cvData.heading.split(" ").map(n => n[0]).join("")}
+                </AvatarFallback>
+              </Avatar>
+            )}
 
-              <div className="flex-1 text-center md:text-left space-y-2">
-                <Typography variant="h1" className="text-4xl">
-                  {cvData.heading}
-                </Typography>
-                <Typography variant="muted" className="uppercase tracking-wider text-xs">
-                  {cvData.tagline}
-                </Typography>
-              </div>
+            {/* Name and Tagline */}
+            <div className="flex flex-col items-center space-y-2">
+              <Typography variant="h1" className="text-4xl text-center">
+                {cvData.heading}
+              </Typography>
+              <Typography variant="muted" className="uppercase tracking-wider text-xs text-center">
+                {cvData.tagline}
+              </Typography>
             </div>
 
-            {/* Contact Links */}
-            <div className="flex flex-wrap gap-4 justify-center md:justify-start text-sm">
-              <a
-                href={`mailto:${cvData.email}`}
-                className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+            {/* Contact Icon Buttons */}
+            <div className="flex items-center gap-2">
+              <Button
+                variant="ghost"
+                size="icon"
+                asChild
               >
-                <Mail className="size-4" />
-                <span>{cvData.email}</span>
-              </a>
-              <a
-                href={`https://linkedin.com/in/${cvData.linkedin}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+                <a
+                  href={`mailto:${cvData.email}`}
+                  aria-label="Email"
+                >
+                  <Mail className="size-4" />
+                </a>
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                asChild
               >
-                <Linkedin className="size-4" />
-                <span>linkedin.com/in/{cvData.linkedin}</span>
-              </a>
-              <a
-                href={`https://${cvData.website}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+                <a
+                  href={`https://linkedin.com/in/${cvData.linkedin}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn"
+                >
+                  <Linkedin className="size-4" />
+                </a>
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                asChild
               >
-                <Globe className="size-4" />
-                <span>{cvData.website}</span>
-              </a>
-            </div>
-
-            {/* Professional Summary */}
-            <div className="pt-4 space-y-3">
-              {cvData.description.map((paragraph, idx) => (
-                <Typography key={idx} variant="p" className="text-muted-foreground">
-                  {paragraph.children?.map((child) => child.text || "").join("")}
-                </Typography>
-              ))}
+                <a
+                  href={`https://${cvData.website}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Website"
+                >
+                  <Globe className="size-4" />
+                </a>
+              </Button>
             </div>
           </div>
-        </Card>
+
+          {/* Professional Summary */}
+          <div className="space-y-3 max-w-3xl mx-auto">
+            {cvData.description.map((paragraph, idx) => (
+              <Typography key={idx} variant="p" className="text-muted-foreground text-center">
+                {paragraph.children?.map((child) => child.text || "").join("")}
+              </Typography>
+            ))}
+          </div>
+        </div>
 
         {/* Languages Section */}
         {cvData.language && cvData.language.length > 0 && (
