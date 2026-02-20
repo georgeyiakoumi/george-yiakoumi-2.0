@@ -489,6 +489,17 @@ export interface CertificateData {
     id: number;
     documentId: string;
     name: string;
+    thumbnail?: {
+      id: number;
+      documentId: string;
+      url: string;
+      alternativeText?: string;
+      width?: number;
+      height?: number;
+      formats?: {
+        thumbnail?: { url: string };
+      };
+    };
   };
   createdAt: string;
   updatedAt: string;
@@ -533,7 +544,7 @@ export async function getCertificates() {
     const data = await fetchAPI<CertificateData[]>({
       endpoint: '/certificates',
       query: {
-        'populate': '*',
+        'populate[certificate_supplier][populate]': 'thumbnail',
         'pagination[pageSize]': 1000,
       },
       tags: ['certificates'],

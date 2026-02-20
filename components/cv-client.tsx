@@ -2,12 +2,12 @@
 
 import { useRef } from "react";
 import Image from "next/image";
-import { Card } from "@/components/ui/card";
 import { Typography } from "@/components/ui/typography";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Mail, Globe, Linkedin, MapPin } from "lucide-react";
+import { Item, ItemMedia, ItemContent, ItemTitle, ItemActions } from "@/components/ui/item";
+import { Mail, Globe, Linkedin, ExternalLink } from "lucide-react";
 import { CVExportControls } from "@/components/cv-export-controls";
 import type { CVPageData, CareerChapterData, CertificateData } from "@/lib/strapi-queries";
 
@@ -41,7 +41,7 @@ export function CVClient({ cvData, careerChapters, certificates }: CVClientProps
   });
 
   return (
-    <div className="min-h-screen bg-muted/30">
+    <div className="min-h-screen bg-background">
       <CVExportControls contentRef={contentRef} />
 
       <div ref={contentRef} className="container max-w-4xl mx-auto px-4 py-12 space-y-8">
@@ -127,94 +127,43 @@ export function CVClient({ cvData, careerChapters, certificates }: CVClientProps
           </div>
         </div>
 
-        {/* Languages Section */}
-        {cvData.language && cvData.language.length > 0 && (
-          <Card>
-            <div className="p-8 space-y-6">
-              <Typography variant="h3" className="uppercase tracking-wider text-sm">
-                Languages
-              </Typography>
-              <div className="flex flex-wrap gap-2">
-                {cvData.language.map((language) => (
-                  <Badge key={language.id} variant="secondary" className="text-sm py-2 px-4">
-                    {language.region} - {language.level}
-                  </Badge>
-                ))}
-              </div>
-            </div>
-          </Card>
-        )}
-
-        {/* Certifications Section */}
-        {certificates && certificates.length > 0 && (
-          <Card>
-            <div className="p-8 space-y-6">
-              <Typography variant="h3" className="uppercase tracking-wider text-sm">
-                Certifications
-              </Typography>
-              <ul className="space-y-3">
-                {certificates.map((cert) => (
-                  <li key={cert.id} className="flex items-start gap-2">
-                    <span className="text-primary mt-1">•</span>
-                    <div className="flex-1">
-                      <a
-                        href={cert.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-sm hover:text-primary transition-colors"
-                      >
-                        {cert.name}
-                      </a>
-                      {cert.certificate_supplier && (
-                        <Typography variant="muted" className="text-xs mt-0.5">
-                          {cert.certificate_supplier.name}
-                        </Typography>
-                      )}
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </Card>
-        )}
-
         {/* Career History Section */}
         <div className="space-y-6">
-          <Typography variant="h3" className="uppercase tracking-wider text-sm px-2">
+          <h2 className="uppercase font-bold tracking-widest text-xs text-center">
             Career History
-          </Typography>
-
-          {sortedChapters.map((chapter) => (
-            <Card key={chapter.id}>
-              <div className="p-8 space-y-6">
-                {/* Company Header */}
-                <div className="flex items-start gap-4 pb-2 border-b">
+          </h2  >
+          <div className="space-y-4">
+            {sortedChapters.map((chapter) => (
+              <div key={chapter.id} className="border border-border rounded-2xl p-4 space-y-4">
+                {/* Company Header - Item-like appearance */}
+                <div className="flex items-start gap-4">
+                  {/* Thumbnail */}
                   {chapter.thumbnail && (
-                    <div className="size-12 rounded-lg overflow-hidden bg-muted flex items-center justify-center shrink-0">
+                    <div className="size-10 rounded-sm overflow-hidden bg-muted flex items-center justify-center shrink-0 border">
                       <Image
                         src={chapter.thumbnail.url}
                         alt={chapter.business_name}
-                        width={48}
-                        height={48}
-                        className="object-contain"
+                        width={40}
+                        height={40}
+                        className="object-cover size-full"
                       />
                     </div>
                   )}
 
+                  {/* Title and Description */}
                   <div className="flex-1 space-y-1">
-                    <Typography variant="large" className="font-semibold">
-                      {chapter.business_name}
-                    </Typography>
-                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                      <MapPin className="size-3" />
-                      <span>
+                    <div className="flex items-baseline gap-2 flex-wrap">
+                      <h3 className="text-lg font-medium">
+                        {chapter.business_name}
+                      </h3>
+                      <span className="text-xs text-muted-foreground">
                         {chapter.city}, {chapter.country}
                         {chapter.remote && " • Remote"}
                         {chapter.hybrid && " • Hybrid"}
                       </span>
                     </div>
                     {chapter.description && (
-                      <Typography variant="muted" className="text-xs pt-1">
+                      <Typography variant="muted" className="text-sm leading-normal">
                         {chapter.description}
                       </Typography>
                     )}
@@ -225,29 +174,26 @@ export function CVClient({ cvData, careerChapters, certificates }: CVClientProps
                 {chapter.Chapter.sort((a, b) =>
                   new Date(b.start_date).getTime() - new Date(a.start_date).getTime()
                 ).map((role) => (
-                  <div key={role.id} className="space-y-3">
+                  <div key={role.id} className="bg-muted/50 p-4 space-y-3 rounded-md">
                     <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2">
-                      <Typography variant="large" className="font-medium">
+                      <h4 className="text-s font-medium">
                         {role.role}
-                      </Typography>
-                      <Typography variant="small" className="text-muted-foreground">
+                      </h4>
+                      <span className="text-xs text-muted-foreground">
                         {formatDate(role.start_date)} - {role.end_date ? formatDate(role.end_date) : "Present"}
-                      </Typography>
+                      </span>
                     </div>
 
                     {/* Experience list */}
                     {role.experience.map((exp, idx) => {
                       if (exp.type === "list" && exp.children) {
                         return (
-                          <ul key={idx} className="space-y-2">
+                          <ul key={idx} className="space-y-2 list-disc list-inside">
                             {exp.children.map((item, itemIdx) => {
                               const text = item.children?.map((child) => child.text || "").join("") || "";
                               return (
-                                <li key={itemIdx} className="flex items-start gap-3">
-                                  <span className="text-primary mt-1.5 text-xs">•</span>
-                                  <Typography variant="p" className="text-sm text-muted-foreground">
-                                    {text}
-                                  </Typography>
+                                <li key={itemIdx} className="text-sm text-muted-foreground">
+                                  {text}
                                 </li>
                               );
                             })}
@@ -259,9 +205,64 @@ export function CVClient({ cvData, careerChapters, certificates }: CVClientProps
                   </div>
                 ))}
               </div>
-            </Card>
-          ))}
+            ))}
+          </div>
         </div>
+
+        {/* Certifications Section */}
+        {certificates && certificates.length > 0 && (
+          <div className="space-y-6">
+            <h2 className="uppercase font-bold tracking-widest text-xs text-center">
+              Certifications
+            </h2>
+            <div className="space-y-4">
+              {certificates.map((cert) => (
+                <Item key={cert.id} variant="outline" className="rounded-2xl" asChild>
+                  <a href={cert.url} target="_blank" rel="noopener noreferrer">
+                    {cert.certificate_supplier?.thumbnail && (
+                      <ItemMedia variant="image">
+                        <Image
+                          src={cert.certificate_supplier.thumbnail.formats?.thumbnail?.url || cert.certificate_supplier.thumbnail.url}
+                          alt={cert.certificate_supplier.thumbnail.alternativeText || cert.certificate_supplier.name}
+                          width={40}
+                          height={40}
+                          className="object-contain"
+                        />
+                      </ItemMedia>
+                    )}
+                    <ItemContent>
+                      <ItemTitle>{cert.name}</ItemTitle>
+                    </ItemContent>
+                    <ItemActions>
+                      <ExternalLink className="size-4" />
+                    </ItemActions>
+                  </a>
+                </Item>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Languages Section */}
+        {cvData.language && cvData.language.length > 0 && (
+          <div className="space-y-3">
+            <Typography variant="muted" className="uppercase tracking-widest text-xs text-center">
+              Languages
+            </Typography>
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-3 justify-center">
+              {cvData.language.map((language) => (
+                <div key={language.id} className="flex items-center gap-2">
+                  <Typography variant="p" className="text-sm">
+                    {language.region}
+                  </Typography>
+                  <Badge variant="secondary" className="text-xs">
+                    {language.level}
+                  </Badge>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
