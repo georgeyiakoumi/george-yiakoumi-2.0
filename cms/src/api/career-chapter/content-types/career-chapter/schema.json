@@ -36,6 +36,18 @@
     },
     "city": {
       "type": "string"
+    },
+    "hybrid": {
+      "type": "boolean",
+      "default": false
+    },
+    "remote": {
+      "type": "boolean",
+      "default": false
+    },
+    "description": {
+      "type": "blocks",
+      "required": true
     }
   }
 }
