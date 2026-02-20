@@ -352,6 +352,7 @@ export async function getTools() {
       query: {
         'populate': '*',
       },
+      cache: 'no-store',
       tags: ['tools'],
     });
     return data;
