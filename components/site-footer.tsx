@@ -56,22 +56,17 @@ export function SiteFooter() {
       <div className="xl:hidden">
         <Drawer open={open} onOpenChange={setOpen}>
           <DrawerTrigger asChild>
-            <button className="cursor-pointer">
+            <button >
               <LogoSVG />
             </button>
           </DrawerTrigger>
           <DrawerContent>
-            <DrawerHeader>
+            <DrawerHeader className="gap-3 py-8">
               <DrawerTitle>© {currentYear} {AUTHOR.fullName}</DrawerTitle>
               <DrawerDescription>
                 A designer who codes. Built with Next.js & shadcn/ui.
               </DrawerDescription>
             </DrawerHeader>
-            <DrawerFooter>
-              <DrawerClose asChild>
-                <Button variant="outline">Close</Button>
-              </DrawerClose>
-            </DrawerFooter>
           </DrawerContent>
         </Drawer>
       </div>

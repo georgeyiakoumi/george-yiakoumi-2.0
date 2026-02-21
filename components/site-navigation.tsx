@@ -23,7 +23,7 @@ export function SiteNavigation() {
   const githubIconRef = useRef<GithubIconHandle>(null);
 
   return (
-    <NavigationMenu orientation="vertical" className="bg-background rounded-full overflow-hidden md:rounded-md fixed box-border items-start left-1/2 -translate-x-1/2 md:left-8 lg:left-16 md:translate-x-0 bottom-8 md:bottom-auto md:top-8 lg:top-16 z-10">
+    <NavigationMenu orientation="vertical" className="bg-background rounded-full overflow-hidden md:overflow-visible md:rounded-md fixed box-border items-start left-1/2 -translate-x-1/2 md:left-8 lg:left-16 md:translate-x-0 bottom-8 md:bottom-auto md:top-8 lg:top-16 z-10">
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuLink asChild active={pathname === NAV_LINKS.about.href}>

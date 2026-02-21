@@ -77,7 +77,7 @@ export function ThemedLogo({ data }: ThemedLogoProps) {
   const logoItem = (
     <Item
       variant="default"
-      className="size-full justify-center aspect-square cursor-pointer hover:border-primary/50 transition-colors"
+      className="size-full justify-center aspect-square lg:hover:border-primary/50 transition-colors"
       role="img"
       aria-label={`Logo for ${data.name}`}
       style={cssVariables}
