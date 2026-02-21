@@ -16,7 +16,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
   return (
     <Link
       href={`/project/${project.slug}`}
-      className="group relative overflow-hidden rounded-3xl bg-background border-border border block h-full w-full transition-transform xl:hover:scale-105"
+      className="group relative overflow-hidden rounded-3xl bg-background border-border border block h-full w-full motion-safe:transition-transform motion-safe:duration-200 motion-safe:ease-out motion-safe:active:scale-[0.97] motion-safe:xl:hover:scale-105 motion-reduce:transition-none xl:will-change-transform"
       style={{ minHeight: '16rem' }}
     >
       {/* Background Image */}
@@ -26,7 +26,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
             src={thumbnailUrl}
             alt={project.project_thumb?.alternativeText || project.title || ''}
             fill
-            className="object-cover lg:opacity-50 group-hover:opacity-100 transition-opacity duration-300"
+            className="object-cover lg:opacity-50 lg:blur-[2px] group-hover:opacity-100 group-hover:blur-0 motion-safe:transition-[opacity,filter] motion-safe:duration-300 motion-safe:ease-out motion-reduce:transition-none lg:will-change-[opacity,filter]"
           />
         </div>
       ) : (
@@ -36,7 +36,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
       {/* Content */}
       <div className="relative p-4 flex flex-col justify-center items-center h-full">
         <div className="pointer-events-none max-w-3xs">
-          <div className="bg-primary !text-primary-foreground px-3 py-2 rounded-md transition-all xl:group-hover:bg-primary/90">
+          <div className="bg-primary !text-primary-foreground px-3 py-2 rounded-md motion-safe:transition-all motion-safe:duration-200 motion-safe:ease-out motion-reduce:transition-none motion-safe:xl:group-hover:bg-primary/90">
             <Typography variant="p" as="h3" className="text-center md:text-sm md:font-medium md:leading-5 !text-primary-foreground">
               {project.title}
             </Typography>
