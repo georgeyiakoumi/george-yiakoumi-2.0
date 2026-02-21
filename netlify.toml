@@ -36,10 +36,16 @@ package = "@netlify/plugin-nextjs"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# Rewrite cv subdomain to /cv page (keeps URL as cv.georgeyiakoumi.com)
+# cv.georgeyiakoumi.com shows /cv page, keeps the subdomain URL
 [[redirects]]
-  from = "/*"
-  to = "/cv/:splat"
+  from = "https://cv.georgeyiakoumi.com"
+  to = "/cv"
   status = 200
-  force = false
-  conditions = {Host = ["cv.georgeyiakoumi.com"]}
+  force = true
+
+# Redirect any other path on cv subdomain to main domain
+[[redirects]]
+  from = "https://cv.georgeyiakoumi.com/*"
+  to = "https://georgeyiakoumi.com/:splat"
+  status = 301
+  force = true
