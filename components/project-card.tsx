@@ -16,7 +16,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
   return (
     <Link
       href={`/project/${project.slug}`}
-      className="group relative overflow-hidden rounded-3xl bg-background border-border border block h-full w-full"
+      className="group relative overflow-hidden rounded-3xl bg-background border-border border block h-full w-full transition-transform xl:hover:scale-105"
       style={{ minHeight: '16rem' }}
     >
       {/* Background Image */}
@@ -36,8 +36,8 @@ export function ProjectCard({ project }: ProjectCardProps) {
       {/* Content */}
       <div className="relative p-4 flex flex-col justify-center items-center h-full">
         <div className="pointer-events-none max-w-3xs">
-          <div className="bg-muted/80 backdrop-blur-sm px-3 py-2 border border-border rounded-lg">
-            <Typography variant="small" as="h3" className="text-center">
+          <div className="bg-primary !text-primary-foreground px-3 py-2 rounded-md transition-all xl:group-hover:bg-primary/90">
+            <Typography variant="p" as="h3" className="text-center md:text-sm md:font-medium md:leading-5 !text-primary-foreground">
               {project.title}
             </Typography>
           </div>

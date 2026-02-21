@@ -6,8 +6,7 @@ import { SquareLibrary } from "lucide-react";
 import { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription } from "@/components/ui/empty";
 import { Section } from "@/components/section";
 import { Typography } from "@/components/ui/typography";
-import { CursorProvider, CursorFollow } from "@/components/animate-ui/components/animate/cursor";
-import { ProjectCard } from "@/components/project-card";
+import { ProjectsGrid } from "@/components/projects-grid";
 
 export const generateMetadata = async () => {
   return generatePageMetadata({
@@ -46,17 +45,7 @@ export default async function Portfolio() {
         Projects
       </Typography>
 
-      <CursorProvider>
-        <CursorFollow side="bottom" align="end">
-          View project
-        </CursorFollow>
-
-        <div className="grid w-full lg:grid-cols-2 2xl:grid-cols-3 auto-rows-[16rem] gap-8">
-          {projects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
-        </div>
-      </CursorProvider>
+      <ProjectsGrid projects={projects} />
     </Section>
   );
 }
