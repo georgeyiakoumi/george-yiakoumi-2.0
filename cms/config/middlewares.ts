@@ -20,7 +20,8 @@ export default [
       origin: [
         'http://localhost:8888', //Netlify
         'http://localhost:3000', //React
-        'https://georgeyiakoumi.com' //Live
+        'https://georgeyiakoumi.com', //Live
+        'https://cv.georgeyiakoumi.com' //CV subdomain
       ],
 
       headers: ['Content-Type', 'Authorization'],
