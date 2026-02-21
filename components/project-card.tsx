@@ -16,7 +16,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
   return (
     <Link
       href={`/project/${project.slug}`}
-      className="group relative overflow-hidden rounded-3xl bg-background border-border border block h-full w-full transition-transform xl:hover:scale-105"
+      className="group relative overflow-hidden rounded-3xl bg-background border-border border block h-full w-full transition-transform duration-200 ease-out active:scale-[0.97] xl:hover:scale-105"
       style={{ minHeight: '16rem' }}
     >
       {/* Background Image */}
@@ -26,7 +26,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
             src={thumbnailUrl}
             alt={project.project_thumb?.alternativeText || project.title || ''}
             fill
-            className="object-cover lg:opacity-50 group-hover:opacity-100 transition-opacity duration-300"
+            className="object-cover lg:opacity-50 lg:blur-[2px] group-hover:opacity-100 group-hover:blur-0 transition-[opacity,filter] duration-300 ease-out"
           />
         </div>
       ) : (

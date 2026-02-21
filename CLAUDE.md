@@ -100,6 +100,31 @@ This is a personal portfolio website built with modern web technologies to showc
 - Smooth CSS transitions for theme switching and UI interactions
 - Loading states with skeleton components
 
+#### Animation Best Practices (Reference: emilkowal.ski/ui/7-practical-animation-tips)
+
+**Core Principles:**
+1. **Button Active States**: Apply `active:scale-[0.97]` for immediate tactile feedback on all interactive elements
+2. **Natural Motion**: Never animate from `scale(0)` - start at `scale(0.9)` or higher for organic motion
+3. **Tooltip Interactions**: First tooltip shows with delay; subsequent tooltips skip delay and animation using `data-instant` attribute
+4. **Easing Strategy**:
+   - Use `ease-out` for entering/exiting content (accelerates at start, feels responsive)
+   - Target 180ms duration for most UI animations, never exceed 300ms
+   - Prefer custom easing curves (easings.co) over browser defaults for refined motion
+5. **Origin-Aware Animations**: Set `transform-origin` using CSS variables (e.g., `--radix-dropdown-menu-content-transform-origin`) so popovers/dropdowns scale from trigger point
+6. **Speed as Priority**:
+   - Fast animations improve perceived performance
+   - Remove animations for frequently repeated interactions (delight becomes friction)
+   - Faster spinners make loading feel quicker regardless of actual duration
+7. **Blur Transitions**: Apply `filter: blur(2px)` during state transitions to mask imperfections and blend discrete states
+8. **Responsive Breakpoints**: Hover effects must use `xl:hover:` prefix (1280px+) to prevent mobile/tablet interaction issues
+9. **Compound Details**: Small unseen refinements aggregate to create polished, intentional interfaces
+
+**Implementation Guidelines:**
+- Keep animations smooth and performant - measure with Chrome DevTools Performance panel
+- Test animations at different speeds and on lower-end devices
+- Consider motion preferences using `prefers-reduced-motion` media query
+- All hover effects and scale transforms should be desktop-only (xl breakpoint)
+
 ### Dark Mode
 - System-aware dark mode with manual toggle
 - Persistent theme selection

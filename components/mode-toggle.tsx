@@ -27,7 +27,7 @@ export function ModeToggle() {
     <div className="fixed box-border flex items-center justify-center p-4 lg:p-0 right-4 top-4 lg:right-16 lg:top-16 z-11">
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="secondary" size="icon" onClick={toggleTheme} className="bg-background hover:bg-background xl:hover:bg-secondary/80 transition-transform xl:cursor-pointer xl:hover:scale-120">
+          <Button variant="secondary" size="icon" onClick={toggleTheme} className="bg-background hover:bg-background xl:hover:bg-secondary/80 transition-transform duration-200 ease-out xl:cursor-pointer xl:hover:scale-120">
             <AnimateIcon animate={animate} asChild>
               <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-transform dark:-rotate-90 dark:scale-0" />
             </AnimateIcon>
