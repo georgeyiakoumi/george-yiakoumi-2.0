@@ -38,8 +38,8 @@ package = "@netlify/plugin-nextjs"
 
 # Rewrite cv subdomain to /cv page (keeps URL as cv.georgeyiakoumi.com)
 [[redirects]]
-  from = "https://cv.georgeyiakoumi.com/*"
+  from = "/*"
   to = "/cv/:splat"
   status = 200
-  force = true
+  force = false
   conditions = {Host = ["cv.georgeyiakoumi.com"]}
