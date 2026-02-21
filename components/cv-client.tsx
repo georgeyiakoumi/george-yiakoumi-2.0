@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
+import { useTheme } from "next-themes";
 import Image from "next/image";
 import { Typography } from "@/components/ui/typography";
 import { Badge } from "@/components/ui/badge";
@@ -9,12 +10,14 @@ import { Button } from "@/components/ui/button";
 import { Item, ItemMedia, ItemContent, ItemTitle, ItemActions } from "@/components/ui/item";
 import { Mail, Globe, Linkedin, ExternalLink } from "lucide-react";
 import { CVExportControls } from "@/components/cv-export-controls";
-import type { CVPageData, CareerChapterData, CertificateData } from "@/lib/strapi-queries";
+import { getStrapiMediaURL } from "@/lib/strapi";
+import type { CVPageData, CareerChapterData, CertificateData, ToolData } from "@/lib/strapi-queries";
 
 interface CVClientProps {
   cvData: CVPageData;
   careerChapters: CareerChapterData[];
   certificates: CertificateData[];
+  tools: ToolData[];
 }
 
 function formatDate(dateString: string): string {
@@ -30,7 +33,63 @@ function renderRichText(content: Array<{ type: string; children?: Array<{ type: 
     .join("\n");
 }
 
-export function CVClient({ cvData, careerChapters, certificates }: CVClientProps) {
+function ToolBadge({ tool }: { tool: ToolData }) {
+  const { resolvedTheme } = useTheme();
+  const [svgContent, setSvgContent] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
+  const imageUrl = tool.image?.url ? getStrapiMediaURL(tool.image.url) : null;
+  const isSvg = tool.image?.ext === '.svg';
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!imageUrl || !isSvg) return;
+
+    fetch(imageUrl)
+      .then(res => res.text())
+      .then(setSvgContent)
+      .catch(console.error);
+  }, [imageUrl, isSvg]);
+
+  // Merge CSS variables based on current theme
+  // Only apply theme-specific variables after mounting to prevent hydration mismatch
+  const cssVariables = {
+    ...(tool.cssVariables || {}),
+    ...(mounted && resolvedTheme === 'dark' && tool.cssVariablesDark ? tool.cssVariablesDark : {}),
+  } as React.CSSProperties;
+
+  return (
+    <Badge
+      variant="secondary"
+      className={`gap-2 ${tool.classes || ""}`}
+      style={cssVariables}
+    >
+      {tool.image && (
+        <>
+          {isSvg && svgContent ? (
+            <span
+              className="size-4 [&>svg]:size-full [&>svg]:object-contain"
+              dangerouslySetInnerHTML={{ __html: svgContent }}
+            />
+          ) : (
+            <Image
+              src={tool.image.url}
+              alt={tool.image.alternativeText || tool.name}
+              width={16}
+              height={16}
+              className="object-contain"
+            />
+          )}
+        </>
+      )}
+      {tool.name}
+    </Badge>
+  );
+}
+
+export function CVClient({ cvData, careerChapters, certificates, tools }: CVClientProps) {
   const contentRef = useRef<HTMLDivElement>(null);
 
   const description = renderRichText(cvData.description);
@@ -126,6 +185,20 @@ export function CVClient({ cvData, careerChapters, certificates }: CVClientProps
             ))}
           </div>
         </div>
+
+        {/* Skills / Tools Section */}
+        {tools && tools.length > 0 && (
+          <div className="space-y-6">
+            <h2 className="uppercase font-bold tracking-widest text-xs text-center">
+              Skills / Tools
+            </h2>
+            <div className="flex flex-wrap items-center gap-3 justify-center">
+              {tools.map((tool) => (
+                <ToolBadge key={tool.id} tool={tool} />
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Career History Section */}
         <div className="space-y-6">
