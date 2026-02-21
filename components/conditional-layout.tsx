@@ -5,10 +5,17 @@ import { ProgressiveBlur } from "@/components/ui/progressive-blur";
 import { SiteNavigation } from "@/components/site-navigation";
 import { SiteFooter } from "@/components/site-footer";
 import { ScrollProgressProvider, ScrollProgress, ScrollProgressContainer } from "@/components/animate-ui/primitives/animate/scroll-progress";
+import { useEffect, useState } from "react";
 
 export function ConditionalLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isCVPage = pathname === "/cv";
+  const [isCVSubdomain, setIsCVSubdomain] = useState(false);
+
+  useEffect(() => {
+    setIsCVSubdomain(window.location.hostname === 'cv.georgeyiakoumi.com');
+  }, []);
+
+  const isCVPage = pathname === "/cv" || isCVSubdomain;
 
   if (isCVPage) {
     // Simple layout for CV page
