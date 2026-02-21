@@ -1,6 +1,6 @@
 import { generatePageMetadata } from "@/lib/metadata";
 import { CVClient } from "@/components/cv-client";
-import { getCVPage, getCareerChapters, getCertificates } from "@/lib/strapi-queries";
+import { getCVPage, getCareerChapters, getCertificates, getTools } from "@/lib/strapi-queries";
 
 export const revalidate = 3600;
 
@@ -13,10 +13,11 @@ export const generateMetadata = async () => {
 };
 
 export default async function CVPage() {
-  const [cvData, careerChapters, certificates] = await Promise.all([
+  const [cvData, careerChapters, certificates, tools] = await Promise.all([
     getCVPage(),
     getCareerChapters(),
     getCertificates(),
+    getTools(),
   ]);
 
   if (!cvData) {
@@ -27,5 +28,5 @@ export default async function CVPage() {
     );
   }
 
-  return <CVClient cvData={cvData} careerChapters={careerChapters} certificates={certificates} />;
+  return <CVClient cvData={cvData} careerChapters={careerChapters} certificates={certificates} tools={tools} />;
 }
