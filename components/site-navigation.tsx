@@ -1,13 +1,14 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { User } from "@/components/animate-ui/icons/user";
 import { GalleryHorizontalEnd } from "@/components/animate-ui/icons/gallery-vertical-end";
 import { MessageCircleMore } from "@/components/animate-ui/icons/message-circle-more";
 import { AnimateIcon } from "@/components/animate-ui/icons/icon";
 import { GithubIcon, type GithubIconHandle } from "@/components/ui/github";
 import { LinkedinIcon, type LinkedinIconHandle } from "@/components/ui/linkedin";
+import { Spinner } from "@/components/ui/spinner";
 import Link from "next/link";
 import {
   NavigationMenu,
@@ -21,6 +22,12 @@ export function SiteNavigation() {
   const pathname = usePathname();
   const linkedinIconRef = useRef<LinkedinIconHandle>(null);
   const githubIconRef = useRef<GithubIconHandle>(null);
+  const [loadingPath, setLoadingPath] = useState<string | null>(null);
+
+  // Reset loading state when pathname changes
+  useEffect(() => {
+    setLoadingPath(null);
+  }, [pathname]);
 
   return (
     <NavigationMenu orientation="vertical" className="bg-background rounded-full overflow-hidden md:overflow-visible md:rounded-md fixed box-border items-start left-1/2 -translate-x-1/2 md:left-8 lg:left-16 md:translate-x-0 bottom-8 md:bottom-auto md:top-8 lg:top-16 z-10">
@@ -28,8 +35,16 @@ export function SiteNavigation() {
         <NavigationMenuItem>
           <NavigationMenuLink asChild active={pathname === NAV_LINKS.about.href}>
             <AnimateIcon animateOnHover asChild>
-              <Link href={NAV_LINKS.about.href} aria-label={NAV_LINKS.about.ariaLabel}>
-                <User />
+              <Link
+                href={NAV_LINKS.about.href}
+                aria-label={NAV_LINKS.about.ariaLabel}
+                onClick={() => setLoadingPath(NAV_LINKS.about.href)}
+              >
+                {loadingPath === NAV_LINKS.about.href ? (
+                  <Spinner className="md:hidden" />
+                ) : (
+                  <User />
+                )}
                 <span>{NAV_LINKS.about.label}</span>
               </Link>
             </AnimateIcon>
@@ -38,8 +53,16 @@ export function SiteNavigation() {
         <NavigationMenuItem>
           <NavigationMenuLink asChild active={pathname === NAV_LINKS.projects.href}>
             <AnimateIcon animateOnHover asChild>
-              <Link href={NAV_LINKS.projects.href} aria-label={NAV_LINKS.projects.ariaLabel}>
-                <GalleryHorizontalEnd />
+              <Link
+                href={NAV_LINKS.projects.href}
+                aria-label={NAV_LINKS.projects.ariaLabel}
+                onClick={() => setLoadingPath(NAV_LINKS.projects.href)}
+              >
+                {loadingPath === NAV_LINKS.projects.href ? (
+                  <Spinner className="md:hidden" />
+                ) : (
+                  <GalleryHorizontalEnd />
+                )}
                 <span>{NAV_LINKS.projects.label}</span>
               </Link>
             </AnimateIcon>
@@ -48,8 +71,16 @@ export function SiteNavigation() {
         <NavigationMenuItem>
           <NavigationMenuLink asChild active={pathname === NAV_LINKS.contact.href}>
             <AnimateIcon animateOnHover asChild>
-              <Link href={NAV_LINKS.contact.href} aria-label={NAV_LINKS.contact.ariaLabel}>
-                <MessageCircleMore />
+              <Link
+                href={NAV_LINKS.contact.href}
+                aria-label={NAV_LINKS.contact.ariaLabel}
+                onClick={() => setLoadingPath(NAV_LINKS.contact.href)}
+              >
+                {loadingPath === NAV_LINKS.contact.href ? (
+                  <Spinner className="md:hidden" />
+                ) : (
+                  <MessageCircleMore />
+                )}
                 <span>{NAV_LINKS.contact.label}</span>
               </Link>
             </AnimateIcon>
