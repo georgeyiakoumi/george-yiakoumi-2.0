@@ -6,9 +6,10 @@ import type { ProjectData } from "@/lib/strapi-queries";
 
 interface ProjectCardProps {
   project: ProjectData;
+  disableHoverScale?: boolean;
 }
 
-export function ProjectCard({ project }: ProjectCardProps) {
+export function ProjectCard({ project, disableHoverScale = false }: ProjectCardProps) {
   const thumbnailUrl = project.project_thumb
     ? getStrapiMediaURL(project.project_thumb.url)
     : null;
@@ -16,7 +17,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
   return (
     <Link
       href={`/project/${project.slug}`}
-      className="group relative overflow-hidden rounded-3xl bg-background border-border border block h-full w-full motion-safe:transition-transform motion-safe:duration-200 motion-safe:ease-out motion-safe:active:scale-[0.97] motion-safe:xl:hover:scale-105 motion-reduce:transition-none xl:will-change-transform"
+      className={`group relative overflow-hidden rounded-3xl bg-background border-border border block h-full w-full motion-safe:transition-transform motion-safe:duration-200 motion-safe:ease-out motion-safe:active:scale-[0.97] motion-reduce:transition-none ${!disableHoverScale ? 'motion-safe:xl:hover:scale-105 xl:will-change-transform' : ''}`}
       style={{ minHeight: '16rem' }}
     >
       {/* Background Image */}
