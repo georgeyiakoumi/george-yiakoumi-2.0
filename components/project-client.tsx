@@ -198,8 +198,8 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
       </article>
 
       {otherProjects.length > 0 && (
-        <section className="flex flex-col gap-8 min-h-dvh items-center justify-center w-full mx-auto md:max-w-xl lg:max-w-2xl xl:max-w-4xl 2xl:max-w-7xl">
-          <Typography variant="h2" align="center" className="mb-8">
+        <section className="flex flex-col gap-8 h-screen md:min-h-dvh items-center justify-center w-full mx-auto md:max-w-xl lg:max-w-2xl xl:max-w-4xl 2xl:max-w-7xl bg-muted md:bg-transparent">
+          <Typography variant="h2" align="center">
             Other projects
           </Typography>
 
@@ -222,7 +222,7 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
                 <CarouselContent className="ml-0">
                   {otherProjects.map((otherProject) => (
                     <CarouselItem key={otherProject.id} className=" lg:basis-1/1 xl:basis-1/3 2xl:basis-1/3 px-4">
-                      <ProjectCard project={otherProject} />
+                      <ProjectCard project={otherProject} disableHoverScale />
                     </CarouselItem>
                   ))}
                 </CarouselContent>
