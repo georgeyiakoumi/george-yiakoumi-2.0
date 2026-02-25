@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import { getStrapiMediaURL } from './strapi';
 import { cn } from './utils';
+import { Typography } from '@/components/ui/typography';
 
 interface RichTextChild {
   type: string;
@@ -83,13 +84,13 @@ function renderBlock(block: RichTextBlock, index: number): React.ReactNode {
 
     case 'heading':
       const headingChildren = block.children?.map((child, i) => renderChild(child, i));
-      const HeadingTag = `h${block.level || 2}` as keyof React.JSX.IntrinsicElements;
-      return <HeadingTag key={index} className="text-gray-600 dark:text-gray-400">{headingChildren}</HeadingTag>;
+      const headingVariant = `h${block.level || 2}` as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+      return <Typography key={index} variant={headingVariant} className="mb-4 last:mb-0">{headingChildren}</Typography>;
 
     case 'list':
       const listItems = block.children?.map((child, i) => renderChild(child, i));
       const ListTag = block.format === 'ordered' ? 'ol' : 'ul';
-      return <ListTag key={index} className={`text-gray-600 dark:text-gray-400 ${block.format === 'ordered' ? 'list-decimal list-inside' : 'list-disc list-inside'}`}>{listItems}</ListTag>;
+      return <ListTag key={index} className={`text-gray-600 dark:text-gray-400 mb-4 last:mb-0 ${block.format === 'ordered' ? 'list-decimal list-inside' : 'list-disc list-inside'}`}>{listItems}</ListTag>;
 
     case 'list-item':
       // This shouldn't normally be rendered directly as it's handled by renderChild
@@ -98,11 +99,11 @@ function renderBlock(block: RichTextBlock, index: number): React.ReactNode {
 
     case 'quote':
       const quoteChildren = block.children?.map((child, i) => renderChild(child, i));
-      return <blockquote key={index} className="border-l-4 border-gray-300 dark:border-gray-700 pl-4 italic text-gray-600 dark:text-gray-400">{quoteChildren}</blockquote>;
+      return <blockquote key={index} className="border-l-4 border-gray-300 dark:border-gray-700 pl-4 italic text-gray-600 dark:text-gray-400 mb-4 last:mb-0">{quoteChildren}</blockquote>;
 
     case 'code':
       const codeChildren = block.children?.map((child, i) => renderChild(child, i));
-      return <pre key={index} className="bg-gray-100 dark:bg-gray-900 p-4 rounded-lg overflow-x-auto text-gray-600 dark:text-gray-400"><code>{codeChildren}</code></pre>;
+      return <pre key={index} className="bg-gray-100 dark:bg-gray-900 p-4 rounded-lg overflow-x-auto text-gray-600 dark:text-gray-400 mb-4 last:mb-0"><code>{codeChildren}</code></pre>;
 
     case 'link':
       const linkChildren = block.children?.map((child, i) => renderChild(child, i));
