@@ -79,7 +79,8 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
           width={1920}
           height={1080}
           sizes="100vw"
-          className="project-image w-full h-auto md:rounded-lg md:max-w-lg lg:max-w-3xl mx-auto md:border-border md:border"
+          className="project-image w-full h-auto md:rounded-lg md:max-w-lg lg:max-w-3xl mx-auto md:border-border md:border select-none"
+          draggable={false}
           priority
         />
       )}

@@ -25,7 +25,8 @@ export function ImageBlock({ block, projectTitle }: ImageBlockProps) {
         width={block.image.width || 1920}
         height={block.image.height || 1080}
         sizes="100vw"
-        className={`project-image h-auto ${sizeClass} mx-auto md:border-border md:border md:rounded-lg`}
+        className={`project-image h-auto ${sizeClass} mx-auto md:border-border md:border md:rounded-lg select-none`}
+        draggable={false}
       />
       {block.caption && (
         <Typography variant="muted" className="text-center px-8 max-w-2xl">
