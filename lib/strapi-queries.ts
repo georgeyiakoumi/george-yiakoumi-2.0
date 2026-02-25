@@ -276,6 +276,10 @@ export async function getProjects(options?: {
   try {
     const query: Record<string, string | number | boolean> = {
       'populate[body][populate]': '*',
+      'populate[project_thumb][fields][0]': 'url',
+      'populate[project_thumb][fields][1]': 'alternativeText',
+      'populate[project_thumb][fields][2]': 'width',
+      'populate[project_thumb][fields][3]': 'height',
       'sort[0]': 'date:desc',
     };
 
@@ -306,6 +310,10 @@ export async function getProjectBySlug(slug: string) {
       query: {
         'filters[slug][$eq]': slug,
         'populate[body][populate]': '*',
+        'populate[project_thumb][fields][0]': 'url',
+        'populate[project_thumb][fields][1]': 'alternativeText',
+        'populate[project_thumb][fields][2]': 'width',
+        'populate[project_thumb][fields][3]': 'height',
       },
       tags: ['projects', `project-${slug}`],
     });
