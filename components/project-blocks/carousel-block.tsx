@@ -22,39 +22,41 @@ export function CarouselBlock({ block, projectTitle }: CarouselBlockProps) {
           }}
           className="w-full"
         >
-          <CarouselContent>
-            {block.slides.map((slide) => {
-              const slideUrl = getStrapiMediaURL(slide.url);
-              const isVideo = slide.mime?.startsWith('video/');
+          <div className="border border-border rounded-lg mb-8">
+            <CarouselContent>
+              {block.slides.map((slide) => {
+                const slideUrl = getStrapiMediaURL(slide.url);
+                const isVideo = slide.mime?.startsWith('video/');
 
-              return (
-                <CarouselItem key={slide.id}>
-                  {isVideo ? (
-                    <video
-                      src={slideUrl || ''}
-                      className="project-image w-full h-auto rounded-lg"
-                      controls
-                      playsInline
-                    >
-                      Your browser does not support the video tag.
-                    </video>
-                  ) : (
-                    <Image
-                      src={slideUrl || ''}
-                      alt={slide.alternativeText || projectTitle}
-                      width={slide.width || 1920}
-                      height={slide.height || 1080}
-                      sizes="100vw"
-                      className="project-image w-full h-auto rounded-lg"
-                    />
-                  )}
-                </CarouselItem>
-              );
-            })}
-          </CarouselContent>
-          <CarouselPrevious className="left-4" />
-          <CarouselNext className="right-4" />
-          <CarouselPagination className="mt-4" />
+                return (
+                  <CarouselItem key={slide.id}>
+                    {isVideo ? (
+                      <video
+                        src={slideUrl || ''}
+                        className="project-image w-full h-auto rounded-lg"
+                        controls
+                        playsInline
+                      >
+                        Your browser does not support the video tag.
+                      </video>
+                    ) : (
+                      <Image
+                        src={slideUrl || ''}
+                        alt={slide.alternativeText || projectTitle}
+                        width={slide.width || 1920}
+                        height={slide.height || 1080}
+                        sizes="100vw"
+                        className="project-image w-full h-auto rounded-lg"
+                      />
+                    )}
+                  </CarouselItem>
+                );
+              })}
+            </CarouselContent>
+            <CarouselPrevious className="left-4 lg:cursor-pointer" />
+            <CarouselNext className="right-4 lg:cursor-pointer" />
+          </div>
+          <CarouselPagination className="absolute left-0 right-0 bottom-[-32]" />
         </Carousel>
       </div>
       {block.caption && (
