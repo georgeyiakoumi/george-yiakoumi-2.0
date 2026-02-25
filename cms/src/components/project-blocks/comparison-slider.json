@@ -1,0 +1,38 @@
+{
+  "collectionName": "components_project_blocks_comparison_sliders",
+  "info": {
+    "displayName": "comparison-slider",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "before_image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "after_image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "before_label": {
+      "type": "text"
+    },
+    "after_label": {
+      "type": "text"
+    }
+  }
+}

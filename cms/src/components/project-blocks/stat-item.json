@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_project_blocks_stat_items",
+  "info": {
+    "displayName": "stat-item"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string"
+    },
+    "value": {
+      "type": "decimal"
+    },
+    "suffix": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    }
+  }
+}
