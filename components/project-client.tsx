@@ -1,10 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef } from "react";
 
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, CarouselPagination } from "@/components/ui/carousel";
 import { ProgressiveBlur } from "@/components/ui/progressive-blur";
 
@@ -12,90 +10,14 @@ import { ArrowLeft } from "@/components/animate-ui/icons/arrow-left";
 import { AnimateIcon } from "@/components/animate-ui/icons/icon";
 
 import { getStrapiMediaURL } from "@/lib/strapi";
-import { renderStrapiRichText } from "@/lib/strapi-blocks-renderer";
-import { Section } from "@/components/section";
 import { Typography } from "@/components/ui/typography";
 import { ProjectCard } from "@/components/project-card";
+import { ProjectBlockRenderer } from "@/components/project-blocks";
+import type { ProjectData } from "@/lib/strapi-queries";
 
 interface ProjectClientProps {
-  project: any;
-  otherProjects: any[];
-}
-
-function ContentSection({ title, content }: { title: string; content: any }) {
-  if (!content) return null;
-
-  return (
-    <Section className="xl:grid xl:grid-cols-[auto_auto_1fr] xl:gap-x-16 [&:nth-child(even)>h2]:xl:order-2 [&:nth-child(even)>div:last-child]:xl:order-0">
-      <Typography variant="h2" className="xl:text-center xl:order-0">
-        {title}
-      </Typography>
-      <Separator orientation="vertical" className="xl:h-full xl:order-1" />
-      <div className="xl:order-2">
-        {renderStrapiRichText(content, "align-center max-w-2xl")}
-      </div>
-    </Section>
-  );
-}
-
-function MediaItem({ media, title }: { media: any; title: string }) {
-  const mediaUrl = getStrapiMediaURL(media.url);
-  const isVideo = media.mime?.startsWith('video/');
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    if (!isVideo || !videoRef.current) return;
-
-    const video = videoRef.current;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            video.play().catch(() => {
-              // Auto-play was prevented, user interaction required
-            });
-          } else {
-            video.pause();
-          }
-        });
-      },
-      { threshold: 0.5 } // Play when 50% visible
-    );
-
-    observer.observe(video);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [isVideo]);
-
-  if (isVideo) {
-    return (
-      <div className="relative w-full h-screen aspect-[9/12] md:aspect-[10/9] z-1">
-        <video
-          ref={videoRef}
-          src={mediaUrl || ''}
-          className="project-image object-cover md:border-border md:border w-full h-full"
-          loop
-          muted
-          playsInline
-        >
-          Your browser does not support the video tag.
-        </video>
-      </div>
-    );
-  }
-
-  return (
-    <Image
-      src={mediaUrl || ''}
-      alt={media?.alternativeText || title || ''}
-      width={1920}
-      height={1080}
-      sizes="100vw"
-      className="project-image w-full h-auto md:max-w-lg lg:max-w-2xl mx-auto md:border-border md:border"
-    />
-  );
+  project: ProjectData;
+  otherProjects: ProjectData[];
 }
 
 export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
@@ -107,9 +29,6 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
   const handleBack = () => {
     window.history.back();
   };
-
-  // Only use first 5 media items
-  const displayMedia = project.media ? project.media.slice(0, 5) : [];
 
   return (
     <section className="place-items-center relative">
@@ -125,9 +44,11 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
           {project.title}
         </Typography>
 
-        <Typography variant="lead" className="text-center">
-          {project.description}
-        </Typography>
+        {project.description && (
+          <Typography variant="lead" className="text-center">
+            {project.description}
+          </Typography>
+        )}
 
         <Typography variant="muted" className="flex items-center gap-2 flex-wrap justify-center">
           {project.project_client && (
@@ -163,38 +84,8 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
         />
       )}
 
-      <article className="flex flex-col w-full">
-
-        <ContentSection title="Challenge" content={project.challenge} />
-
-        {displayMedia[0] && (
-          <MediaItem media={displayMedia[0]} title={project.title} />
-        )}
-
-        <ContentSection title="Solution" content={project.solution} />
-
-        {displayMedia[1] && (
-          <MediaItem media={displayMedia[1]} title={project.title} />
-        )}
-
-        {project.role && typeof project.role !== 'string' && (
-          <>
-            <ContentSection title="My role" content={project.role} />
-
-            {displayMedia[2] && (
-              <MediaItem media={displayMedia[2]} title={project.title} />
-            )}
-          </>
-        )}
-
-        <ContentSection title="Impact" content={project.impact} />
-
-        {displayMedia[3] && (
-          <MediaItem media={displayMedia[3]} title={project.title} />
-        )}
-
-        <ContentSection title="Key takeaway" content={project.takeaway} />
-
+      <article className="flex flex-col w-full gap-8 my-16">
+        {project.body && <ProjectBlockRenderer blocks={project.body} projectTitle={project.title} />}
       </article>
 
       {otherProjects.length > 0 && (
