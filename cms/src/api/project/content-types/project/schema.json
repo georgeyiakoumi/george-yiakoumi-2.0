@@ -79,6 +79,17 @@
     },
     "takeaway": {
       "type": "blocks"
+    },
+    "body": {
+      "type": "dynamiczone",
+      "components": [
+        "project-blocks.video",
+        "project-blocks.stats",
+        "project-blocks.rich-text",
+        "project-blocks.image",
+        "project-blocks.comparison-slider",
+        "project-blocks.carousel"
+      ]
     }
   }
 }

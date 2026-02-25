@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_project_blocks_stats",
+  "info": {
+    "displayName": "stats",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "project-blocks.stat-item"
+    },
+    "chart_type": {
+      "type": "enumeration",
+      "enum": [
+        "bar",
+        "line",
+        "pie",
+        "number-only"
+      ]
+    },
+    "description": {
+      "type": "text"
+    }
+  }
+}

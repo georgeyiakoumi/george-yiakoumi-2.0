@@ -639,6 +639,16 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    body: Schema.Attribute.DynamicZone<
+      [
+        'project-blocks.video',
+        'project-blocks.stats',
+        'project-blocks.rich-text',
+        'project-blocks.image',
+        'project-blocks.comparison-slider',
+        'project-blocks.carousel',
+      ]
+    >;
     challenge: Schema.Attribute.Blocks;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
