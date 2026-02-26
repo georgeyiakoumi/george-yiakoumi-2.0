@@ -52,6 +52,107 @@ interface StrapiRichTextBlock {
   } | null;
 }
 
+// Dynamic Zone Block Types for Projects
+export interface RichTextBlock {
+  __component: 'project-blocks.rich-text';
+  id: number;
+  content: Array<{
+    type: string;
+    children?: Array<{
+      type: string;
+      text?: string;
+    }>;
+  }>;
+}
+
+export interface ImageBlock {
+  __component: 'project-blocks.image';
+  id: number;
+  image?: {
+    id: number;
+    url: string;
+    alternativeText?: string;
+    width?: number;
+    height?: number;
+    mime?: string;
+  };
+  caption?: string;
+  size?: 'full' | 'contained' | 'small';
+}
+
+export interface CarouselBlock {
+  __component: 'project-blocks.carousel';
+  id: number;
+  slides?: Array<{
+    id: number;
+    url: string;
+    alternativeText?: string;
+    width?: number;
+    height?: number;
+    mime?: string;
+  }>;
+  caption?: string;
+}
+
+export interface VideoBlock {
+  __component: 'project-blocks.video';
+  id: number;
+  url?: string;
+  file?: {
+    id: number;
+    url: string;
+    alternativeText?: string;
+    mime?: string;
+  };
+  caption?: string;
+}
+
+export interface ComparisonSliderBlock {
+  __component: 'project-blocks.comparison-slider';
+  id: number;
+  before_image?: {
+    id: number;
+    url: string;
+    alternativeText?: string;
+    width?: number;
+    height?: number;
+  };
+  after_image?: {
+    id: number;
+    url: string;
+    alternativeText?: string;
+    width?: number;
+    height?: number;
+  };
+  before_label?: string;
+  after_label?: string;
+}
+
+export interface StatItem {
+  id: number;
+  label: string;
+  value: number;
+  suffix?: string;
+  context?: string;
+  description?: string; // Strapi uses 'description' field name
+}
+
+export interface StatsBlock {
+  __component: 'project-blocks.stats';
+  id: number;
+  items?: StatItem[];
+  chart_type?: 'bar' | 'line' | 'pie' | 'number-only';
+  description?: string;
+}
+
+export type ProjectBlock =
+  | RichTextBlock
+  | ImageBlock
+  | CarouselBlock
+  | VideoBlock
+  | ComparisonSliderBlock
+  | StatsBlock;
+
 export interface ProjectData {
   id: number;
   documentId: string;
@@ -69,55 +170,22 @@ export interface ProjectData {
     width?: number;
     height?: number;
   };
-  project_hero_image?: {
-    id: number;
-    url: string;
-    alternativeText?: string;
-    width?: number;
-    height?: number;
-  };
   project_client?: string;
   project_role?: string;
-  role?: Array<{
-    type: string;
-    children?: Array<{
-      type: string;
-      text?: string;
-    }>;
-  }>;
-  challenge?: Array<{
-    type: string;
-    children?: Array<{
-      type: string;
-      text?: string;
-    }>;
-  }>;
-  solution?: Array<{
-    type: string;
-    children?: Array<{
-      type: string;
-      text?: string;
-    }>;
-  }>;
-  impact?: Array<{
-    type: string;
-    children?: Array<{
-      type: string;
-      text?: string;
-    }>;
-  }>;
-  takeaway?: Array<{
-    type: string;
-    children?: Array<{
-      type: string;
-      text?: string;
-    }>;
-  }>;
+  body?: ProjectBlock[];
   tools?: Array<{
     id: number;
     documentId: string;
     name: string;
     slug: string;
+  }>;
+  media?: Array<{
+    id: number;
+    url: string;
+    alternativeText?: string;
+    width?: number;
+    height?: number;
+    mime?: string;
   }>;
   createdAt: string;
   updatedAt: string;
@@ -207,7 +275,11 @@ export async function getProjects(options?: {
 }) {
   try {
     const query: Record<string, string | number | boolean> = {
-      'populate': '*',
+      'populate[body][populate]': '*',
+      'populate[project_thumb][fields][0]': 'url',
+      'populate[project_thumb][fields][1]': 'alternativeText',
+      'populate[project_thumb][fields][2]': 'width',
+      'populate[project_thumb][fields][3]': 'height',
       'sort[0]': 'date:desc',
     };
 
@@ -237,7 +309,11 @@ export async function getProjectBySlug(slug: string) {
       endpoint: '/projects',
       query: {
         'filters[slug][$eq]': slug,
-        'populate': '*',
+        'populate[body][populate]': '*',
+        'populate[project_thumb][fields][0]': 'url',
+        'populate[project_thumb][fields][1]': 'alternativeText',
+        'populate[project_thumb][fields][2]': 'width',
+        'populate[project_thumb][fields][3]': 'height',
       },
       tags: ['projects', `project-${slug}`],
     });

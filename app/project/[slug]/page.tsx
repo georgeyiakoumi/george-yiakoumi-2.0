@@ -25,8 +25,8 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
     });
   }
 
-  const projectImageUrl = project.project_hero_image
-    ? getStrapiMediaURL(project.project_hero_image.url)
+  const projectImageUrl = project.project_thumb
+    ? getStrapiMediaURL(project.project_thumb.url)
     : undefined;
 
   return generatePageMetadata({
