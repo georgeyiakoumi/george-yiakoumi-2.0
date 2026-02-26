@@ -18,14 +18,14 @@ export function ImageBlock({ block, projectTitle }: ImageBlockProps) {
     'w-full md:max-w-lg lg:max-w-2xl'; // contained (default)
 
   return (
-    <figure className="flex flex-col gap-4 items-center w-full my-8">
+    <figure className="flex flex-col gap-4 items-center w-full px-8 my-8">
       <Image
         src={imageUrl || ''}
         alt={block.image.alternativeText || projectTitle}
         width={block.image.width || 1920}
         height={block.image.height || 1080}
         sizes="100vw"
-        className={`project-image h-auto ${sizeClass} mx-auto md:border-border md:border md:rounded-lg select-none`}
+        className={`project-image h-auto ${sizeClass} mx-auto border-border border rounded-lg select-none`}
         draggable={false}
       />
       {block.caption && (
