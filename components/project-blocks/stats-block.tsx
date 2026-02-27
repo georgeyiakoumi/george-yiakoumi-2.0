@@ -35,6 +35,15 @@ interface StatsBlockProps {
   block: StatsBlockType;
 }
 
+// Reusable wrapper component for consistent styling
+function StatsWrapper({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return (
+    <figure className={`flex flex-col gap-4 items-center w-full md:max-w-md lg:max-w-xl xl:max-w-2xl mx-auto my-8 ${className}`}>
+      {children}
+    </figure>
+  );
+}
+
 export function StatsBlock({ block }: StatsBlockProps) {
   if (!block.items || block.items.length === 0) return null;
 
@@ -54,7 +63,7 @@ export function StatsBlock({ block }: StatsBlockProps) {
   // Render number-only stats
   if (chartType === 'number-only') {
     return (
-      <figure className="flex flex-col gap-4 items-center w-full my-8">
+      <StatsWrapper>
         <div className="w-full max-w-3xl md:max-w-md lg:max-w-xl mx-auto px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {block.items.map((item) => (
@@ -83,7 +92,7 @@ export function StatsBlock({ block }: StatsBlockProps) {
             {block.description}
           </Typography>
         )}
-      </figure>
+      </StatsWrapper>
     );
   }
 
@@ -109,8 +118,8 @@ export function StatsBlock({ block }: StatsBlockProps) {
     const isGradient = variant === 'gradient';
 
     return (
-      <section className="w-full my-16 px-8">
-        <div className="max-w-4xl mx-auto">
+      <StatsWrapper className="my-16 px-8">
+        <div className="max-w-4xl mx-auto w-full">
           {block.description && (
             <Typography variant="lead" className="text-center mb-12">
               {block.description}
@@ -143,7 +152,7 @@ export function StatsBlock({ block }: StatsBlockProps) {
             </AreaChart>
           </ChartContainer>
         </div>
-      </section>
+      </StatsWrapper>
     );
   }
 
@@ -152,8 +161,8 @@ export function StatsBlock({ block }: StatsBlockProps) {
     const isHorizontal = variant === 'horizontal';
 
     return (
-      <section className="w-full my-16 px-8">
-        <div className="max-w-4xl mx-auto">
+      <StatsWrapper className="my-16 px-8">
+        <div className="max-w-4xl mx-auto w-full">
           {block.description && (
             <Typography variant="lead" className="text-center mb-12">
               {block.description}
@@ -187,7 +196,7 @@ export function StatsBlock({ block }: StatsBlockProps) {
             </BarChart>
           </ChartContainer>
         </div>
-      </section>
+      </StatsWrapper>
     );
   }
 
@@ -197,8 +206,8 @@ export function StatsBlock({ block }: StatsBlockProps) {
     const showLineDots = variant === 'dots' || showDots;
 
     return (
-      <section className="w-full my-16 px-8">
-        <div className="max-w-4xl mx-auto">
+      <StatsWrapper className="my-16 px-8">
+        <div className="max-w-4xl mx-auto w-full">
           {block.description && (
             <Typography variant="lead" className="text-center mb-12">
               {block.description}
@@ -222,7 +231,7 @@ export function StatsBlock({ block }: StatsBlockProps) {
             </LineChart>
           </ChartContainer>
         </div>
-      </section>
+      </StatsWrapper>
     );
   }
 
@@ -242,8 +251,8 @@ export function StatsBlock({ block }: StatsBlockProps) {
     }, {} as ChartConfig);
 
     return (
-      <section className="w-full my-16 px-8">
-        <div className="max-w-4xl mx-auto">
+      <StatsWrapper className="my-16 px-8">
+        <div className="max-w-4xl mx-auto w-full">
           {block.description && (
             <Typography variant="lead" className="text-center mb-12">
               {block.description}
@@ -272,7 +281,7 @@ export function StatsBlock({ block }: StatsBlockProps) {
             </PieChart>
           </ChartContainer>
         </div>
-      </section>
+      </StatsWrapper>
     );
   }
 
@@ -284,8 +293,8 @@ export function StatsBlock({ block }: StatsBlockProps) {
     const isFilled = variant === 'filled';
 
     return (
-      <section className="w-full my-16 px-8">
-        <div className="max-w-4xl mx-auto">
+      <StatsWrapper className="my-16 px-8">
+        <div className="max-w-4xl mx-auto w-full">
           {block.description && (
             <Typography variant="lead" className="text-center mb-12">
               {block.description}
@@ -309,7 +318,7 @@ export function StatsBlock({ block }: StatsBlockProps) {
             </RadarChart>
           </ChartContainer>
         </div>
-      </section>
+      </StatsWrapper>
     );
   }
 
@@ -336,8 +345,8 @@ export function StatsBlock({ block }: StatsBlockProps) {
     }));
 
     return (
-      <section className="w-full my-16 px-8">
-        <div className="max-w-4xl mx-auto">
+      <StatsWrapper className="my-16 px-8">
+        <div className="max-w-4xl mx-auto w-full">
           {block.description && (
             <Typography variant="lead" className="text-center mb-12">
               {block.description}
@@ -363,7 +372,7 @@ export function StatsBlock({ block }: StatsBlockProps) {
             </RadialBarChart>
           </ChartContainer>
         </div>
-      </section>
+      </StatsWrapper>
     );
   }
 
