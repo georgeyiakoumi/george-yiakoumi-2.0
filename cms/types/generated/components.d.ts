@@ -123,11 +123,40 @@ export interface ProjectBlocksStats extends Struct.ComponentSchema {
     displayName: 'stats';
   };
   attributes: {
+    area_variant: Schema.Attribute.Enumeration<
+      ['default', 'linear', 'step', 'stacked', 'gradient']
+    > &
+      Schema.Attribute.DefaultTo<'default'>;
+    bar_variant: Schema.Attribute.Enumeration<
+      ['default', 'horizontal', 'multiple', 'stacked', 'negative']
+    > &
+      Schema.Attribute.DefaultTo<'default'>;
     chart_type: Schema.Attribute.Enumeration<
-      ['bar', 'line', 'pie', 'number-only']
+      ['area', 'bar', 'line', 'pie', 'radar', 'radial', 'number-only']
     >;
     description: Schema.Attribute.Text;
     items: Schema.Attribute.Component<'project-blocks.stat-item', true>;
+    line_variant: Schema.Attribute.Enumeration<
+      ['default', 'linear', 'step', 'multiple', 'dots']
+    > &
+      Schema.Attribute.DefaultTo<'default'>;
+    pie_variant: Schema.Attribute.Enumeration<
+      ['default', 'donut', 'donut-text', 'donut-active']
+    > &
+      Schema.Attribute.DefaultTo<'default'>;
+    radar_variant: Schema.Attribute.Enumeration<
+      ['default', 'dots', 'lines-only', 'circle', 'filled']
+    > &
+      Schema.Attribute.DefaultTo<'default'>;
+    radial_variant: Schema.Attribute.Enumeration<
+      ['default', 'stacked', 'text']
+    > &
+      Schema.Attribute.DefaultTo<'default'>;
+    show_axes: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    show_dots: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    show_grid: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    show_labels: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    show_legend: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
   };
 }
 

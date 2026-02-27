@@ -14,11 +14,97 @@
     "chart_type": {
       "type": "enumeration",
       "enum": [
+        "area",
         "bar",
         "line",
         "pie",
+        "radar",
+        "radial",
         "number-only"
       ]
+    },
+    "area_variant": {
+      "type": "enumeration",
+      "enum": [
+        "default",
+        "linear",
+        "step",
+        "stacked",
+        "gradient"
+      ],
+      "default": "default"
+    },
+    "bar_variant": {
+      "type": "enumeration",
+      "enum": [
+        "default",
+        "horizontal",
+        "multiple",
+        "stacked",
+        "negative"
+      ],
+      "default": "default"
+    },
+    "line_variant": {
+      "type": "enumeration",
+      "enum": [
+        "default",
+        "linear",
+        "step",
+        "multiple",
+        "dots"
+      ],
+      "default": "default"
+    },
+    "pie_variant": {
+      "type": "enumeration",
+      "enum": [
+        "default",
+        "donut",
+        "donut-text",
+        "donut-active"
+      ],
+      "default": "default"
+    },
+    "radar_variant": {
+      "type": "enumeration",
+      "enum": [
+        "default",
+        "dots",
+        "lines-only",
+        "circle",
+        "filled"
+      ],
+      "default": "default"
+    },
+    "radial_variant": {
+      "type": "enumeration",
+      "enum": [
+        "default",
+        "stacked",
+        "text"
+      ],
+      "default": "default"
+    },
+    "show_legend": {
+      "type": "boolean",
+      "default": true
+    },
+    "show_grid": {
+      "type": "boolean",
+      "default": true
+    },
+    "show_axes": {
+      "type": "boolean",
+      "default": true
+    },
+    "show_dots": {
+      "type": "boolean",
+      "default": false
+    },
+    "show_labels": {
+      "type": "boolean",
+      "default": false
     },
     "description": {
       "type": "text"

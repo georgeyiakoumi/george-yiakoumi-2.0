@@ -137,11 +137,29 @@ export interface StatItem {
   description?: string; // Strapi uses 'description' field name
 }
 
+export type AreaVariant = 'default' | 'linear' | 'step' | 'stacked' | 'gradient';
+export type BarVariant = 'default' | 'horizontal' | 'multiple' | 'stacked' | 'negative';
+export type LineVariant = 'default' | 'linear' | 'step' | 'multiple' | 'dots';
+export type PieVariant = 'default' | 'donut' | 'donut-text' | 'donut-active';
+export type RadarVariant = 'default' | 'dots' | 'lines-only' | 'circle' | 'filled';
+export type RadialVariant = 'default' | 'stacked' | 'text';
+
 export interface StatsBlock {
   __component: 'project-blocks.stats';
   id: number;
   items?: StatItem[];
-  chart_type?: 'bar' | 'line' | 'pie' | 'number-only';
+  chart_type?: 'area' | 'bar' | 'line' | 'pie' | 'radar' | 'radial' | 'number-only';
+  area_variant?: AreaVariant;
+  bar_variant?: BarVariant;
+  line_variant?: LineVariant;
+  pie_variant?: PieVariant;
+  radar_variant?: RadarVariant;
+  radial_variant?: RadialVariant;
+  show_legend?: boolean;
+  show_grid?: boolean;
+  show_axes?: boolean;
+  show_dots?: boolean;
+  show_labels?: boolean;
   description?: string;
 }
 
