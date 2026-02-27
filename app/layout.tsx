@@ -13,6 +13,9 @@ import "@/lib/tailwind-safelist";
 
 const mulish = Mulish({
   subsets: ["latin"],
+  display: 'swap',
+  preload: true,
+  fallback: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
 });
 
 export const generateMetadata = generateSiteMetadata;
