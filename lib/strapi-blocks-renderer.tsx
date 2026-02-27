@@ -152,6 +152,7 @@ export function renderStrapiRichText(
             src={imageUrl}
             alt={richTextBlock.Image?.alternativeText || 'Section image'}
             fill
+            sizes="100vw"
             className="object-cover"
           />
         </div>

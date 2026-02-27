@@ -17,6 +17,11 @@ export function ImageBlock({ block, projectTitle }: ImageBlockProps) {
     block.size === 'small' ? 'w-full md:max-w-md' :
     'w-full md:max-w-lg lg:max-w-2xl'; // contained (default)
 
+  const sizes =
+    block.size === 'full' ? '100vw' :
+    block.size === 'small' ? '(max-width: 768px) 100vw, 28rem' :
+    '(max-width: 768px) 100vw, (max-width: 1024px) 32rem, 48rem'; // contained (default)
+
   return (
     <figure className="flex flex-col gap-4 items-center w-full px-8 my-8">
       <Image
@@ -24,7 +29,7 @@ export function ImageBlock({ block, projectTitle }: ImageBlockProps) {
         alt={block.image.alternativeText || projectTitle}
         width={block.image.width || 1920}
         height={block.image.height || 1080}
-        sizes="100vw"
+        sizes={sizes}
         className={`project-image h-auto ${sizeClass} mx-auto border-border border rounded-lg select-none`}
         draggable={false}
       />

@@ -78,7 +78,7 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
           alt={project.project_thumb?.alternativeText || project.title || ''}
           width={1920}
           height={1080}
-          sizes="100vw"
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 32rem, 48rem"
           className="project-image w-full h-auto md:rounded-lg md:max-w-lg lg:max-w-3xl mx-auto md:border-border md:border select-none"
           draggable={false}
           priority

@@ -45,7 +45,7 @@ export function CarouselBlock({ block, projectTitle }: CarouselBlockProps) {
                         alt={slide.alternativeText || projectTitle}
                         width={slide.width || 1920}
                         height={slide.height || 1080}
-                        sizes="100vw"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 32rem, 48rem"
                         className="project-image w-full h-auto rounded-lg"
                       />
                     )}

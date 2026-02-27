@@ -93,7 +93,7 @@ export function ComparisonSliderBlock({ block, projectTitle }: ComparisonSliderB
               src={beforeImageUrl || ''}
               alt={block.before_label || 'Before'}
               fill
-              sizes="100vw"
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 32rem, 48rem"
               className="object-cover pointer-events-none select-none"
               draggable={false}
             />
@@ -109,7 +109,7 @@ export function ComparisonSliderBlock({ block, projectTitle }: ComparisonSliderB
                 src={afterImageUrl || ''}
                 alt={block.after_label || 'After'}
                 fill
-                sizes="100vw"
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 32rem, 48rem"
                 className="object-cover select-none"
                 draggable={false}
               />

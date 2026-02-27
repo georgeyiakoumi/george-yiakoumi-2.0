@@ -27,6 +27,7 @@ export function ProjectCard({ project, disableHoverScale = false }: ProjectCardP
             src={thumbnailUrl}
             alt={project.project_thumb?.alternativeText || project.title || ''}
             fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 33vw, 25vw"
             className="object-cover lg:opacity-50 lg:blur-[2px] group-hover:opacity-100 group-hover:blur-0 motion-safe:transition-[opacity,filter] motion-safe:duration-300 motion-safe:ease-out motion-reduce:transition-none lg:will-change-[opacity,filter]"
           />
         </div>
