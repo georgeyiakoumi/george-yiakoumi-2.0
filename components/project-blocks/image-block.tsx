@@ -12,10 +12,6 @@ export function ImageBlock({ block, projectTitle }: ImageBlockProps) {
   if (!block.image) return null;
 
   const imageUrl = getStrapiMediaURL(block.image.url);
-  const sizeClass =
-    block.size === 'full' ? 'w-full' :
-    block.size === 'small' ? 'w-full md:max-w-md' :
-    'w-full md:max-w-lg lg:max-w-2xl'; // contained (default)
 
   const sizes =
     block.size === 'full' ? '100vw' :
@@ -30,7 +26,7 @@ export function ImageBlock({ block, projectTitle }: ImageBlockProps) {
         width={block.image.width || 1920}
         height={block.image.height || 1080}
         sizes={sizes}
-        className={`project-image h-auto ${sizeClass} mx-auto border-border border rounded-lg select-none`}
+        className="h-auto md:max-w-md lg:max-w-xl xl:max-w-2xl mx-auto border-border border rounded-lg select-none"
         draggable={false}
       />
       {block.caption && (

@@ -9,7 +9,7 @@ export function RichTextBlock({ block }: RichTextBlockProps) {
   if (!block.content) return null;
 
   return (
-    <div className="max-w-2xl mx-auto px-8">
+    <div className="px-8 md:px-0 md:max-w-md lg:max-w-xl xl:max-w-2xl mx-auto">
       {renderStrapiRichText(block.content)}
     </div>
   );
