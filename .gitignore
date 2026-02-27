@@ -56,3 +56,6 @@ storybook-static
 
 # Local Netlify folder
 .netlify
+
+# References folder
+.references

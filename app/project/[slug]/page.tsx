@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { getProjects } from "@/lib/strapi-queries";
+import { getProjects, getProjectBySlug } from "@/lib/strapi-queries";
 import { getStrapiMediaURL } from "@/lib/strapi";
 import { generatePageMetadata, SITE_CONFIG } from "@/lib/metadata";
 import { ProjectClient } from "@/components/project-client";
@@ -46,13 +46,13 @@ export async function generateStaticParams() {
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { slug } = await params;
-  const projects = await getProjects();
-  const project = projects.find((p) => p.slug === slug);
+  const project = await getProjectBySlug(slug);
 
   if (!project) {
     notFound();
   }
 
+  const projects = await getProjects();
   const otherProjects = projects.filter((p) => p.slug !== slug);
 
   return <ProjectClient project={project} otherProjects={otherProjects} />;
