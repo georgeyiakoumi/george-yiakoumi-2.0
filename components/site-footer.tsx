@@ -56,7 +56,7 @@ export function SiteFooter() {
       <div className="xl:hidden">
         <Drawer open={open} onOpenChange={setOpen}>
           <DrawerTrigger asChild>
-            <button >
+            <button aria-label="Open footer information">
               <LogoSVG />
             </button>
           </DrawerTrigger>
@@ -76,7 +76,7 @@ export function SiteFooter() {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <button className="cursor-default">
+              <button className="cursor-default" aria-label="Footer information">
                 <LogoSVG />
               </button>
             </TooltipTrigger>
