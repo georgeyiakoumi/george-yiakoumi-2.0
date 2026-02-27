@@ -104,7 +104,7 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
             >
               <CarouselContent className="ml-0">
                 {otherProjects.map((otherProject) => (
-                  <CarouselItem key={otherProject.id} className=" lg:basis-1/1 xl:basis-1/3 2xl:basis-1/5 px-4">
+                  <CarouselItem key={otherProject.id} className=" lg:basis-1/3 xl:basis-1/5 px-4">
                     <ProjectCard project={otherProject} disableHoverScale />
                   </CarouselItem>
                 ))}
