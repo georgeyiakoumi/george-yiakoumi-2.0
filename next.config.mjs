@@ -25,14 +25,10 @@ const nextConfig = {
   },
   // Enable compression
   compress: true,
-  // Optimize font loading
-  optimizeFonts: true,
   // Enable React strict mode for better error catching
   reactStrictMode: true,
   // Optimize production builds
   poweredByHeader: false,
-  // Enable SWC minification (faster)
-  swcMinify: true,
 };
 
 export default nextConfig;
