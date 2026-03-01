@@ -441,7 +441,7 @@ export async function getTools() {
         'populate': '*',
         'pagination[pageSize]': 1000,
       },
-      cache: 'no-store',
+      cache: 'force-cache',
       tags: ['tools'],
     });
     return data;
@@ -484,7 +484,7 @@ export async function getBusinesses() {
         'populate': '*',
         'pagination[pageSize]': 1000,
       },
-      cache: 'no-store',
+      cache: 'force-cache',
       tags: ['businesses'],
     });
     return data;

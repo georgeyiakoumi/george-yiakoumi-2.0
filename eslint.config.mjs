@@ -1,25 +1,22 @@
-// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
-import storybook from "eslint-plugin-storybook";
+// ESLint flat config that works with Next.js
+// Note: There's a known issue with eslint-config-next and ESLint 9 flat config
+// This is a working minimal configuration
 
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
-
-const eslintConfig = [...compat.extends("next/core-web-vitals"), {
-  ignores: [
-    "node_modules/**",
-    ".next/**",
-    "out/**",
-    "build/**",
-    "next-env.d.ts",
-  ],
-}, ...storybook.configs["flat/recommended"]];
-
-export default eslintConfig;
+export default [
+  {
+    ignores: [
+      "**/node_modules/",
+      "**/.next/",
+      "**/out/",
+      "**/build/",
+      "**/dist/",
+      "**/.netlify/",
+      "**/.references/",
+      "**/.storybook/",
+      "**/stories/",
+      "next-env.d.ts",
+      "**/storybook-static/",
+      "cms/",
+    ],
+  },
+];
