@@ -61,7 +61,7 @@ export default async function Portfolio() {
       {/* Desktop List */}
       <ItemGroup className="hidden md:flex w-full max-w-3xl gap-4">
         {projects.map((project) => (
-          <ProjectCard key={project.id} project={project} variant="list" />
+          <ProjectCard key={project.id} project={project} scenario="list" />
         ))}
       </ItemGroup>
     </Section>

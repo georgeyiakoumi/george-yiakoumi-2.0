@@ -110,7 +110,7 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
           {/* Desktop List */}
           <ItemGroup className="hidden md:flex w-full md:max-w-md lg:max-w-xl xl:max-w-3xl gap-4">
             {otherProjects.map((otherProject) => (
-              <ProjectCard key={otherProject.id} project={otherProject} variant="list" background="background"  />
+              <ProjectCard key={otherProject.id} project={otherProject} scenario="list" background="background" />
             ))}
           </ItemGroup>
         </section>

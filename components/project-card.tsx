@@ -10,34 +10,29 @@ import {
   ItemDescription,
   ItemActions,
 } from "@/components/ui/item";
-import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import type { ProjectData } from "@/lib/strapi-queries";
 
 interface ProjectCardProps {
   project: ProjectData;
-  variant?: "carousel" | "list";
+  scenario?: "carousel" | "list";
   background?: "muted" | "background";
 }
 
-export function ProjectCard({ project, variant = "carousel", background = "muted" }: ProjectCardProps) {
+export function ProjectCard({ project, scenario = "carousel", background = "muted" }: ProjectCardProps) {
   const year = new Date(project.date).getFullYear();
   const primaryTag = project.tags?.[0]?.name;
 
-  if (variant === "list") {
+  if (scenario === "list") {
     return (
       <Item
         asChild
-        variant={undefined}
-        size={undefined}
-        className={cn(
-          "!p-0 !gap-0 rounded-xl overflow-hidden !border-0 flex items-center",
-          background === "background" && "md:!bg-background xl:!bg-primary xl:hover:!bg-primary/90"
-        )}
+        variant="outline"   
+        className="p-px"     
       >
         <Link href={`/project/${project.slug}`}>
           {project.project_thumb && (
-            <ItemMedia variant="image" className="size-32 !rounded-s-xl !rounded-e-none !border-0">
+            <ItemMedia variant="image" className="size-32 !rounded-e-none ">
               <Image
                 src={project.project_thumb.url}
                 alt={project.project_thumb.alternativeText || project.title}
@@ -47,23 +42,23 @@ export function ProjectCard({ project, variant = "carousel", background = "muted
               />
             </ItemMedia>
           )}
-          <ItemContent className="px-4 py-4">
+          <ItemContent>
             {primaryTag && (
-            <div className="text-xs xl:text-primary-foreground/70 mb-1">
+            <div className="text-xs text-muted-foreground pb-2">
               {year} · {primaryTag}
             </div>
             )}
-            <ItemTitle className={cn(background === "background" && "xl:text-primary-foreground")}>
+            <ItemTitle>
               {project.title}
             </ItemTitle>
             {project.description && (
-              <ItemDescription className={cn(background === "background" && "xl:text-primary-foreground/70")}>
+              <ItemDescription>
                 {project.description}
               </ItemDescription>
             )}
           </ItemContent>
           <ItemActions className="pr-4">
-            <ChevronRight className="size-4 text-muted-foreground" />
+            <ChevronRight className="size-4" />
           </ItemActions>
         </Link>
       </Item>
