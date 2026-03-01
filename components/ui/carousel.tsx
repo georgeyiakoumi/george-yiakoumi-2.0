@@ -268,13 +268,15 @@ function CarouselPagination({ className, ...props }: React.ComponentProps<"div">
           key={index}
           type="button"
           className={cn(
-            "size-2 rounded-full transition-all",
+            "relative p-3 transition-all",
+            "after:absolute after:inset-0 after:m-auto after:rounded-full after:transition-all",
             index === selectedIndex
-              ? "bg-primary w-6"
-              : "bg-muted-foreground/30"
+              ? "after:bg-primary after:h-2 after:w-6"
+              : "after:bg-muted-foreground/30 after:size-2"
           )}
           onClick={() => api?.scrollTo(index)}
           aria-label={`Go to slide ${index + 1}`}
+          aria-current={index === selectedIndex ? "true" : "false"}
         />
       ))}
     </div>

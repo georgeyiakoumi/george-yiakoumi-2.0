@@ -10,7 +10,6 @@ import { MessageCircleMore } from "@/components/animate-ui/icons/message-circle-
 import { AnimateIcon } from "@/components/animate-ui/icons/icon";
 import { getAboutPage, getTools, getBusinesses, type ToolData, type BusinessData } from "@/lib/strapi-queries";
 import { ThemedLogo } from "@/components/themed-logo";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { useEffect, useState } from "react";
 import HomeLoading from "@/app/loading";
 
@@ -112,15 +111,51 @@ export function HomeClient() {
           {aboutData.heading_tools}
         </Typography>
 
-        <Tabs defaultValue="all" className="w-full" onValueChange={setActiveCategory}>
-          <TabsList className="mx-auto">
-            <TabsTrigger value="all">All</TabsTrigger>
-            <TabsTrigger value="design">Design</TabsTrigger>
-            <TabsTrigger value="development">Development</TabsTrigger>
-            <TabsTrigger value="tools">Tools</TabsTrigger>
-          </TabsList>
+        <div className="flex flex-col items-center gap-8 w-full">
+          <div
+            className="inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground gap-1"
+            role="group"
+            aria-label="Filter tools by category"
+          >
+            <Button
+              variant={activeCategory === "all" ? "default" : "ghost"}
+              size="sm"
+              onClick={() => setActiveCategory("all")}
+              aria-pressed={activeCategory === "all"}
+              className="h-7"
+            >
+              All
+            </Button>
+            <Button
+              variant={activeCategory === "design" ? "default" : "ghost"}
+              size="sm"
+              onClick={() => setActiveCategory("design")}
+              aria-pressed={activeCategory === "design"}
+              className="h-7"
+            >
+              Design
+            </Button>
+            <Button
+              variant={activeCategory === "development" ? "default" : "ghost"}
+              size="sm"
+              onClick={() => setActiveCategory("development")}
+              aria-pressed={activeCategory === "development"}
+              className="h-7"
+            >
+              Development
+            </Button>
+            <Button
+              variant={activeCategory === "tools" ? "default" : "ghost"}
+              size="sm"
+              onClick={() => setActiveCategory("tools")}
+              aria-pressed={activeCategory === "tools"}
+              className="h-7"
+            >
+              Tools
+            </Button>
+          </div>
 
-          <div className="w-full grid gap-8 grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 2xl:grid-cols-8 mt-8">
+          <div className="w-full grid gap-8 grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 2xl:grid-cols-8">
             {tools.map((tool) => {
               const isActive = activeCategory === "all" || tool.category === activeCategory;
               return (
@@ -135,7 +170,7 @@ export function HomeClient() {
               );
             })}
           </div>
-        </Tabs>
+        </div>
       </Section>
 
       <Section>
