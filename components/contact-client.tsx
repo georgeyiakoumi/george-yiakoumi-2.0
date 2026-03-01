@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { FieldSet, FieldGroup, Field, FieldLabel } from "@/components/ui/field";
 import { Section } from "@/components/section";
-import { Typography } from "@/components/ui/typography";
 import { Send } from "@/components/animate-ui/icons/send";
 import { AnimateIcon } from "@/components/animate-ui/icons/icon";
 import { Spinner } from "@/components/ui/spinner";
@@ -79,7 +78,7 @@ export function ContactClient() {
   return (
     <Section>
       <h1 className="z-10 inline-flex items-center justify-center rounded-md text-sm font-medium bg-background px-4 py-2 fixed top-8 left-8 md:hidden pointer-events-none">
-        / Contact
+        Contact
       </h1>
 
       <form

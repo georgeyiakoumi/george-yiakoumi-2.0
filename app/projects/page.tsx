@@ -43,7 +43,7 @@ export default async function Portfolio() {
   return (
     <Section className="px-0 py-32 md:py-24 lg:py-32 justify-center">
       <h1 className="z-10 inline-flex items-center justify-center rounded-md text-sm font-medium bg-background px-4 py-2 fixed top-8 left-8 md:hidden">
-        / Projects
+        Projects
       </h1>
 
       {/* Mobile Carousel */}
