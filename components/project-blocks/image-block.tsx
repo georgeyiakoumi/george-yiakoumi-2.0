@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { getStrapiMediaURL } from "@/lib/strapi";
-import { Typography } from "@/components/ui/typography";
 import type { ImageBlock as ImageBlockType } from "@/lib/strapi-queries";
 
 interface ImageBlockProps {
@@ -30,9 +29,9 @@ export function ImageBlock({ block, projectTitle }: ImageBlockProps) {
         draggable={false}
       />
       {block.caption && (
-        <Typography variant="muted" className="text-center px-8 max-w-2xl">
+        <figcaption className="text-center px-8 max-w-2xl text-sm text-muted-foreground">
           {block.caption}
-        </Typography>
+        </figcaption>
       )}
     </figure>
   );

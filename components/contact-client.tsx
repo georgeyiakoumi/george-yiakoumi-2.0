@@ -78,9 +78,9 @@ export function ContactClient() {
 
   return (
     <Section>
-      <Typography variant="h1" align="center">
-        Contact
-      </Typography>
+      <h1 className="z-10 inline-flex items-center justify-center rounded-md text-sm font-medium bg-background px-4 py-2 fixed top-8 left-8 md:hidden pointer-events-none">
+        / Contact
+      </h1>
 
       <form
         name="contact"

@@ -4,6 +4,7 @@ import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, CarouselPagination } from "@/components/ui/carousel";
+import { ItemGroup } from "@/components/ui/item";
 
 import { ArrowLeft } from "@/components/animate-ui/icons/arrow-left";
 import { AnimateIcon } from "@/components/animate-ui/icons/icon";
@@ -84,34 +85,34 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
         />
       )}
 
-      <article className="flex flex-col w-full gap-8 my-16">
+      <article className="flex flex-col w-full pb-16">
         {project.body && <ProjectBlockRenderer blocks={project.body} projectTitle={project.title} />}
       </article>
 
       {otherProjects.length > 0 && (
-        <section className="flex flex-col gap-8 h-screen md:min-h-dvh items-center justify-center w-full bg-muted">
+        <section className="flex flex-col gap-8 h-screen md:h-auto md:py-16 items-center justify-center w-full bg-muted px-0 md:px-8">
           <Typography variant="h2" align="center">
             Other projects
           </Typography>
 
-          <div className="w-full">
-            <Carousel
-              opts={{
-                align: "center",
-                loop: true,
-              }}
-              className="w-full"
-            >
-              <CarouselContent className="ml-0">
-                {otherProjects.map((otherProject) => (
-                  <CarouselItem key={otherProject.id} className=" lg:basis-1/3 xl:basis-1/5 px-4">
-                    <ProjectCard project={otherProject} disableHoverScale />
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPagination className="mt-8" />
-            </Carousel>
-          </div>
+          {/* Mobile Carousel */}
+          <Carousel className="w-full md:hidden">
+            <CarouselContent className="mx-4">
+              {otherProjects.map((otherProject) => (
+                <CarouselItem key={otherProject.id} className="px-4">
+                  <ProjectCard project={otherProject} background="background" />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPagination className="mt-4" />
+          </Carousel>
+
+          {/* Desktop List */}
+          <ItemGroup className="hidden md:flex w-full md:max-w-md lg:max-w-xl xl:max-w-3xl gap-4">
+            {otherProjects.map((otherProject) => (
+              <ProjectCard key={otherProject.id} project={otherProject} variant="list" background="background"  />
+            ))}
+          </ItemGroup>
         </section>
       )}
     </section>

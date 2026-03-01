@@ -1,7 +1,6 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { ProgressiveBlur } from "@/components/ui/progressive-blur";
 import { SiteNavigation } from "@/components/site-navigation";
 import { SiteFooter } from "@/components/site-footer";
 import { ScrollProgressProvider, ScrollProgress, ScrollProgressContainer } from "@/components/animate-ui/primitives/animate/scroll-progress";
@@ -17,6 +16,9 @@ export function ConditionalLayout({ children }: { children: React.ReactNode }) {
 
   const isCVPage = pathname === "/cv" || isCVSubdomain;
 
+  // Only show scroll progress on pages with long-form content
+  const showScrollProgress = pathname === "/" || pathname.startsWith("/project/");
+
   if (isCVPage) {
     // Simple layout for CV page
     return <main>{children}</main>;
@@ -25,13 +27,12 @@ export function ConditionalLayout({ children }: { children: React.ReactNode }) {
   // Full layout with navigation for other pages
   return (
     <ScrollProgressProvider>
-      <ProgressiveBlur height="10%" position="top" />
-      <ProgressiveBlur height="15%" position="bottom" />
-
       <SiteNavigation />
 
-      {/* Scroll progress indicator */}
-      <ScrollProgress className="fixed top-0 left-0 h-1 bg-primary z-50 origin-left" />
+      {/* Scroll progress indicator - only on index and project detail pages */}
+      {showScrollProgress && (
+        <ScrollProgress className="fixed top-0 left-0 h-1 bg-primary z-50 origin-left" />
+      )}
 
       <ScrollProgressContainer asChild>
         <main className="h-dvh overflow-y-auto relative scrollbar-hide">

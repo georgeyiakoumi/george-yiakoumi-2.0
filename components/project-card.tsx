@@ -1,50 +1,110 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Typography } from "@/components/ui/typography";
-import { getStrapiMediaURL } from "@/lib/strapi";
+import { ChevronRight } from "lucide-react";
+import {
+  Item,
+  ItemHeader,
+  ItemMedia,
+  ItemContent,
+  ItemTitle,
+  ItemDescription,
+  ItemActions,
+} from "@/components/ui/item";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 import type { ProjectData } from "@/lib/strapi-queries";
 
 interface ProjectCardProps {
   project: ProjectData;
-  disableHoverScale?: boolean;
+  variant?: "carousel" | "list";
+  background?: "muted" | "background";
 }
 
-export function ProjectCard({ project, disableHoverScale = false }: ProjectCardProps) {
-  const thumbnailUrl = project.project_thumb
-    ? getStrapiMediaURL(project.project_thumb.url)
-    : null;
+export function ProjectCard({ project, variant = "carousel", background = "muted" }: ProjectCardProps) {
+  const year = new Date(project.date).getFullYear();
+  const primaryTag = project.tags?.[0]?.name;
+
+  if (variant === "list") {
+    return (
+      <Item
+        asChild
+        variant={undefined}
+        size={undefined}
+        className={cn(
+          "!p-0 !gap-0 rounded-xl overflow-hidden !border-0 flex items-center",
+          background === "background" && "md:!bg-background xl:!bg-primary xl:hover:!bg-primary/90"
+        )}
+      >
+        <Link href={`/project/${project.slug}`}>
+          {project.project_thumb && (
+            <ItemMedia variant="image" className="size-32 !rounded-s-xl !rounded-e-none !border-0">
+              <Image
+                src={project.project_thumb.url}
+                alt={project.project_thumb.alternativeText || project.title}
+                fill
+                className="object-cover"
+                sizes="256px"
+              />
+            </ItemMedia>
+          )}
+          <ItemContent className="px-4 py-4">
+            {primaryTag && (
+            <div className="text-xs xl:text-primary-foreground/70 mb-1">
+              {year} · {primaryTag}
+            </div>
+            )}
+            <ItemTitle className={cn(background === "background" && "xl:text-primary-foreground")}>
+              {project.title}
+            </ItemTitle>
+            {project.description && (
+              <ItemDescription className={cn(background === "background" && "xl:text-primary-foreground/70")}>
+                {project.description}
+              </ItemDescription>
+            )}
+          </ItemContent>
+          <ItemActions className="pr-4">
+            <ChevronRight className="size-4 text-muted-foreground" />
+          </ItemActions>
+        </Link>
+      </Item>
+    );
+  }
 
   return (
-    <Link
-      href={`/project/${project.slug}`}
-      className={`group relative overflow-hidden rounded-3xl bg-background border-border border block h-full w-full motion-safe:transition-transform motion-safe:duration-200 motion-safe:ease-out motion-safe:active:scale-[0.97] motion-reduce:transition-none ${!disableHoverScale ? 'motion-safe:xl:hover:scale-105 xl:will-change-transform' : ''}`}
-      style={{ minHeight: '16rem' }}
-    >
-      {/* Background Image */}
-      {thumbnailUrl ? (
-        <div className="absolute inset-0 overflow-hidden">
-          <Image
-            src={thumbnailUrl}
-            alt={project.project_thumb?.alternativeText || project.title || ''}
-            fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 33vw, 25vw"
-            className="object-cover lg:opacity-50 lg:blur-[2px] group-hover:opacity-100 group-hover:blur-0 motion-safe:transition-[opacity,filter] motion-safe:duration-300 motion-safe:ease-out motion-reduce:transition-none lg:will-change-[opacity,filter]"
-          />
-        </div>
-      ) : (
-        <div className="absolute inset-0 bg-gradient-to-br from-neutral-200 via-neutral-100 to-neutral-200 dark:from-neutral-800 dark:via-neutral-900 dark:to-neutral-800" />
+    <Item
+      variant="muted"
+      asChild
+      className={cn(
+        "p-0 rounded-xl overflow-hidden",
+        background === "background" && "bg-background",
       )}
-
-      {/* Content */}
-      <div className="relative p-4 flex flex-col justify-center items-center h-full">
-        <div className="pointer-events-none max-w-3xs">
-          <div className="bg-primary !text-primary-foreground px-3 py-2 rounded-md motion-safe:transition-all motion-safe:duration-200 motion-safe:ease-out motion-reduce:transition-none motion-safe:xl:group-hover:bg-primary/90">
-            <Typography variant="p" as="h3" className="text-center md:text-sm md:font-medium md:leading-5 !text-primary-foreground">
-              {project.title}
-            </Typography>
-          </div>
-        </div>
-      </div>
-    </Link>
+    >
+      <Link href={`/project/${project.slug}`} className="pb-4">
+        {project.project_thumb && (
+          <ItemHeader className="relative aspect-video w-full overflow-hidden">
+            <Image
+              src={project.project_thumb.url}
+              alt={project.project_thumb.alternativeText || project.title}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 768px"
+            />
+          </ItemHeader>
+        )}
+        <ItemContent className="px-4">
+          {primaryTag && (
+            <div className="text-xs text-muted-foreground mb-1">
+              {year} · {primaryTag}
+            </div>
+          )}
+          <ItemTitle>
+            {project.title}
+          </ItemTitle>
+          {project.description && (
+            <ItemDescription>{project.description}</ItemDescription>
+          )}
+        </ItemContent>
+      </Link>
+    </Item>
   );
 }

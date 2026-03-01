@@ -5,8 +5,9 @@ import { SquareLibrary } from "lucide-react";
 
 import { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription } from "@/components/ui/empty";
 import { Section } from "@/components/section";
-import { Typography } from "@/components/ui/typography";
-import { ProjectsGrid } from "@/components/projects-grid";
+import { Carousel, CarouselContent, CarouselItem, CarouselPagination } from "@/components/ui/carousel";
+import { ProjectCard } from "@/components/project-card";
+import { ItemGroup } from "@/components/ui/item";
 
 export const generateMetadata = async () => {
   return generatePageMetadata({
@@ -40,12 +41,29 @@ export default async function Portfolio() {
   }
 
   return (
-    <Section className="!h-auto !justify-start py-32 md:py-24 lg:py-32 2xl:py-0 2xl:!justify-center">
-      <Typography variant="h1" align="center" className="mb-8">
-        Projects
-      </Typography>
+    <Section className="px-0 py-32 md:py-24 lg:py-32 justify-center">
+      <h1 className="z-10 inline-flex items-center justify-center rounded-md text-sm font-medium bg-background px-4 py-2 fixed top-8 left-8 md:hidden">
+        / Projects
+      </h1>
 
-      <ProjectsGrid projects={projects} />
+      {/* Mobile Carousel */}
+      <Carousel className="w-full md:hidden">
+        <CarouselContent className="mx-4">
+          {projects.map((project) => (
+            <CarouselItem key={project.id} className="px-4">
+              <ProjectCard project={project} />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPagination className="mt-4" />
+      </Carousel>
+
+      {/* Desktop List */}
+      <ItemGroup className="hidden md:flex w-full max-w-3xl gap-4">
+        {projects.map((project) => (
+          <ProjectCard key={project.id} project={project} variant="list" />
+        ))}
+      </ItemGroup>
     </Section>
   );
 }

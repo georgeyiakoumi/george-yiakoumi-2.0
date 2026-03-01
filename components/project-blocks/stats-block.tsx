@@ -38,7 +38,7 @@ interface StatsBlockProps {
 // Reusable wrapper component for consistent styling
 function StatsWrapper({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
-    <figure className={`flex flex-col gap-4 items-center w-full md:max-w-md lg:max-w-xl xl:max-w-2xl mx-auto my-8 ${className}`}>
+    <figure className={`flex flex-col gap-4 items-center w-full md:max-w-md lg:max-w-xl xl:max-w-3xl 2xl:max-w-4xl mx-auto my-8 ${className}`}>
       {children}
     </figure>
   );
@@ -64,16 +64,16 @@ export function StatsBlock({ block }: StatsBlockProps) {
   if (chartType === 'number-only') {
     return (
       <StatsWrapper>
-        <div className="w-full max-w-3xl md:max-w-md lg:max-w-xl mx-auto px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="w-full max-w-3xl md:max-w-md lg:max-w-xl xl:max-w-5xl mx-auto px-8 md:px-0">
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-6">
             {block.items.map((item) => (
               <div
                 key={item.id}
                 className="flex flex-col items-center text-center gap-2 p-8 border border-border rounded-lg bg-muted/30"
               >
-                <Typography variant="h2" className="text-primary">
+                <Typography variant="h3" className="text-primary">
                   {item.value}
-                  {item.suffix && <span className="text-xl">{item.suffix}</span>}
+                  {item.suffix && <span className="text-lg"> {item.suffix}</span>}
                 </Typography>
                 <Typography variant="large" className="font-semibold">
                   {item.label}
