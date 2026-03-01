@@ -16,6 +16,7 @@ const mulish = Mulish({
   display: 'swap',
   preload: true,
   fallback: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
+  adjustFontFallback: true,
 });
 
 export const generateMetadata = generateSiteMetadata;
@@ -31,6 +32,10 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <SEOScripts />
+        {/* Preconnect to external resources for faster loading */}
+        <link rel="preconnect" href="https://res.cloudinary.com" />
+        <link rel="preconnect" href="https://region1.google-analytics.com" />
+        <link rel="dns-prefetch" href="https://res.cloudinary.com" />
       </head>
       <body className={`${mulish.className}`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>

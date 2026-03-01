@@ -1,5 +1,6 @@
 import { generatePageMetadata } from "@/lib/metadata";
-import { HomeClient } from "@/components/home-client";
+import { getAboutPage, getTools, getBusinesses } from "@/lib/strapi-queries";
+import { HomeContent } from "@/components/home-content";
 
 export const generateMetadata = async () => {
   return generatePageMetadata({
@@ -9,6 +10,15 @@ export const generateMetadata = async () => {
   });
 };
 
-export default function Home() {
-  return <HomeClient />;
+export const revalidate = 3600; // Revalidate every hour
+
+export default async function Home() {
+  // Fetch all data in parallel on the server
+  const [aboutData, tools, businesses] = await Promise.all([
+    getAboutPage(),
+    getTools(),
+    getBusinesses(),
+  ]);
+
+  return <HomeContent aboutData={aboutData} tools={tools} businesses={businesses} />;
 }
