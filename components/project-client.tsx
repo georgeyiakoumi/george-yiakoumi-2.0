@@ -1,8 +1,11 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Image from "next/image";
+import { useTheme } from "next-themes";
 
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, CarouselPagination } from "@/components/ui/carousel";
 import { ItemGroup } from "@/components/ui/item";
 
@@ -13,11 +16,67 @@ import { getStrapiMediaURL } from "@/lib/strapi";
 import { Typography } from "@/components/ui/typography";
 import { ProjectCard } from "@/components/project-card";
 import { ProjectBlockRenderer } from "@/components/project-blocks";
-import type { ProjectData } from "@/lib/strapi-queries";
+import type { ProjectData, ToolData } from "@/lib/strapi-queries";
 
 interface ProjectClientProps {
   project: ProjectData;
   otherProjects: ProjectData[];
+}
+
+function ToolBadge({ tool }: { tool: ToolData }) {
+  const { resolvedTheme } = useTheme();
+  const [svgContent, setSvgContent] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
+  const imageUrl = tool.image?.url ? getStrapiMediaURL(tool.image.url) : null;
+  const isSvg = tool.image?.ext === '.svg';
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (isSvg && imageUrl) {
+      fetch(imageUrl)
+        .then((res) => res.text())
+        .then((svg) => setSvgContent(svg))
+        .catch((err) => console.error('Failed to fetch SVG:', err));
+    }
+  }, [isSvg, imageUrl]);
+
+  // Merge CSS variables based on current theme
+  // Only apply theme-specific variables after mounting to prevent hydration mismatch
+  const cssVariables = {
+    ...(tool.cssVariables || {}),
+    ...(mounted && resolvedTheme === 'dark' && tool.cssVariablesDark ? tool.cssVariablesDark : {}),
+  } as React.CSSProperties;
+
+  return (
+    <Badge
+      variant="secondary"
+      className={`gap-2 ${tool.classes || ""}`}
+      style={cssVariables}
+    >
+      {tool.image && (
+        <>
+          {isSvg && svgContent ? (
+            <span
+              className="size-4 [&>svg]:size-full [&>svg]:object-contain"
+              dangerouslySetInnerHTML={{ __html: svgContent }}
+            />
+          ) : (
+            <Image
+              src={tool.image.url}
+              alt={tool.image.alternativeText || tool.name}
+              width={16}
+              height={16}
+              className="object-contain"
+            />
+          )}
+        </>
+      )}
+      {tool.name}
+    </Badge>
+  );
 }
 
 export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
@@ -39,7 +98,7 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
         </Button>
       </AnimateIcon>
 
-      <header className="flex flex-col gap-8 px-8 items-center justify-center w-full md:max-w-lg lg:max-w-2xl h-screen mx-auto">
+      <header className="flex flex-col gap-8 px-8 items-center justify-center w-full md:max-w-lg lg:max-w-2xl xl:max-w-3xl h-screen mx-auto">
         <Typography variant="h1" className="text-center">
           {project.title}
         </Typography>
@@ -70,6 +129,14 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
             </>
           )}
         </Typography>
+
+        {project.tools && project.tools.length > 0 && (
+          <div className="flex flex-wrap gap-2 justify-center">
+            {project.tools.map((tool) => (
+              <ToolBadge key={tool.id} tool={tool} />
+            ))}
+          </div>
+        )}
       </header>
 
       {heroImageUrl && (

@@ -191,12 +191,7 @@ export interface ProjectData {
   project_client?: string;
   project_role?: string;
   body?: ProjectBlock[];
-  tools?: Array<{
-    id: number;
-    documentId: string;
-    name: string;
-    slug: string;
-  }>;
+  tools?: ToolData[];
   media?: Array<{
     id: number;
     url: string;
@@ -332,6 +327,7 @@ export async function getProjectBySlug(slug: string) {
         'populate[project_thumb][fields][1]': 'alternativeText',
         'populate[project_thumb][fields][2]': 'width',
         'populate[project_thumb][fields][3]': 'height',
+        'populate[tools][populate]': '*',
       },
       tags: ['projects', `project-${slug}`],
     });

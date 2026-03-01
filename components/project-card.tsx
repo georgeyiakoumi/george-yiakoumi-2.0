@@ -27,12 +27,15 @@ export function ProjectCard({ project, scenario = "carousel", background = "mute
     return (
       <Item
         asChild
-        variant="outline"   
-        className="p-px"     
+        variant="outline"
+        className={cn(
+          "p-px",
+          background === "background" && "xl:bg-background xl:[a]:hover:bg-background xl:hover:border-foreground"
+        )}
       >
         <Link href={`/project/${project.slug}`}>
           {project.project_thumb && (
-            <ItemMedia variant="image" className="size-32 !rounded-e-none ">
+            <ItemMedia variant="image" className="size-32 !rounded-e-none">
               <Image
                 src={project.project_thumb.url}
                 alt={project.project_thumb.alternativeText || project.title}
@@ -44,20 +47,22 @@ export function ProjectCard({ project, scenario = "carousel", background = "mute
           )}
           <ItemContent>
             {primaryTag && (
-            <div className="text-xs text-muted-foreground pb-2">
+            <div className={cn(
+              "text-xs text-muted-foreground pb-2"
+            )}>
               {year} · {primaryTag}
             </div>
             )}
-            <ItemTitle>
+            <ItemTitle className="xl:text-foreground">
               {project.title}
             </ItemTitle>
             {project.description && (
-              <ItemDescription>
+              <ItemDescription className="xl:text-muted-foreground">
                 {project.description}
               </ItemDescription>
             )}
           </ItemContent>
-          <ItemActions className="pr-4">
+          <ItemActions className="xl:text-foreground pr-4">
             <ChevronRight className="size-4" />
           </ItemActions>
         </Link>
