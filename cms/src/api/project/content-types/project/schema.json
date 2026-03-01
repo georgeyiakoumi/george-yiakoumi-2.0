@@ -54,32 +54,6 @@
     "project_role": {
       "type": "string"
     },
-    "media": {
-      "type": "media",
-      "multiple": true,
-      "required": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
-    },
-    "challenge": {
-      "type": "blocks"
-    },
-    "solution": {
-      "type": "blocks"
-    },
-    "role": {
-      "type": "blocks"
-    },
-    "impact": {
-      "type": "blocks"
-    },
-    "takeaway": {
-      "type": "blocks"
-    },
     "body": {
       "type": "dynamiczone",
       "components": [
