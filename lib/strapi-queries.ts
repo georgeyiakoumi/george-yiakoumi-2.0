@@ -415,6 +415,7 @@ export interface ToolData {
   imageWidth?: number;
   url?: string;
   description?: string;
+  category?: 'design' | 'development' | 'tools';
   cssVariables?: Record<string, string> | null;
   cssVariablesDark?: Record<string, string> | null;
   classes?: string | null;

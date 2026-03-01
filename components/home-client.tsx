@@ -10,6 +10,7 @@ import { MessageCircleMore } from "@/components/animate-ui/icons/message-circle-
 import { AnimateIcon } from "@/components/animate-ui/icons/icon";
 import { getAboutPage, getTools, getBusinesses, type ToolData, type BusinessData } from "@/lib/strapi-queries";
 import { ThemedLogo } from "@/components/themed-logo";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { useEffect, useState } from "react";
 import HomeLoading from "@/app/loading";
 
@@ -19,6 +20,7 @@ export function HomeClient() {
   const [businesses, setBusinesses] = useState<BusinessData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [activeCategory, setActiveCategory] = useState<string>("all");
 
   useEffect(() => {
     Promise.all([
@@ -109,11 +111,31 @@ export function HomeClient() {
         <Typography variant="h2" align="center">
           {aboutData.heading_tools}
         </Typography>
-        <div className="w-full grid gap-8 grid-cols-4 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8">
-          {tools.map((tool) => (
-            <ThemedLogo key={tool.id} data={tool} />
-          ))}
-        </div>
+
+        <Tabs defaultValue="all" className="w-full" onValueChange={setActiveCategory}>
+          <TabsList className="mx-auto">
+            <TabsTrigger value="all">All</TabsTrigger>
+            <TabsTrigger value="design">Design</TabsTrigger>
+            <TabsTrigger value="development">Development</TabsTrigger>
+            <TabsTrigger value="tools">Tools</TabsTrigger>
+          </TabsList>
+
+          <div className="w-full grid gap-8 grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 2xl:grid-cols-8 mt-8">
+            {tools.map((tool) => {
+              const isActive = activeCategory === "all" || tool.category === activeCategory;
+              return (
+                <div
+                  key={tool.id}
+                  className={`transition-all duration-300 ease-out motion-reduce:transition-none ${
+                    !isActive ? "opacity-50 blur-sm pointer-events-none scale-90 saturate-50" : "scale-100 saturate-100"
+                  }`}
+                >
+                  <ThemedLogo data={tool} />
+                </div>
+              );
+            })}
+          </div>
+        </Tabs>
       </Section>
 
       <Section>
