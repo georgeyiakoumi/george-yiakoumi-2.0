@@ -206,3 +206,45 @@ export async function generateWebsiteJsonLd() {
     },
   };
 }
+
+export async function generateProjectJsonLd({
+  title,
+  description,
+  slug,
+  image,
+  datePublished,
+  dateModified,
+  tags,
+}: {
+  title: string;
+  description: string;
+  slug: string;
+  image?: string;
+  datePublished: string;
+  dateModified?: string;
+  tags?: string[];
+}) {
+  const seoData = await getGlobalSEO();
+  const authorName = seoData?.authorName || SITE_CONFIG.author.name;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": `${SITE_CONFIG.url}/project/${slug}`,
+    name: title,
+    description: description,
+    url: `${SITE_CONFIG.url}/project/${slug}`,
+    image: image || SITE_CONFIG.ogImage,
+    datePublished: datePublished,
+    dateModified: dateModified || datePublished,
+    author: {
+      "@type": "Person",
+      name: authorName,
+      url: SITE_CONFIG.url,
+    },
+    ...(tags && tags.length > 0 && {
+      keywords: tags.join(", "),
+    }),
+    inLanguage: "en-US",
+  };
+}
