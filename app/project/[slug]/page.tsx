@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { getProjects, getProjectBySlug } from "@/lib/strapi-queries";
 import { getStrapiMediaURL } from "@/lib/strapi";
-import { generatePageMetadata, SITE_CONFIG } from "@/lib/metadata";
+import { generatePageMetadata, generateProjectJsonLd, SITE_CONFIG } from "@/lib/metadata";
 import { ProjectClient } from "@/components/project-client";
 import { notFound } from "next/navigation";
 
@@ -55,7 +55,30 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   const projects = await getProjects();
   const otherProjects = projects.filter((p) => p.slug !== slug);
 
-  return <ProjectClient project={project} otherProjects={otherProjects} />;
+  // Generate structured data for SEO
+  const projectImageUrl = project.project_thumb
+    ? getStrapiMediaURL(project.project_thumb.url)
+    : undefined;
+
+  const projectJsonLd = await generateProjectJsonLd({
+    title: project.title,
+    description: project.description || `View ${project.title} - a design project by George Yiakoumi`,
+    slug: project.slug,
+    image: projectImageUrl ?? undefined,
+    datePublished: project.publishedAt,
+    dateModified: project.updatedAt,
+    tags: project.tags?.map((tag) => tag.name) || [],
+  });
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(projectJsonLd) }}
+      />
+      <ProjectClient project={project} otherProjects={otherProjects} />
+    </>
+  );
 }
 
 export const revalidate = 3600;
