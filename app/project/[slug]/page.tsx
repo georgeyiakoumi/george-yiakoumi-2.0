@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
 
   return generatePageMetadata({
     title: project.title,
-    description: project.description,
+    description: project.description || `View ${project.title} - a design project by George Yiakoumi`,
     path: `/project/${slug}`,
     image: projectImageUrl || SITE_CONFIG.ogImage,
   });

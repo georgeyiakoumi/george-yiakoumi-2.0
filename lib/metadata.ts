@@ -98,13 +98,13 @@ export async function generateSiteMetadata(): Promise<Metadata> {
     },
     icons: {
       icon: seoData?.favIcon?.url
-        ? getStrapiMediaURL(seoData.favIcon.url)
+        ? getStrapiMediaURL(seoData.favIcon.url) ?? "/favicon.ico"
         : "/favicon.ico",
       shortcut: seoData?.favIcon?.url
-        ? getStrapiMediaURL(seoData.favIcon.url)
+        ? getStrapiMediaURL(seoData.favIcon.url) ?? "/favicon.ico"
         : "/favicon.ico",
       apple: seoData?.appleTouchIcon?.url
-        ? getStrapiMediaURL(seoData.appleTouchIcon.url)
+        ? getStrapiMediaURL(seoData.appleTouchIcon.url) ?? "/apple-touch-icon.png"
         : "/apple-touch-icon.png",
     },
   };
@@ -128,7 +128,7 @@ export async function generatePageMetadata({
   // Fetch global SEO to get the default OG image if no custom image is provided
   const seoData = await getGlobalSEO();
   const defaultOgImage = seoData?.ogImage?.url
-    ? getStrapiMediaURL(seoData.ogImage.url)
+    ? getStrapiMediaURL(seoData.ogImage.url) ?? SITE_CONFIG.ogImage
     : SITE_CONFIG.ogImage;
 
   const ogImage = image || defaultOgImage;

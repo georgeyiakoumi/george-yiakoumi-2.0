@@ -138,7 +138,7 @@ export function renderStrapiRichText(
   }
 
   const hasImage = richTextBlock.Image && richTextBlock.Image.url;
-  const imageUrl = hasImage ? getStrapiMediaURL(richTextBlock.Image.url) : null;
+  const imageUrl = hasImage ? getStrapiMediaURL(richTextBlock.Image?.url) : null;
 
   return (
     <>

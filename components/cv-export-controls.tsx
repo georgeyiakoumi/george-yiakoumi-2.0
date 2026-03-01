@@ -7,7 +7,7 @@ import { FileText, Printer, Download } from "lucide-react";
 import { toast } from "sonner";
 
 interface CVExportControlsProps {
-  contentRef: React.RefObject<HTMLDivElement>;
+  contentRef: React.RefObject<HTMLDivElement | null>;
 }
 
 export function CVExportControls({ contentRef }: CVExportControlsProps) {
