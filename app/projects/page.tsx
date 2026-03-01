@@ -46,6 +46,10 @@ export default async function Portfolio() {
         Projects
       </h1>
 
+      <p className="text-sm text-muted-foreground text-center max-w-xl px-8">
+        Projects are anonymised (unless specified) by default due to NDAs however I'm available to showcase work in detail on a private call.
+      </p>
+
       {/* Mobile Carousel */}
       <Carousel className="w-full md:hidden">
         <CarouselContent className="mx-4">
