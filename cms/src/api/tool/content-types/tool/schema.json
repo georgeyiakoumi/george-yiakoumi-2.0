@@ -40,6 +40,14 @@
     },
     "classes": {
       "type": "string"
+    },
+    "category": {
+      "type": "enumeration",
+      "enum": [
+        "design",
+        "development",
+        "tools"
+      ]
     }
   }
 }
