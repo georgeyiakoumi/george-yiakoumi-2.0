@@ -1,27 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  async headers() {
-    return [
-      {
-        source: '/_next/static/chunks/:path*.css',
-        headers: [
-          {
-            key: 'Content-Type',
-            value: 'text/css; charset=utf-8',
-          },
-        ],
-      },
-      {
-        source: '/_next/static/css/:path*.css',
-        headers: [
-          {
-            key: 'Content-Type',
-            value: 'text/css; charset=utf-8',
-          },
-        ],
-      },
-    ];
-  },
   images: {
     remotePatterns: [
       {
