@@ -1,3 +1,4 @@
+import { Mulish } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ModeToggle } from "@/components/mode-toggle";
@@ -9,6 +10,12 @@ import { ConditionalLayout } from "@/components/conditional-layout";
 
 // Import safelist to ensure Tailwind scans it for dynamic Strapi classes
 import "@/lib/tailwind-safelist";
+
+const mulish = Mulish({
+  subsets: ["latin"],
+  display: 'swap',
+  preload: false,
+});
 
 export const generateMetadata = generateSiteMetadata;
 
@@ -24,7 +31,7 @@ export default function RootLayout({
       <head>
         <SEOScripts />
       </head>
-      <body className="font-sans">
+      <body className={mulish.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <ModeToggle />
 
