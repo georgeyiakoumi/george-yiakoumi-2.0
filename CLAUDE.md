@@ -482,7 +482,7 @@ When implementing new features or fixing bugs:
 **These are not suggestions - they are requirements.** The quality bar has been set across these 4 phases and must be maintained.
 
 ## Future Enhancements
-1. Implement contact form email backend (currently form submits to /forms/contact success page)
+1. Implement contact form email backend (currently uses Sonner toast notifications)
 2. Consider adding blog/articles section
 3. Add more portfolio projects through Strapi CMS
 4. Add page transitions between routes

@@ -24,8 +24,7 @@ const PAGES_TO_PURGE = [
   '/about',
   '/portfolio',
   '/contact',
-  '/forms/contact',
-  // Add dynamic routes as needed
+  // Add dynamic routes as needed (e.g., '/portfolio/project-slug')
 ];
 
 const args = process.argv.slice(2);
