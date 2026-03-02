@@ -13,10 +13,12 @@ import "@/lib/tailwind-safelist";
 
 const mulish = Mulish({
   subsets: ["latin"],
-  display: 'swap',
+  display: 'swap', // Swap to fallback immediately to show text faster
   preload: true,
   fallback: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
-  adjustFontFallback: true,
+  adjustFontFallback: true, // Prevents layout shift when web font loads
+  weight: ['400', '500', '600', '700'], // Specify weights to reduce font file size
+  variable: '--font-mulish', // CSS variable for better control
 });
 
 export const generateMetadata = generateSiteMetadata;
@@ -33,8 +35,12 @@ export default function RootLayout({
       <head>
         <SEOScripts />
         {/* Preconnect to external resources for faster loading */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://res.cloudinary.com" />
         <link rel="preconnect" href="https://region1.google-analytics.com" />
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
         <link rel="dns-prefetch" href="https://res.cloudinary.com" />
       </head>
       <body className={`${mulish.className}`}>
