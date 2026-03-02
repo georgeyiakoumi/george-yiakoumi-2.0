@@ -237,10 +237,21 @@ For webhook setup instructions, see [WEBHOOK_SETUP.md](WEBHOOK_SETUP.md).
 
 This project is designed to be deployed on modern hosting platforms:
 
+- **CDN**: Cloudflare (DNS and edge caching in front of Netlify)
 - **Frontend**: Netlify (with `@netlify/plugin-nextjs`)
 - **CMS**: Render (Strapi 5)
 - **Database**: Supabase (PostgreSQL)
 - **Media**: Cloudinary CDN
+
+### CDN Architecture
+
+The site uses a **two-tier CDN architecture**:
+1. **Cloudflare** - Primary CDN layer handling DNS and edge caching globally
+2. **Netlify Edge** - Secondary CDN layer serving Next.js application
+
+**Important**: When deploying changes, both cache layers may need to be cleared:
+- Netlify cache: Cleared via "Deploy without cache" in Netlify dashboard
+- Cloudflare cache: Must be manually purged at https://dash.cloudflare.com → Caching → Purge Cache
 
 ### Environment Variables
 

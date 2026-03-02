@@ -227,6 +227,32 @@ This project is hosted on Netlify Free Tier with limited serverless function inv
 - Verify responsive design on mobile/tablet/desktop
 - Check scroll animations performance
 
+## Deployment Architecture
+
+### CDN Stack
+The site uses a **two-tier CDN architecture**:
+
+1. **Cloudflare** (Primary CDN)
+   - DNS management
+   - Global edge caching
+   - DDoS protection
+   - SSL/TLS termination
+
+2. **Netlify Edge** (Secondary CDN)
+   - Next.js application hosting
+   - Serverless functions
+   - Automatic deployments from GitHub
+
+**Cache Purging**: When stale content appears, BOTH cache layers must be cleared:
+- **Cloudflare**: https://dash.cloudflare.com → select domain → Caching → Purge Cache
+- **Netlify**: Deploy without cache via dashboard
+
+### Hosting Infrastructure
+- **Frontend**: Netlify with `@netlify/plugin-nextjs`
+- **CMS**: Render (Strapi 5)
+- **Database**: Supabase (PostgreSQL)
+- **Media Storage**: Cloudinary CDN
+
 ## Environment Requirements
 - Node.js 22.15.1 (via nvm)
 - npm package manager
