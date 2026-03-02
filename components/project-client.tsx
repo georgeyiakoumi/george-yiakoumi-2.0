@@ -145,10 +145,13 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
           alt={project.project_thumb?.alternativeText || project.title || ''}
           width={1920}
           height={1080}
+          priority
+          fetchPriority="high"
           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 32rem, 48rem"
           className="h-auto md:max-w-md lg:max-w-xl xl:max-w-3xl mx-auto md:border-border md:border md:rounded-lg select-none"
+          placeholder="blur"
+          blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyMCIgaGVpZ2h0PSIxMDgwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxOTIwIiBoZWlnaHQ9IjEwODAiIGZpbGw9IiNlZWUiLz48L3N2Zz4="
           draggable={false}
-          priority
         />
       )}
 
