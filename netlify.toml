@@ -2,8 +2,8 @@
 package = "@netlify/plugin-nextjs"
 
 [build]
-  command = "npm run build"
-  publish = ".next"
+  command = "npm run build && mv .next .next-new"
+  publish = ".next-new"
 
 # TEMPORARY: Force no-cache for contact page to clear stale CDN cache
 [[headers]]
