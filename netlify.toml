@@ -2,7 +2,7 @@
 package = "@netlify/plugin-nextjs"
 
 [build]
-  command = "npm run build"
+  command = "rm -rf .next && npm run build"
   publish = ".next"
 
 # Ensure correct MIME types for Next.js assets (MUST come before /* rule)

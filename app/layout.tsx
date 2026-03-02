@@ -13,12 +13,10 @@ import "@/lib/tailwind-safelist";
 
 const mulish = Mulish({
   subsets: ["latin"],
-  display: 'swap', // Swap to fallback immediately to show text faster
+  display: 'swap',
   preload: true,
   fallback: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
-  adjustFontFallback: true, // Prevents layout shift when web font loads
-  weight: ['400', '500', '600', '700'], // Specify weights to reduce font file size
-  variable: '--font-mulish', // CSS variable for better control
+  adjustFontFallback: true,
 });
 
 export const generateMetadata = generateSiteMetadata;
