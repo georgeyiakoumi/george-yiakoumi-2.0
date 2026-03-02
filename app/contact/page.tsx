@@ -1,6 +1,8 @@
 import { generatePageMetadata } from "@/lib/metadata";
 import { ContactClient } from "@/components/contact-client";
 
+export const revalidate = 3600;
+
 export const generateMetadata = async () => {
   return generatePageMetadata({
     title: "Contact",
