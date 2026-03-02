@@ -249,4 +249,31 @@ Frontend requires:
 - `STRAPI_API_TOKEN` - Server-side API token
 - `REVALIDATE_SECRET` - Webhook authentication secret (mark as "contains secret values" in Netlify)
 
+## Quality Standards
+
+This project maintains high standards across 4 key areas:
+
+1. **Accessibility** - 100/100 Lighthouse score, WCAG 2.1 AA compliant
+2. **Performance** - 92/100 Lighthouse score, Core Web Vitals optimized
+3. **SEO** - Comprehensive metadata, sitemap, structured data
+4. **Testing** - Unit, component, and E2E test coverage with CI/CD
+
+**All code changes must maintain these standards.** See [CLAUDE.md](CLAUDE.md) for complete rules and guidelines.
+
+### Pre-commit Checklist
+
+Before committing changes:
+
+```bash
+npm run lint          # ESLint check
+npx tsc --noEmit      # TypeScript check
+npm run test:run      # Unit tests
+npm run test:e2e      # E2E tests (optional for minor changes)
+npm run build         # Production build
+```
+
+GitHub Actions CI will automatically verify these checks on all PRs.
+
+## Documentation
+
 For detailed technical documentation and development guidelines, see [CLAUDE.md](CLAUDE.md).

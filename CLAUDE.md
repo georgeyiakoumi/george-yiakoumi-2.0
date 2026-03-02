@@ -253,11 +253,198 @@ The Strapi CMS includes the following content types:
 - **Navigation** - Site navigation structure
 - **Tools** - Skills and technologies
 
+## Quality Standards & Best Practices
+
+This project has undergone comprehensive optimization across 4 key phases. **ALL future code changes MUST respect and honor these established patterns and rules.**
+
+### Phase 1: Accessibility (100/100 Score Achieved)
+
+**WCAG 2.1 Compliance - Level AA (AAA where possible)**
+
+#### Critical Rules:
+1. **ARIA Attributes**: All interactive components MUST have valid ARIA attributes
+   - Tabs MUST have corresponding TabsContent elements
+   - aria-controls MUST reference existing DOM elements
+   - Never use ARIA on non-interactive elements
+2. **Touch Targets**: Minimum 48px × 48px for all interactive elements
+   - Carousel dots, buttons, links all meet this standard
+   - Use padding or pseudo-elements to expand hit areas without visual size change
+3. **Keyboard Navigation**: All interactive elements MUST be keyboard accessible
+   - Focus visible on all interactive elements
+   - Tab order follows logical flow
+   - Escape key closes modals/dropdowns
+4. **Semantic HTML**: Use proper landmarks and heading hierarchy
+   - One h1 per page
+   - No heading level skips (h1 → h2 → h3, never h1 → h3)
+   - nav, main, section, article used appropriately
+5. **Form Labels**: Every input MUST have an associated label
+   - Use proper <label> with htmlFor attribute
+   - Placeholder is NOT a substitute for label
+6. **Alt Text**: All images MUST have descriptive alt text
+   - Decorative images use empty alt=""
+   - Functional images describe action/purpose
+7. **Color Contrast**: Minimum 4.5:1 for text, 3:1 for UI components
+   - Test both light and dark modes
+   - Use tools like WebAIM Contrast Checker
+
+**Testing**: Run Lighthouse accessibility audits before committing
+```bash
+npx lighthouse http://localhost:3000 --only-categories=accessibility --view
+```
+
+### Phase 2: Performance (92/100 Score Achieved)
+
+**Core Web Vitals Targets:**
+- **LCP** (Largest Contentful Paint): < 2.5s
+- **FID** (First Input Delay): < 100ms
+- **CLS** (Cumulative Layout Shift): < 0.1
+
+#### Critical Rules:
+1. **Server Components First**: Default to Server Components
+   - Only use "use client" when absolutely necessary (state, hooks, browser APIs)
+   - Fetch data server-side in parallel using Promise.all()
+   - Eliminates loading states and client-side waterfalls
+2. **Resource Hints**: Always include for external resources
+   - preconnect for critical origins (Cloudinary, Analytics)
+   - dns-prefetch as fallback for older browsers
+   - Currently: Cloudinary CDN, Google Analytics
+3. **Image Optimization**:
+   - Use Next.js Image component with fill prop
+   - Add fetchPriority="high" to LCP images (hero, above-fold)
+   - Enable AVIF format in next.config.mjs
+   - Blur placeholders for instant visual feedback
+   - sizes="100vw" or specific sizes for responsive images
+4. **Code Splitting & Lazy Loading**:
+   - Dynamic imports for components not needed immediately
+   - Animation components loaded lazily (AnimateIcon, etc.)
+   - Use React.lazy() with Suspense boundaries
+5. **Font Optimization**:
+   - adjustFontFallback enabled to prevent layout shift
+   - Preload critical font files
+   - Font display: swap for faster FCP
+6. **ISR Configuration**:
+   - All pages use revalidate: 3600 (1 hour)
+   - generateStaticParams for dynamic routes
+   - cache: 'force-cache' for all Strapi API calls
+   - Only use cache: 'no-store' when data must be real-time
+7. **Bundle Optimization**:
+   - modularizeImports for lucide-react and @radix-ui
+   - Tree shaking enabled
+   - Remove console logs in production
+   - Extended image cache TTL (1 year)
+8. **CSS Performance**:
+   - willChange for animated properties
+   - transform and opacity for 60fps animations
+   - Avoid animating width, height, top, left
+
+**Testing**: Run Lighthouse performance audits on production builds
+```bash
+npm run build
+npx lighthouse http://localhost:3000 --only-categories=performance --view
+```
+
+### Phase 3: SEO (Comprehensive Implementation)
+
+#### Critical Rules:
+1. **Metadata**: Every page MUST export metadata or generateMetadata
+   - title: Unique, descriptive (50-60 chars)
+   - description: Compelling summary (150-160 chars)
+   - openGraph: Images, URLs, type
+   - twitter: Card type, images
+2. **Structured Data**: JSON-LD on project pages
+   - Schema.org CreativeWork for portfolio projects
+   - Include name, description, image, datePublished, keywords
+3. **Sitemap**: Auto-generated from routes
+   - Dynamic sitemap.ts exports all static and dynamic pages
+   - Updates automatically when projects added/removed
+4. **Robots.txt**: Configured for optimal crawling
+   - Allow all bots on public pages
+   - Disallow admin, API routes, draft content
+5. **Canonical URLs**: Prevent duplicate content issues
+   - Set canonical in metadata for each page
+
+**Files**:
+- [app/sitemap.ts](app/sitemap.ts) - Dynamic sitemap generation
+- [app/robots.ts](app/robots.ts) - Crawler configuration
+- [lib/metadata.ts](lib/metadata.ts) - Reusable metadata utilities
+
+### Phase 4: Testing (Comprehensive Coverage)
+
+#### Critical Rules:
+1. **Write Tests BEFORE Committing**: New features MUST include tests
+   - Unit tests for utilities/functions
+   - Component tests for UI components
+   - E2E tests for critical user flows
+2. **Test Pyramid**:
+   - **Unit tests** (majority): Fast, isolated, focused
+   - **Component tests**: Integration of component + children
+   - **E2E tests** (fewer): Critical paths only (homepage, nav, contact form)
+3. **Coverage Requirements**:
+   - Utilities: 100% coverage (small, pure functions)
+   - Components: Test all props, variants, states
+   - E2E: Cover happy path + critical error states
+4. **Run Tests Before Committing**:
+   ```bash
+   npm run test:run  # Unit + component tests
+   npm run test:e2e  # E2E tests
+   ```
+5. **Test Naming Conventions**:
+   - Unit tests: `*.test.ts`
+   - Component tests: `*.test.tsx`
+   - E2E tests: `*.spec.ts` (in e2e/ directory)
+6. **What to Test**:
+   - ✅ Pure functions (utils, helpers)
+   - ✅ Component rendering with different props
+   - ✅ User interactions (clicks, typing, navigation)
+   - ✅ Form validation and submission
+   - ✅ Error states and loading states
+   - ❌ Don't test implementation details
+   - ❌ Don't test third-party libraries
+
+**Testing Stack**:
+- Vitest - Unit & component tests
+- Playwright - E2E tests across browsers
+- React Testing Library - Component testing
+
+See [TESTING.md](TESTING.md) for full documentation.
+
+### GitHub Actions CI/CD
+
+**Continuous Integration**: All PRs MUST pass CI checks before merging
+
+The CI pipeline runs on every push and PR:
+1. **Lint Check**: ESLint must pass (no errors)
+2. **Type Check**: TypeScript compilation must succeed
+3. **Unit Tests**: Vitest tests must pass
+4. **E2E Tests**: Playwright tests must pass in Chromium
+5. **Build**: Production build must succeed
+
+**Configuration**: [.github/workflows/ci.yml](.github/workflows/ci.yml)
+
+**Local Pre-commit Checklist**:
+```bash
+npm run lint          # ESLint check
+npx tsc --noEmit      # TypeScript check
+npm run test:run      # Unit tests
+npm run test:e2e      # E2E tests
+npm run build         # Production build
+```
+
+## Summary: Making Changes to This Codebase
+
+When implementing new features or fixing bugs:
+
+1. ✅ **Accessibility First**: Ensure WCAG AA compliance (ARIA, keyboard nav, contrast)
+2. ✅ **Performance Aware**: Use Server Components, optimize images, lazy load non-critical code
+3. ✅ **SEO Complete**: Add metadata, structured data for new pages
+4. ✅ **Test Coverage**: Write unit/component/E2E tests as appropriate
+5. ✅ **CI Passing**: All checks must pass before merging
+6. ✅ **Respect Animation Rules**: ≤300ms, ease-out, motion-reduce support
+
+**These are not suggestions - they are requirements.** The quality bar has been set across these 4 phases and must be maintained.
+
 ## Future Enhancements
 1. Implement contact form email backend (currently form submits to /forms/contact success page)
-2. Add SEO metadata and Open Graph tags for social sharing
-3. Consider adding blog/articles section
-4. Add analytics tracking (Google Analytics, Plausible, etc.)
-5. Add more portfolio projects through Strapi CMS
-6. Optimize loading states and skeleton components
-7. Add page transitions between routes
+2. Consider adding blog/articles section
+3. Add more portfolio projects through Strapi CMS
+4. Add page transitions between routes
