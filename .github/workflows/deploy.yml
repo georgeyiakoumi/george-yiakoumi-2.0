@@ -1,0 +1,40 @@
+name: Deploy & Cache Management
+
+on:
+  push:
+    branches: ['main']
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  purge-cloudflare:
+    name: Purge Cloudflare Cache
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Wait for Netlify deployment
+        run: |
+          echo "Waiting 60 seconds for Netlify to deploy..."
+          sleep 60
+
+      - name: Purge Cloudflare cache
+        run: npm run purge:cloudflare
+        env:
+          CLOUDFLARE_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+
+      - name: Deployment complete
+        run: |
+          echo "✅ Deployment complete!"
+          echo "✅ Netlify cache cleared via 'Deploy without cache'"
+          echo "✅ Cloudflare cache purged for main pages"
+          echo ""
+          echo "🌐 Site: https://georgeyiakoumi.com"

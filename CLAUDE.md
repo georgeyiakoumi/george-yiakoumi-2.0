@@ -243,9 +243,21 @@ The site uses a **two-tier CDN architecture**:
    - Serverless functions
    - Automatic deployments from GitHub
 
-**Cache Purging**: When stale content appears, BOTH cache layers must be cleared:
-- **Cloudflare**: https://dash.cloudflare.com → select domain → Caching → Purge Cache
-- **Netlify**: Deploy without cache via dashboard
+**Automated Cache Purging**:
+GitHub Actions workflow automatically purges Cloudflare cache on every push to `main`:
+1. Waits 60 seconds for Netlify deployment
+2. Runs `npm run purge:cloudflare` to clear main pages
+3. Ensures fresh content served globally
+
+**Manual Cache Purging** (when needed):
+```bash
+npm run purge:cloudflare      # Purge main pages (recommended)
+npm run purge:cloudflare:all  # Purge everything (use sparingly)
+```
+
+**Required Environment Variables** (GitHub Secrets & local `.env.local`):
+- `CLOUDFLARE_ZONE_ID` - From Cloudflare dashboard
+- `CLOUDFLARE_API_TOKEN` - API token with "Cache Purge" permission
 
 ### Hosting Infrastructure
 - **Frontend**: Netlify with `@netlify/plugin-nextjs`

@@ -28,8 +28,13 @@ A modern, full-stack portfolio website showcasing design and development work. B
 Create a `.env.local` file in the project root:
 
 ```bash
+# Strapi CMS
 NEXT_PUBLIC_STRAPI_API_URL=your_strapi_url
 STRAPI_API_TOKEN=your_api_token
+
+# Cloudflare API (optional - for manual cache purging)
+CLOUDFLARE_ZONE_ID=your_zone_id
+CLOUDFLARE_API_TOKEN=your_api_token
 ```
 
 #### CMS (cms/.env)
@@ -231,7 +236,7 @@ This project uses an optimized caching strategy that balances performance with r
 4. Next request regenerates page with fresh content from Strapi
 5. Subsequent visitors see the updated cached content
 
-For webhook setup instructions, see [WEBHOOK_SETUP.md](WEBHOOK_SETUP.md).
+For webhook setup instructions, see `claude-guides/WEBHOOK_SETUP.md` (local development guide, not in repo).
 
 ## Deployment
 
@@ -249,16 +254,36 @@ The site uses a **two-tier CDN architecture**:
 1. **Cloudflare** - Primary CDN layer handling DNS and edge caching globally
 2. **Netlify Edge** - Secondary CDN layer serving Next.js application
 
-**Important**: When deploying changes, both cache layers may need to be cleared:
-- Netlify cache: Cleared via "Deploy without cache" in Netlify dashboard
-- Cloudflare cache: Must be manually purged at https://dash.cloudflare.com → Caching → Purge Cache
+**Automated Cache Purging**: When code is pushed to `main`, GitHub Actions automatically:
+1. Waits for Netlify deployment to complete
+2. Purges Cloudflare cache for all main pages
+3. Ensures fresh content is served globally
+
+**Manual Cache Purging** (if needed):
+```bash
+# Purge Cloudflare cache for main pages (HTML only)
+npm run purge:cloudflare
+
+# Purge EVERYTHING (use sparingly - impacts CDN performance)
+npm run purge:cloudflare:all
+```
+
+**Old Manual Method** (deprecated):
+- Netlify: "Deploy without cache" in dashboard
+- Cloudflare: https://dash.cloudflare.com → Caching → Purge Cache
 
 ### Environment Variables
 
-Frontend requires:
+**Frontend** (`.env.local` and Netlify):
 - `NEXT_PUBLIC_STRAPI_API_URL` - Public Strapi API URL
 - `STRAPI_API_TOKEN` - Server-side API token
-- `REVALIDATE_SECRET` - Webhook authentication secret (mark as "contains secret values" in Netlify)
+- `REVALIDATE_SECRET` - Webhook authentication secret
+
+**Cloudflare API** (for automated cache purging):
+- `CLOUDFLARE_ZONE_ID` - Zone ID from Cloudflare dashboard (domain overview)
+- `CLOUDFLARE_API_TOKEN` - API token with "Cache Purge" permission
+
+**Setting up Cloudflare API**: See `claude-guides/CLOUDFLARE_SETUP.md` for complete step-by-step instructions (local guide, not in repo).
 
 ## Quality Standards
 

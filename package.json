@@ -20,7 +20,9 @@
     "test:strapi": "node scripts/test-strapi.mjs",
     "cms:dev": "cd cms && npm run develop",
     "cms:build": "cd cms && npm run build",
-    "cms:start": "cd cms && npm run start"
+    "cms:start": "cd cms && npm run start",
+    "purge:cloudflare": "node scripts/purge-cloudflare.mjs",
+    "purge:cloudflare:all": "node scripts/purge-cloudflare.mjs --all"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

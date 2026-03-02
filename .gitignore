@@ -43,6 +43,14 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# Lighthouse audit reports (regenerate locally, don't commit)
+/accessibility-reports
+
+# Performance reports - ignore JSON data, keep docs and tools
+/performance-reports/*.json
+!/performance-reports/PERFORMANCE_AUDIT.md
+!/performance-reports/compare.js
+
 *storybook.log
 storybook-static
 
@@ -62,3 +70,6 @@ storybook-static
 
 # References folder
 .references
+
+# Claude Code setup guides (local development documentation)
+claude-guides/
