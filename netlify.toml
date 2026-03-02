@@ -5,6 +5,14 @@ package = "@netlify/plugin-nextjs"
   command = "npm run build"
   publish = ".next"
 
+# TEMPORARY: Force no-cache for contact page to clear stale CDN cache
+[[headers]]
+  for = "/contact"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate, max-age=0"
+    Pragma = "no-cache"
+    Expires = "0"
+
 # Headers for better caching and security
 [[headers]]
   for = "/*"
