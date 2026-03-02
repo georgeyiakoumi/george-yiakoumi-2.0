@@ -1,5 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Force fresh build ID to bypass aggressive CDN caching
+  generateBuildId: async () => {
+    return `build-${Date.now()}`;
+  },
   images: {
     remotePatterns: [
       {
