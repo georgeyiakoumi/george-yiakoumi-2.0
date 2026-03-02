@@ -265,6 +265,56 @@ npm run purge:cloudflare:all  # Purge everything (use sparingly)
 - **Database**: Supabase (PostgreSQL)
 - **Media Storage**: Cloudinary CDN
 
+### Cloudflare Configuration for Next.js
+
+**CRITICAL: Cloudflare settings MUST be configured correctly to avoid conflicts with Next.js optimization**
+
+#### Recommended Speed Settings:
+
+**✅ ENABLED (Recommended)**:
+- **HTTP/2** - Modern protocol for faster page loads
+- **HTTP/3 (with QUIC)** - Latest protocol version for improved performance
+- **Early Hints** - Preload critical resources before full response
+- **Speed Brain** - Beta feature for predictive prefetching (optional)
+- **Auto Minify** - HTML, CSS, JS minification (safe for Next.js production builds)
+
+**❌ DISABLED (Required)**:
+- **Rocket Loader** - OFF (breaks React hydration and Next.js client-side JavaScript)
+- **Cloudflare Fonts** - OFF (conflicts with Next.js `next/font/google` optimization, causes double-optimization)
+- **Mirage** - OFF (not compatible with Next.js Image component)
+
+#### Caching Settings:
+
+**Browser Cache TTL**: Set to **30 minutes** (or max 1 hour)
+- Default 4+ hours causes stale asset issues during deployments
+- Shorter TTL ensures users get fresh content faster
+- Located in: Speed → Optimization → Content Optimization → Browser Cache TTL
+
+**Cloudflare Cache Level**: Standard
+- Let Cloudflare determine what to cache
+- Next.js assets have proper cache headers
+
+**Page Rules** (already configured):
+```
+Rule 1: georgeyiakoumi.com/_next/*
+- Cache Level: Bypass
+- Purpose: Prevent Cloudflare from caching Next.js dynamic routes
+```
+
+#### Why These Settings Matter:
+
+1. **Rocket Loader** injects JavaScript that delays execution, breaking React's hydration process
+2. **Cloudflare Fonts** tries to optimize Google Fonts that Next.js already optimizes via `next/font`, causing:
+   - Double font loading
+   - FOUT (Flash of Unstyled Text)
+   - Potential MIME type conflicts
+3. **High Browser Cache TTL** means users cache old JavaScript chunks for hours, causing MIME type errors and 404s when new deployments change chunk hashes
+
+#### Propagation Time:
+- Setting changes typically propagate within **1-5 minutes**
+- In rare cases, can take up to **15 minutes** for all edge nodes to update
+- Clear browser cache after making Cloudflare changes to test properly
+
 ## Environment Requirements
 - Node.js 22.15.1 (via nvm)
 - npm package manager
