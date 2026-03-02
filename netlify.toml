@@ -5,6 +5,25 @@ package = "@netlify/plugin-nextjs"
   command = "npm run build"
   publish = ".next"
 
+# Ensure correct MIME types for Next.js assets (MUST come before /* rule)
+[[headers]]
+  for = "/_next/static/chunks/*.css"
+  [headers.values]
+    Content-Type = "text/css; charset=utf-8"
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/_next/static/chunks/*.js"
+  [headers.values]
+    Content-Type = "application/javascript; charset=utf-8"
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/_next/static/media/*.woff2"
+  [headers.values]
+    Content-Type = "font/woff2"
+    Cache-Control = "public, max-age=31536000, immutable"
+
 # TEMPORARY: Force no-cache for contact page to clear stale CDN cache
 [[headers]]
   for = "/contact"
@@ -13,12 +32,11 @@ package = "@netlify/plugin-nextjs"
     Pragma = "no-cache"
     Expires = "0"
 
-# Headers for better caching and security
+# Headers for better caching and security (broad rule comes LAST)
 [[headers]]
   for = "/*"
   [headers.values]
     X-Frame-Options = "DENY"
-    X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "geolocation=(), microphone=(), camera=()"
     # Content Security Policy
@@ -39,25 +57,6 @@ package = "@netlify/plugin-nextjs"
     """
     # Don't cache HTML pages in browser - allow ISR to work
     Cache-Control = "public, max-age=0, must-revalidate"
-
-# Ensure correct MIME types for Next.js assets
-[[headers]]
-  for = "/_next/static/chunks/*.js"
-  [headers.values]
-    Content-Type = "application/javascript; charset=utf-8"
-    Cache-Control = "public, max-age=31536000, immutable"
-
-[[headers]]
-  for = "/_next/static/chunks/*.css"
-  [headers.values]
-    Content-Type = "text/css; charset=utf-8"
-    Cache-Control = "public, max-age=31536000, immutable"
-
-[[headers]]
-  for = "/_next/static/media/*.woff2"
-  [headers.values]
-    Content-Type = "font/woff2"
-    Cache-Control = "public, max-age=31536000, immutable"
 
 # Cache static assets aggressively (1 year)
 [[headers]]
