@@ -1,7 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // TEMPORARY: Change output directory to bypass Netlify cache
-  distDir: '.next-clean',
   images: {
     remotePatterns: [
       {
