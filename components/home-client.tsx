@@ -122,7 +122,7 @@ export function HomeClient() {
               size="sm"
               onClick={() => setActiveCategory("all")}
               aria-pressed={activeCategory === "all"}
-              className={`h-7 ${activeCategory !== "all" ? "!text-foreground" : ""}`}
+              className="h-7"
             >
               All
             </Button>
@@ -131,7 +131,7 @@ export function HomeClient() {
               size="sm"
               onClick={() => setActiveCategory("design")}
               aria-pressed={activeCategory === "design"}
-              className={`h-7 ${activeCategory !== "design" ? "!text-foreground" : ""}`}
+              className="h-7"
             >
               Design
             </Button>
@@ -140,7 +140,7 @@ export function HomeClient() {
               size="sm"
               onClick={() => setActiveCategory("development")}
               aria-pressed={activeCategory === "development"}
-              className={`h-7 ${activeCategory !== "development" ? "!text-foreground" : ""}`}
+              className="h-7"
             >
               Development
             </Button>
@@ -149,7 +149,7 @@ export function HomeClient() {
               size="sm"
               onClick={() => setActiveCategory("tools")}
               aria-pressed={activeCategory === "tools"}
-              className={`h-7 ${activeCategory !== "tools" ? "!text-foreground" : ""}`}
+              className="h-7"
             >
               Tools
             </Button>
