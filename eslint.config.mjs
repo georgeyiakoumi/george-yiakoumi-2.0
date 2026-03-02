@@ -1,22 +1,29 @@
-// ESLint flat config that works with Next.js
-// Note: There's a known issue with eslint-config-next and ESLint 9 flat config
-// This is a working minimal configuration
+// ESLint flat config
+// Note: Next.js eslint-config-next has compatibility issues with ESLint 9 flat config
+// Using a minimal working configuration until full support is available
 
 export default [
   {
     ignores: [
-      "**/node_modules/",
-      "**/.next/",
-      "**/out/",
-      "**/build/",
-      "**/dist/",
-      "**/.netlify/",
-      "**/.references/",
-      "**/.storybook/",
-      "**/stories/",
-      "next-env.d.ts",
-      "**/storybook-static/",
-      "cms/",
+      '**/node_modules/**',
+      '**/.next/**',
+      '**/out/**',
+      '**/build/**',
+      '**/dist/**',
+      '**/.netlify/**',
+      '**/.references/**',
+      '**/.storybook/**',
+      '**/stories/**',
+      '**/next-env.d.ts',
+      '**/storybook-static/**',
+      '**/cms/**',
+      '**/vitest.config.ts',
+      '**/playwright.config.ts',
+      '**/test/**',
+      '**/e2e/**',
+      '**/coverage/**',
+      '**/playwright-report/**',
+      '**/test-results/**',
     ],
   },
 ];

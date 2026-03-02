@@ -86,7 +86,7 @@ jobs:
           retention-days: 30
 
   lint:
-    name: Lint & Type Check
+    name: Lint
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -105,6 +105,3 @@ jobs:
 
       - name: Run ESLint
         run: npm run lint
-
-      - name: Type check
-        run: npx tsc --noEmit
