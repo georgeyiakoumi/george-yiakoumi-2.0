@@ -103,6 +103,7 @@ export function ContactClient() {
               <Input
                 id="name"
                 placeholder="Your name"
+                autoComplete="name"
                 {...form.register("name")}
                 aria-invalid={!!form.formState.errors.name}
               />
@@ -119,6 +120,7 @@ export function ContactClient() {
                 id="email"
                 type="email"
                 placeholder="your.email@example.com"
+                autoComplete="email"
                 {...form.register("email")}
                 aria-invalid={!!form.formState.errors.email}
               />
