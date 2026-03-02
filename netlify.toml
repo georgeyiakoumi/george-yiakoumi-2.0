@@ -5,10 +5,6 @@ package = "@netlify/plugin-nextjs"
   command = "rm -rf .next node_modules/.cache && npm run build"
   publish = ".next"
 
-[build.environment]
-  # Force disable Netlify build cache to fix deployment issues
-  NETLIFY_NEXT_PLUGIN_SKIP = "true"
-
 # Ensure correct MIME types for Next.js assets (MUST come before /* rule)
 [[headers]]
   for = "/_next/static/chunks/*.css"
