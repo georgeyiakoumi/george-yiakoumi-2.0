@@ -14,6 +14,7 @@ import "@/lib/tailwind-safelist";
 const mulish = Mulish({
   subsets: ["latin"],
   display: 'swap',
+  preload: false, // Disable preload to fix "unused preload" warning
 });
 
 export const generateMetadata = generateSiteMetadata;
