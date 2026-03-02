@@ -7,7 +7,7 @@ import { Section } from "@/components/section";
 import { Typography } from "@/components/ui/typography";
 import { type ToolData, type BusinessData } from "@/lib/strapi-queries";
 import { ThemedLogo } from "@/components/themed-logo";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 // Lazy load animation components
 const AnimateIcon = dynamic(() => import("@/components/animate-ui/icons/icon").then(mod => ({ default: mod.AnimateIcon })), { ssr: false });
@@ -38,6 +38,32 @@ interface HomeContentProps {
 
 export function HomeContent({ aboutData, tools, businesses }: HomeContentProps) {
   const [activeCategory, setActiveCategory] = useState<string>("all");
+  const [clipPath, setClipPath] = useState<string>("");
+  const containerRef = useRef<HTMLDivElement>(null);
+  const buttonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+
+  useEffect(() => {
+    const updateClipPath = () => {
+      const container = containerRef.current;
+      const activeButton = buttonRefs.current[activeCategory];
+
+      if (!container || !activeButton) return;
+
+      const containerRect = container.getBoundingClientRect();
+      const buttonRect = activeButton.getBoundingClientRect();
+
+      const left = buttonRect.left - containerRect.left;
+      const right = containerRect.width - (buttonRect.right - containerRect.left);
+      const top = buttonRect.top - containerRect.top;
+      const bottom = containerRect.height - (buttonRect.bottom - containerRect.top);
+
+      setClipPath(`inset(${top}px ${right}px ${bottom}px ${left}px round 0.375rem)`);
+    };
+
+    updateClipPath();
+    window.addEventListener('resize', updateClipPath);
+    return () => window.removeEventListener('resize', updateClipPath);
+  }, [activeCategory]);
 
   if (!aboutData) {
     return null;
@@ -105,43 +131,58 @@ export function HomeContent({ aboutData, tools, businesses }: HomeContentProps) 
 
         <div className="flex flex-col items-center gap-8 w-full">
           <div
-            className="inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground gap-1"
+            ref={containerRef}
+            className="relative inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground gap-1"
             role="group"
             aria-label="Filter tools by category"
           >
+            {/* Animated background */}
+            <div
+              className="absolute inset-0 bg-background shadow-sm transition-[clip-path] duration-200 ease-out motion-reduce:transition-none"
+              style={{
+                clipPath,
+                willChange: 'clip-path'
+              }}
+              aria-hidden="true"
+            />
+
             <Button
-              variant={activeCategory === "all" ? "default" : "ghost"}
+              ref={(el) => { buttonRefs.current["all"] = el; }}
+              variant="ghost"
               size="sm"
               onClick={() => setActiveCategory("all")}
               aria-pressed={activeCategory === "all"}
-              className="h-7"
+              className="h-7 cursor-pointer relative z-10 hover:bg-transparent"
             >
               All
             </Button>
             <Button
-              variant={activeCategory === "design" ? "default" : "ghost"}
+              ref={(el) => { buttonRefs.current["design"] = el; }}
+              variant="ghost"
               size="sm"
               onClick={() => setActiveCategory("design")}
               aria-pressed={activeCategory === "design"}
-              className="h-7"
+              className="h-7 cursor-pointer relative z-10 hover:bg-transparent"
             >
               Design
             </Button>
             <Button
-              variant={activeCategory === "development" ? "default" : "ghost"}
+              ref={(el) => { buttonRefs.current["development"] = el; }}
+              variant="ghost"
               size="sm"
               onClick={() => setActiveCategory("development")}
               aria-pressed={activeCategory === "development"}
-              className="h-7"
+              className="h-7 cursor-pointer relative z-10 hover:bg-transparent"
             >
               Development
             </Button>
             <Button
-              variant={activeCategory === "tools" ? "default" : "ghost"}
+              ref={(el) => { buttonRefs.current["tools"] = el; }}
+              variant="ghost"
               size="sm"
               onClick={() => setActiveCategory("tools")}
               aria-pressed={activeCategory === "tools"}
-              className="h-7"
+              className="h-7 cursor-pointer relative z-10 hover:bg-transparent"
             >
               Tools
             </Button>
