@@ -39,6 +39,10 @@
   "exclude": [
     "node_modules",
     "cms",
-    "stories"
+    "stories",
+    "vitest.config.ts",
+    "playwright.config.ts",
+    "test",
+    "e2e"
   ]
 }
