@@ -3,3 +3,14 @@ package = "@netlify/plugin-nextjs"
 
 [build]
   command = "npm run build"
+
+# Force correct MIME types for Next.js assets
+[[headers]]
+  for = "/_next/static/chunks/*.css"
+  [headers.values]
+    Content-Type = "text/css; charset=utf-8"
+
+[[headers]]
+  for = "/_next/static/css/*.css"
+  [headers.values]
+    Content-Type = "text/css; charset=utf-8"
