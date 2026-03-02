@@ -40,9 +40,12 @@ export default defineConfig({
   ],
 
   webServer: {
-    command: 'npm run build && npm run start',
+    command: 'NEXT_PUBLIC_STRAPI_API_URL=https://portfolio-cms-n9hb.onrender.com/api npm run build && npm run start',
     url: baseURL,
     reuseExistingServer: !process.env.CI,
     timeout: 120000,
+    env: {
+      NEXT_PUBLIC_STRAPI_API_URL: 'https://portfolio-cms-n9hb.onrender.com/api',
+    },
   },
 });
