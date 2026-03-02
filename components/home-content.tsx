@@ -7,7 +7,7 @@ import { Section } from "@/components/section";
 import { Typography } from "@/components/ui/typography";
 import { type ToolData, type BusinessData } from "@/lib/strapi-queries";
 import { ThemedLogo } from "@/components/themed-logo";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 
 // Lazy load animation components
 const AnimateIcon = dynamic(() => import("@/components/animate-ui/icons/icon").then(mod => ({ default: mod.AnimateIcon })), { ssr: false });
@@ -39,16 +39,23 @@ interface HomeContentProps {
 export function HomeContent({ aboutData, tools, businesses }: HomeContentProps) {
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [clipPath, setClipPath] = useState<string>("");
+  const [isAnimating, setIsAnimating] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const buttonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const resizeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const animationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  useEffect(() => {
-    const updateClipPath = () => {
-      const container = containerRef.current;
-      const activeButton = buttonRefs.current[activeCategory];
+  const updateClipPath = useCallback(() => {
+    const container = containerRef.current;
+    const activeButton = buttonRefs.current[activeCategory];
 
-      if (!container || !activeButton) return;
+    if (!container || !activeButton) return;
 
+    // Set animating state
+    setIsAnimating(true);
+
+    // Use requestAnimationFrame to batch with browser paint
+    requestAnimationFrame(() => {
       const containerRect = container.getBoundingClientRect();
       const buttonRect = activeButton.getBoundingClientRect();
 
@@ -58,12 +65,41 @@ export function HomeContent({ aboutData, tools, businesses }: HomeContentProps) 
       const bottom = containerRect.height - (buttonRect.bottom - containerRect.top);
 
       setClipPath(`inset(${top}px ${right}px ${bottom}px ${left}px round 0.375rem)`);
+
+      // Remove willChange after animation completes
+      if (animationTimeoutRef.current) {
+        clearTimeout(animationTimeoutRef.current);
+      }
+      animationTimeoutRef.current = setTimeout(() => {
+        setIsAnimating(false);
+      }, 200); // Match transition duration
+    });
+  }, [activeCategory]);
+
+  useEffect(() => {
+    updateClipPath();
+
+    // Debounced resize handler
+    const handleResize = () => {
+      if (resizeTimeoutRef.current) {
+        clearTimeout(resizeTimeoutRef.current);
+      }
+      resizeTimeoutRef.current = setTimeout(() => {
+        updateClipPath();
+      }, 100);
     };
 
-    updateClipPath();
-    window.addEventListener('resize', updateClipPath);
-    return () => window.removeEventListener('resize', updateClipPath);
-  }, [activeCategory]);
+    window.addEventListener('resize', handleResize, { passive: true });
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      if (resizeTimeoutRef.current) {
+        clearTimeout(resizeTimeoutRef.current);
+      }
+      if (animationTimeoutRef.current) {
+        clearTimeout(animationTimeoutRef.current);
+      }
+    };
+  }, [updateClipPath]);
 
   if (!aboutData) {
     return null;
@@ -141,7 +177,7 @@ export function HomeContent({ aboutData, tools, businesses }: HomeContentProps) 
               className="absolute inset-0 bg-background shadow-sm transition-[clip-path] duration-200 ease-out motion-reduce:transition-none"
               style={{
                 clipPath,
-                willChange: 'clip-path'
+                willChange: isAnimating ? 'clip-path' : 'auto'
               }}
               aria-hidden="true"
             />
