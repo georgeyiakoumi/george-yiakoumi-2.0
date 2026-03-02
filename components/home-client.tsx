@@ -113,7 +113,7 @@ export function HomeClient() {
 
         <div className="flex flex-col items-center gap-8 w-full">
           <div
-            className="inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground gap-1"
+            className="inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 gap-1"
             role="group"
             aria-label="Filter tools by category"
           >
@@ -122,7 +122,7 @@ export function HomeClient() {
               size="sm"
               onClick={() => setActiveCategory("all")}
               aria-pressed={activeCategory === "all"}
-              className="h-7"
+              className={`h-7 ${activeCategory !== "all" ? "text-foreground" : ""}`}
             >
               All
             </Button>
@@ -131,7 +131,7 @@ export function HomeClient() {
               size="sm"
               onClick={() => setActiveCategory("design")}
               aria-pressed={activeCategory === "design"}
-              className="h-7"
+              className={`h-7 ${activeCategory !== "design" ? "text-foreground" : ""}`}
             >
               Design
             </Button>
@@ -140,7 +140,7 @@ export function HomeClient() {
               size="sm"
               onClick={() => setActiveCategory("development")}
               aria-pressed={activeCategory === "development"}
-              className="h-7"
+              className={`h-7 ${activeCategory !== "development" ? "text-foreground" : ""}`}
             >
               Development
             </Button>
@@ -149,7 +149,7 @@ export function HomeClient() {
               size="sm"
               onClick={() => setActiveCategory("tools")}
               aria-pressed={activeCategory === "tools"}
-              className="h-7"
+              className={`h-7 ${activeCategory !== "tools" ? "text-foreground" : ""}`}
             >
               Tools
             </Button>
