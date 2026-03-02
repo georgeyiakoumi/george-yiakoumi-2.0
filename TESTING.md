@@ -154,7 +154,36 @@ test.describe('Feature', () => {
 
 ## CI/CD Integration
 
-The testing setup is ready for CI/CD integration. Tests can be run in CI environments with:
+### GitHub Actions
+
+Tests run automatically on every pull request via GitHub Actions. The workflow includes:
+
+- **Unit & Component Tests** - Run on every PR
+- **E2E Tests** - Run on every PR with Chromium browser
+- **Lint & Type Check** - Verify code quality and TypeScript
+
+**Workflow file**: `.github/workflows/test.yml`
+
+**Triggers**:
+- Pull requests to any branch
+- Pushes to `main` or `claude-audit` branches
+
+**Features**:
+- ✅ Parallel job execution (unit, E2E, lint run simultaneously)
+- ✅ NPM dependency caching for faster runs
+- ✅ Coverage reports uploaded as artifacts
+- ✅ Playwright reports on test failures
+- ✅ Test results retention for 30 days
+
+**Viewing Results**:
+1. Go to your PR on GitHub
+2. Scroll to the bottom to see check status
+3. Click "Details" to view test results
+4. Download artifacts for coverage/failure reports
+
+### Manual CI Setup
+
+For other CI environments, tests can be run with:
 
 ```bash
 # Install dependencies and browsers
