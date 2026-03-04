@@ -12,13 +12,13 @@ export function CarouselBlock({ block, projectTitle }: CarouselBlockProps) {
   if (!block.slides || block.slides.length === 0) return null;
 
   return (
-    <figure className="flex flex-col gap-4 items-center w-full md:max-w-lg lg:max-w-2xl mx-auto px-8 my-8">
+    <figure className="flex flex-col gap-12 items-center w-full md:max-w-lg lg:max-w-xl xl:max-w-2xl px-8 lg:px-0 mx-auto my-12">
       <Carousel
         opts={{
           align: "center",
           loop: true,
         }}
-        className="w-full border border-border rounded-lg mb-8"
+        className="w-full border border-border rounded-lg"
       >
         
         <CarouselContent>
