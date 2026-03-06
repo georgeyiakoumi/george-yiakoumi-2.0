@@ -99,6 +99,9 @@ export function StatsBlock({ block }: StatsBlockProps) {
     );
   }
 
+  // Detect multi-series data (items with group field)
+  const hasGroups = block.items.some(item => item.group);
+
   // Prepare data for time-series charts (Area, Bar, Line)
   const chartData = block.items.map((item) => ({
     name: item.label,
@@ -162,7 +165,78 @@ export function StatsBlock({ block }: StatsBlockProps) {
   // ========== BAR CHARTS ==========
   if (chartType === 'bar') {
     const isHorizontal = variant === 'horizontal';
+    const isStacked = variant === 'stacked';
 
+    // Multi-series grouped bar chart
+    if (hasGroups) {
+      const groups = [...new Set(block.items!.filter(item => item.group).map(item => item.group!))];
+      const labels = [...new Set(block.items!.map(item => item.label))];
+
+      const groupedChartData = groups.map(group => {
+        const row: Record<string, string | number> = { name: group };
+        block.items!
+          .filter(item => item.group === group)
+          .forEach(item => {
+            row[item.label] = typeof item.value === 'string' ? parseFloat(item.value) : item.value;
+          });
+        return row;
+      });
+
+      const groupedChartConfig = labels.reduce((config, label, index) => {
+        return {
+          ...config,
+          [label]: {
+            label,
+            color: `var(--chart-${(index % 5) + 1})`,
+          },
+        };
+      }, {} as ChartConfig);
+
+      return (
+        <StatsWrapper className="my-16 px-8">
+          <div className="max-w-4xl mx-auto w-full">
+            {block.description && (
+              <Typography variant="lead" className="text-center mb-12">
+                {block.description}
+              </Typography>
+            )}
+
+            <ChartContainer config={groupedChartConfig} className="h-[400px] w-full">
+              <BarChart
+                data={groupedChartData}
+                layout={isHorizontal ? "vertical" : "horizontal"}
+              >
+                {showGrid && <CartesianGrid strokeDasharray="3 3" vertical={!isHorizontal} />}
+                {isHorizontal ? (
+                  <>
+                    {showAxes && <XAxis type="number" />}
+                    {showAxes && <YAxis dataKey="name" type="category" />}
+                  </>
+                ) : (
+                  <>
+                    {showAxes && <XAxis dataKey="name" />}
+                    {showAxes && <YAxis />}
+                  </>
+                )}
+                <ChartTooltip content={<ChartTooltipContent />} />
+                {showLegend && <ChartLegend content={<ChartLegendContent />} />}
+                {labels.map((label) => (
+                  <Bar
+                    key={label}
+                    dataKey={label}
+                    fill={`var(--color-${label})`}
+                    radius={isStacked ? 0 : 4}
+                    stackId={isStacked ? "a" : undefined}
+                  />
+                ))}
+              </BarChart>
+            </ChartContainer>
+          </div>
+        </StatsWrapper>
+      );
+    }
+
+    // Single-series bar chart (existing behaviour)
     return (
       <StatsWrapper className="my-16 px-8">
         <div className="max-w-4xl mx-auto w-full">

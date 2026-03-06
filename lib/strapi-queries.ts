@@ -135,6 +135,7 @@ export interface StatItem {
   suffix?: string;
   context?: string;
   description?: string; // Strapi uses 'description' field name
+  group?: string;
 }
 
 export type AreaVariant = 'default' | 'linear' | 'step' | 'stacked' | 'gradient';
