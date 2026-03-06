@@ -169,24 +169,32 @@ export function StatsBlock({ block }: StatsBlockProps) {
 
     // Multi-series grouped bar chart
     if (hasGroups) {
+      // Groups become the series/legend (e.g. "Browse intent", "Actual purchase")
       const groups = [...new Set(block.items!.filter(item => item.group).map(item => item.group!))];
+      // Labels become the x-axis categories (e.g. "Windows", "Chrome", "Android")
       const labels = [...new Set(block.items!.map(item => item.label))];
 
-      const groupedChartData = groups.map(group => {
-        const row: Record<string, string | number> = { name: group };
+      // Sanitize group names for CSS variable compatibility (spaces → hyphens, lowercase)
+      const sanitize = (str: string) => str.toLowerCase().replace(/\s+/g, '-');
+      const groupKeyMap = Object.fromEntries(groups.map(g => [g, sanitize(g)]));
+
+      const groupedChartData = labels.map(label => {
+        const row: Record<string, string | number> = { name: label };
         block.items!
-          .filter(item => item.group === group)
+          .filter(item => item.label === label)
           .forEach(item => {
-            row[item.label] = typeof item.value === 'string' ? parseFloat(item.value) : item.value;
+            if (item.group) {
+              row[groupKeyMap[item.group]] = typeof item.value === 'string' ? parseFloat(item.value) : item.value;
+            }
           });
         return row;
       });
 
-      const groupedChartConfig = labels.reduce((config, label, index) => {
+      const groupedChartConfig = groups.reduce((config, group, index) => {
         return {
           ...config,
-          [label]: {
-            label,
+          [groupKeyMap[group]]: {
+            label: group,
             color: `var(--chart-${(index % 5) + 1})`,
           },
         };
@@ -202,29 +210,22 @@ export function StatsBlock({ block }: StatsBlockProps) {
             )}
 
             <ChartContainer config={groupedChartConfig} className="h-[400px] w-full">
-              <BarChart
-                data={groupedChartData}
-                layout={isHorizontal ? "vertical" : "horizontal"}
-              >
-                {showGrid && <CartesianGrid strokeDasharray="3 3" vertical={!isHorizontal} />}
-                {isHorizontal ? (
-                  <>
-                    {showAxes && <XAxis type="number" />}
-                    {showAxes && <YAxis dataKey="name" type="category" />}
-                  </>
-                ) : (
-                  <>
-                    {showAxes && <XAxis dataKey="name" />}
-                    {showAxes && <YAxis />}
-                  </>
-                )}
+              <BarChart accessibilityLayer data={groupedChartData}>
+                <CartesianGrid vertical={false} />
+                <XAxis
+                  dataKey="name"
+                  tickLine={false}
+                  tickMargin={10}
+                  axisLine={false}
+                />
+                {showAxes && <YAxis />}
                 <ChartTooltip content={<ChartTooltipContent />} />
                 {showLegend && <ChartLegend content={<ChartLegendContent />} />}
-                {labels.map((label) => (
+                {groups.map((group) => (
                   <Bar
-                    key={label}
-                    dataKey={label}
-                    fill={`var(--color-${label})`}
+                    key={groupKeyMap[group]}
+                    dataKey={groupKeyMap[group]}
+                    fill={`var(--color-${groupKeyMap[group]})`}
                     radius={isStacked ? 0 : 4}
                     stackId={isStacked ? "a" : undefined}
                   />
