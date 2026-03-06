@@ -106,10 +106,12 @@ export interface ProjectBlocksRichText extends Struct.ComponentSchema {
 export interface ProjectBlocksStatItem extends Struct.ComponentSchema {
   collectionName: 'components_project_blocks_stat_items';
   info: {
+    description: '';
     displayName: 'stat-item';
   };
   attributes: {
     description: Schema.Attribute.String;
+    group: Schema.Attribute.String;
     label: Schema.Attribute.String;
     suffix: Schema.Attribute.String;
     value: Schema.Attribute.Decimal;
