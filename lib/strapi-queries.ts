@@ -441,6 +441,8 @@ export async function getTools() {
       query: {
         'populate': '*',
         'pagination[pageSize]': 1000,
+        'sort[0]': 'category:asc',
+        'sort[1]': 'name:asc',
       },
       cache: 'force-cache',
       tags: ['tools'],
