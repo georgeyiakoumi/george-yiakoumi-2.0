@@ -5,6 +5,18 @@ import { getStrapiMediaURL } from "@/lib/strapi";
 import { Typography } from "@/components/ui/typography";
 import type { VideoBlock as VideoBlockType } from "@/lib/strapi-queries";
 
+function toEmbedUrl(url: string): string {
+  // YouTube: watch?v=ID → embed/ID
+  const ytMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/);
+  if (ytMatch) return `https://www.youtube.com/embed/${ytMatch[1]}`;
+
+  // Vimeo: vimeo.com/ID → player.vimeo.com/video/ID
+  const vimeoMatch = url.match(/vimeo\.com\/(\d+)/);
+  if (vimeoMatch) return `https://player.vimeo.com/video/${vimeoMatch[1]}`;
+
+  return url;
+}
+
 interface VideoBlockProps {
   block: VideoBlockType;
 }
@@ -46,7 +58,7 @@ export function VideoBlock({ block }: VideoBlockProps) {
         <div className="w-full md:max-w-lg lg:max-w-2xl mx-auto px-8">
           <div className="relative w-full aspect-video rounded-lg overflow-hidden md:border-border md:border">
             <iframe
-              src={block.url}
+              src={toEmbedUrl(block.url)}
               title="Project video"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
