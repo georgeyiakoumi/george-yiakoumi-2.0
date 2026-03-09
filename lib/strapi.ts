@@ -43,7 +43,7 @@ export async function fetchAPI<T>(
     const response = await fetch(url.toString(), {
       headers,
       cache,
-      ...(tags && { next: { tags } }),
+      next: { revalidate: 3600, ...(tags && { tags }) },
     });
 
     if (!response.ok) {
