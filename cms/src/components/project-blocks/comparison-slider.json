@@ -28,12 +28,6 @@
         "audios"
       ]
     },
-    "before_label": {
-      "type": "text"
-    },
-    "after_label": {
-      "type": "text"
-    },
     "caption": {
       "type": "text"
     }
