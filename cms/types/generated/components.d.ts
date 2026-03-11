@@ -76,6 +76,7 @@ export interface ProjectBlocksComparisonSlider extends Struct.ComponentSchema {
     > &
       Schema.Attribute.Required;
     before_label: Schema.Attribute.Text;
+    caption: Schema.Attribute.Text;
   };
 }
 
