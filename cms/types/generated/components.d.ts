@@ -70,12 +70,10 @@ export interface ProjectBlocksComparisonSlider extends Struct.ComponentSchema {
       'images' | 'files' | 'videos' | 'audios'
     > &
       Schema.Attribute.Required;
-    after_label: Schema.Attribute.Text;
     before_image: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios'
     > &
       Schema.Attribute.Required;
-    before_label: Schema.Attribute.Text;
     caption: Schema.Attribute.Text;
   };
 }
