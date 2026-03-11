@@ -91,7 +91,7 @@ export function ComparisonSliderBlock({ block, projectTitle }: ComparisonSliderB
             {/* Before Image (full) */}
             <Image
               src={beforeImageUrl || ''}
-              alt={block.before_label || 'Before'}
+              alt={`${projectTitle} — before`}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1024px) 32rem, 48rem"
               className="object-cover pointer-events-none select-none"
@@ -107,7 +107,7 @@ export function ComparisonSliderBlock({ block, projectTitle }: ComparisonSliderB
             >
               <Image
                 src={afterImageUrl || ''}
-                alt={block.after_label || 'After'}
+                alt={`${projectTitle} — after`}
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1024px) 32rem, 48rem"
                 className="object-cover select-none"
@@ -132,20 +132,12 @@ export function ComparisonSliderBlock({ block, projectTitle }: ComparisonSliderB
 
         </div>
 
-        {/* Labels */}
-        <div className="flex justify-between items-start mt-2">
-          {block.before_label && (
-            <Typography variant="small" className="text-muted-foreground">
-              {block.before_label}
-            </Typography>
-          )}
-          {block.after_label && (
-            <Typography variant="small" className="text-muted-foreground">
-              {block.after_label}
-            </Typography>
-          )}
-        </div>
       </div>
+      {block.caption && (
+        <Typography variant="muted" className="text-center px-8 max-w-2xl">
+          {block.caption}
+        </Typography>
+      )}
     </figure>
   );
 }

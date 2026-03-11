@@ -124,8 +124,7 @@ export interface ComparisonSliderBlock {
     width?: number;
     height?: number;
   };
-  before_label?: string;
-  after_label?: string;
+  caption?: string;
 }
 
 export interface StatItem {
