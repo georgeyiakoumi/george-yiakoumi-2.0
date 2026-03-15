@@ -5,9 +5,7 @@ import { SquareLibrary } from "lucide-react";
 
 import { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription } from "@/components/ui/empty";
 import { Section } from "@/components/section";
-import { Carousel, CarouselContent, CarouselItem, CarouselPagination } from "@/components/ui/carousel";
-import { ProjectCard } from "@/components/project-card";
-import { ItemGroup } from "@/components/ui/item";
+import { ProjectsContent } from "@/components/projects-content";
 
 export const generateMetadata = async () => {
   return generatePageMetadata({
@@ -50,31 +48,7 @@ export default async function Portfolio() {
         Projects are anonymised (unless specified) by default due to NDAs however I'm available to showcase work in detail on a private call.
       </p>
 
-      {/* Mobile Carousel */}
-      <Carousel className="w-full md:hidden">
-        <CarouselContent className="mx-4">
-          {projects.map((project) => (
-            <CarouselItem key={project.id} className="px-4">
-              <ProjectCard project={project} />
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPagination className="mt-4" />
-      </Carousel>
-
-      {/* Tablet Grid */}
-      <div className="hidden md:flex md:flex-col lg:hidden w-full max-w-3xl gap-8">
-        {projects.map((project) => (
-          <ProjectCard key={project.id} project={project} />
-        ))}
-      </div>
-
-      {/* Desktop List */}
-      <ItemGroup className="hidden lg:flex w-full max-w-3xl gap-4">
-        {projects.map((project) => (
-          <ProjectCard key={project.id} project={project} scenario="list" />
-        ))}
-      </ItemGroup>
+      <ProjectsContent projects={projects} />
     </Section>
   );
 }
