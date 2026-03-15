@@ -62,8 +62,15 @@ export default async function Portfolio() {
         <CarouselPagination className="mt-4" />
       </Carousel>
 
+      {/* Tablet Grid */}
+      <div className="hidden md:flex md:flex-col lg:hidden w-full max-w-3xl gap-8">
+        {projects.map((project) => (
+          <ProjectCard key={project.id} project={project} />
+        ))}
+      </div>
+
       {/* Desktop List */}
-      <ItemGroup className="hidden md:flex w-full max-w-3xl gap-4">
+      <ItemGroup className="hidden lg:flex w-full max-w-3xl gap-4">
         {projects.map((project) => (
           <ProjectCard key={project.id} project={project} scenario="list" />
         ))}

@@ -53,7 +53,7 @@ export function ProjectCard({ project, scenario = "carousel", background = "mute
               {year} · {primaryTag}
             </div>
             )}
-            <ItemTitle className="xl:text-foreground">
+            <ItemTitle className="xl:text-foreground line-clamp-2">
               {project.title}
             </ItemTitle>
             {project.description && (
@@ -97,7 +97,7 @@ export function ProjectCard({ project, scenario = "carousel", background = "mute
               {year} · {primaryTag}
             </div>
           )}
-          <ItemTitle>
+          <ItemTitle className="line-clamp-2">
             {project.title}
           </ItemTitle>
           {project.description && (
