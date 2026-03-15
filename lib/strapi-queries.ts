@@ -58,6 +58,7 @@ export interface RichTextBlock {
   id: number;
   content: Array<{
     type: string;
+    level?: number;
     children?: Array<{
       type: string;
       text?: string;
