@@ -5,7 +5,8 @@ import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
 import { Section } from "@/components/section";
 import { Typography } from "@/components/ui/typography";
-import { type ToolData, type BusinessData } from "@/lib/strapi-queries";
+import { type ToolData, type BusinessData, type ProjectData } from "@/lib/strapi-queries";
+import { ProjectCard } from "@/components/project-card";
 import { ThemedLogo } from "@/components/themed-logo";
 import { useState, useRef, useEffect, useCallback } from "react";
 
@@ -34,9 +35,10 @@ interface HomeContentProps {
   aboutData: AboutData | null;
   tools: ToolData[];
   businesses: BusinessData[];
+  latestProject?: ProjectData | null;
 }
 
-export function HomeContent({ aboutData, tools, businesses }: HomeContentProps) {
+export function HomeContent({ aboutData, tools, businesses, latestProject }: HomeContentProps) {
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [clipPath, setClipPath] = useState<string>("");
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
@@ -144,6 +146,25 @@ export function HomeContent({ aboutData, tools, businesses }: HomeContentProps) 
           </Typography>
         ))}
       </Section>
+
+      {latestProject && (
+        <Section>
+          <Typography variant="h2" align="center">
+            Latest project
+          </Typography>
+          <div className="w-full max-w-3xl">
+            <div className="lg:hidden">
+              <ProjectCard project={latestProject} />
+            </div>
+            <div className="hidden lg:block">
+              <ProjectCard project={latestProject} scenario="list" />
+            </div>
+          </div>
+          <Button variant="outline" href="/projects">
+            All projects
+          </Button>
+        </Section>
+      )}
 
       <Section>
         <Typography variant="h2" align="center">
