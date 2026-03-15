@@ -7,50 +7,45 @@ import { ProjectCard } from "@/components/project-card";
 import { ItemGroup } from "@/components/ui/item";
 import type { ProjectData } from "@/lib/strapi-queries";
 
-type ProjectFilter = "all" | "client" | "concept";
+type ProjectFilter = "client" | "concept";
 
 interface ProjectsContentProps {
   projects: ProjectData[];
 }
 
 export function ProjectsContent({ projects }: ProjectsContentProps) {
-  const [activeFilter, setActiveFilter] = useState<ProjectFilter>("all");
+  const [activeFilter, setActiveFilter] = useState<ProjectFilter>("client");
 
-  const filteredProjects = activeFilter === "all"
-    ? projects
-    : projects.filter((p) => (p.type || "client") === activeFilter);
+  const hasConcepts = projects.some((p) => p.type === "concept");
+
+  const filteredProjects = hasConcepts
+    ? projects.filter((p) => (p.type || "client") === activeFilter)
+    : projects;
 
   return (
     <>
-      <div className="flex gap-1 bg-muted p-1 rounded-lg">
-        <Button
-          variant="ghost"
-          size="sm"
-          className={`h-7 cursor-pointer ${activeFilter === "all" ? "bg-background shadow-sm" : ""}`}
-          onClick={() => setActiveFilter("all")}
-          aria-pressed={activeFilter === "all"}
-        >
-          All
-        </Button>
-        <Button
-          variant="ghost"
-          size="sm"
-          className={`h-7 cursor-pointer ${activeFilter === "client" ? "bg-background shadow-sm" : ""}`}
-          onClick={() => setActiveFilter("client")}
-          aria-pressed={activeFilter === "client"}
-        >
-          Client work
-        </Button>
-        <Button
-          variant="ghost"
-          size="sm"
-          className={`h-7 cursor-pointer ${activeFilter === "concept" ? "bg-background shadow-sm" : ""}`}
-          onClick={() => setActiveFilter("concept")}
-          aria-pressed={activeFilter === "concept"}
-        >
-          Concept work
-        </Button>
-      </div>
+      {hasConcepts && (
+        <div className="flex gap-1 bg-muted p-1 rounded-lg">
+          <Button
+            variant="ghost"
+            size="sm"
+            className={`h-7 cursor-pointer ${activeFilter === "client" ? "bg-background shadow-sm" : ""}`}
+            onClick={() => setActiveFilter("client")}
+            aria-pressed={activeFilter === "client"}
+          >
+            Client work
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            className={`h-7 cursor-pointer ${activeFilter === "concept" ? "bg-background shadow-sm" : ""}`}
+            onClick={() => setActiveFilter("concept")}
+            aria-pressed={activeFilter === "concept"}
+          >
+            Concepts
+          </Button>
+        </div>
+      )}
 
       {/* Mobile Carousel */}
       <Carousel className="w-full md:hidden">
