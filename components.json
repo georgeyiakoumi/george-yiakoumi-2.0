@@ -21,8 +21,6 @@
   "registries": {
     "@animate-ui": "https://animate-ui.com/r/{name}.json",
     "@lucide-animated": "https://lucide-animated.com/r/{name}.json",
-    "@magicui": "https://magicui.design/r/{name}",
     "@acme": "https://acme.com/r/{name}.json"
-    
   }
 }
