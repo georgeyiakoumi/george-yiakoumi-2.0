@@ -1,7 +1,7 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import { useRef, useState, useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useRef, useTransition } from "react";
 import { User } from "@/components/animate-ui/icons/user";
 import { GalleryHorizontalEnd } from "@/components/animate-ui/icons/gallery-vertical-end";
 import { MessageCircleMore } from "@/components/animate-ui/icons/message-circle-more";
@@ -20,14 +20,20 @@ import { NAV_LINKS, SOCIAL_LINKS } from "@/lib/constants";
 
 export function SiteNavigation() {
   const pathname = usePathname();
+  const router = useRouter();
   const linkedinIconRef = useRef<LinkedinIconHandle>(null);
   const githubIconRef = useRef<GithubIconHandle>(null);
-  const [loadingPath, setLoadingPath] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
+  const pendingPathRef = useRef<string | null>(null);
 
-  // Reset loading state when pathname changes
-  useEffect(() => {
-    setLoadingPath(null);
-  }, [pathname]);
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    if (href === pathname) return;
+    pendingPathRef.current = href;
+    startTransition(() => {
+      router.push(href);
+    });
+  };
 
   return (
     <NavigationMenu orientation="vertical" className="bg-background rounded-full overflow-hidden md:overflow-visible md:rounded-md fixed box-border items-start left-1/2 -translate-x-1/2 md:left-8 lg:left-16 md:translate-x-0 bottom-8 md:bottom-auto md:top-8 lg:top-16 z-10">
@@ -38,9 +44,9 @@ export function SiteNavigation() {
               <Link
                 href={NAV_LINKS.about.href}
                 aria-label={NAV_LINKS.about.ariaLabel}
-                onClick={() => setLoadingPath(NAV_LINKS.about.href)}
+                onClick={(e) => handleNavClick(e, NAV_LINKS.about.href)}
               >
-                {loadingPath === NAV_LINKS.about.href ? (
+                {isPending && pendingPathRef.current === NAV_LINKS.about.href ? (
                   <Spinner className="md:hidden" />
                 ) : (
                   <User />
@@ -56,9 +62,9 @@ export function SiteNavigation() {
               <Link
                 href={NAV_LINKS.projects.href}
                 aria-label={NAV_LINKS.projects.ariaLabel}
-                onClick={() => setLoadingPath(NAV_LINKS.projects.href)}
+                onClick={(e) => handleNavClick(e, NAV_LINKS.projects.href)}
               >
-                {loadingPath === NAV_LINKS.projects.href ? (
+                {isPending && pendingPathRef.current === NAV_LINKS.projects.href ? (
                   <Spinner className="md:hidden" />
                 ) : (
                   <GalleryHorizontalEnd />
@@ -74,9 +80,9 @@ export function SiteNavigation() {
               <Link
                 href={NAV_LINKS.contact.href}
                 aria-label={NAV_LINKS.contact.ariaLabel}
-                onClick={() => setLoadingPath(NAV_LINKS.contact.href)}
+                onClick={(e) => handleNavClick(e, NAV_LINKS.contact.href)}
               >
-                {loadingPath === NAV_LINKS.contact.href ? (
+                {isPending && pendingPathRef.current === NAV_LINKS.contact.href ? (
                   <Spinner className="md:hidden" />
                 ) : (
                   <MessageCircleMore />
