@@ -62,6 +62,13 @@
         "project-blocks.comparison-slider",
         "project-blocks.carousel"
       ]
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "client",
+        "concept"
+      ]
     }
   }
 }

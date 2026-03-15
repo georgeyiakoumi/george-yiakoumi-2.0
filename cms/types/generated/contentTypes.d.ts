@@ -669,6 +669,7 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
       Schema.Attribute.CustomField<'plugin::tagsinput.tags'>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     tools: Schema.Attribute.Relation<'oneToMany', 'api::tool.tool'>;
+    type: Schema.Attribute.Enumeration<['client', 'concept']>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
