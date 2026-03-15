@@ -20,7 +20,6 @@
   },
   "registries": {
     "@animate-ui": "https://animate-ui.com/r/{name}.json",
-    "@lucide-animated": "https://lucide-animated.com/r/{name}.json",
-    "@acme": "https://acme.com/r/{name}.json"
+    "@lucide-animated": "https://lucide-animated.com/r/{name}.json"
   }
 }
