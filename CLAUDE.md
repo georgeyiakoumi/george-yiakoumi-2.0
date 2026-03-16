@@ -518,6 +518,18 @@ npm run test:e2e      # E2E tests
 npm run build         # Production build
 ```
 
+## Workflow: Starting Any Task or Issue
+
+Before writing any code, follow this process for every task:
+
+1. **Plan** — Define the problem clearly and outline the solution approach
+2. **Create a Linear ticket** — Use the Linear MCP to create a ticket with the title, description (problem + solution), and appropriate priority
+3. **Create a branch** — Use the `gitBranchName` returned by Linear (e.g. `george/geo-201-ticket-name`) to create and checkout a new git branch
+4. **Work on the branch** — All code changes happen on that branch
+5. **PR & merge** — When complete, create a PR referencing the Linear ticket
+
+This applies to all feature work, bug fixes, and improvements — no matter how small.
+
 ## Summary: Making Changes to This Codebase
 
 When implementing new features or fixing bugs:
