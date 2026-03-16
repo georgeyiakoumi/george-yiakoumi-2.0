@@ -90,7 +90,7 @@ function renderBlock(block: RichTextBlock, index: number): React.ReactNode {
     case 'list':
       const listItems = block.children?.map((child, i) => renderChild(child, i));
       const ListTag = block.format === 'ordered' ? 'ol' : 'ul';
-      return <ListTag key={index} className={`text-gray-600 dark:text-gray-400 mb-4 last:mb-0 ${block.format === 'ordered' ? 'list-decimal list-inside' : 'list-disc list-inside'}`}>{listItems}</ListTag>;
+      return <ListTag key={index} className={`text-gray-600 dark:text-gray-400 mb-4 last:mb-0 pl-5 space-y-2 ${block.format === 'ordered' ? 'list-decimal list-outside' : 'list-disc list-outside'}`}>{listItems}</ListTag>;
 
     case 'list-item':
       // This shouldn't normally be rendered directly as it's handled by renderChild
