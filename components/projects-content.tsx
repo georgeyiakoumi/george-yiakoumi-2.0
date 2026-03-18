@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Carousel, CarouselContent, CarouselItem, CarouselPagination } from "@/components/ui/carousel";
 import { ProjectCard } from "@/components/project-card";
 import { ItemGroup } from "@/components/ui/item";
 import type { ProjectData } from "@/lib/strapi-queries";
 
-type ProjectFilter = "client" | "concept";
+type ProjectFilter = "client" | "concept" | "article";
 
 interface ProjectsContentProps {
   projects: ProjectData[];
@@ -16,34 +17,55 @@ interface ProjectsContentProps {
 export function ProjectsContent({ projects }: ProjectsContentProps) {
   const [activeFilter, setActiveFilter] = useState<ProjectFilter>("client");
 
-  const hasConcepts = projects.some((p) => p.type === "concept");
+  const clientCount = projects.filter((p) => (p.type || "client") === "client").length;
+  const conceptCount = projects.filter((p) => p.type === "concept").length;
+  const articleCount = projects.filter((p) => p.type === "article").length;
+  const hasConcepts = conceptCount > 0;
+  const hasArticles = articleCount > 0;
+  const hasFilters = hasConcepts || hasArticles;
 
-  const filteredProjects = hasConcepts
+  const filteredProjects = hasFilters
     ? projects.filter((p) => (p.type || "client") === activeFilter)
     : projects;
 
   return (
     <>
-      {hasConcepts && (
+      {hasFilters && (
         <div className="flex gap-1 bg-muted p-1 rounded-lg">
           <Button
             variant="ghost"
             size="sm"
-            className={`h-7 cursor-pointer ${activeFilter === "client" ? "bg-background shadow-sm" : ""}`}
+            className={`h-7 cursor-pointer gap-1.5 ${activeFilter === "client" ? "bg-background shadow-sm" : ""}`}
             onClick={() => setActiveFilter("client")}
             aria-pressed={activeFilter === "client"}
           >
             Client work
+            <Badge variant="secondary" className="h-4 px-1 text-xs">{clientCount}</Badge>
           </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            className={`h-7 cursor-pointer ${activeFilter === "concept" ? "bg-background shadow-sm" : ""}`}
-            onClick={() => setActiveFilter("concept")}
-            aria-pressed={activeFilter === "concept"}
-          >
-            Concepts
-          </Button>
+          {hasConcepts && (
+            <Button
+              variant="ghost"
+              size="sm"
+              className={`h-7 cursor-pointer gap-1.5 ${activeFilter === "concept" ? "bg-background shadow-sm" : ""}`}
+              onClick={() => setActiveFilter("concept")}
+              aria-pressed={activeFilter === "concept"}
+            >
+              Concepts
+              <Badge variant="secondary" className="h-4 px-1 text-xs">{conceptCount}</Badge>
+            </Button>
+          )}
+          {hasArticles && (
+            <Button
+              variant="ghost"
+              size="sm"
+              className={`h-7 cursor-pointer gap-1.5 ${activeFilter === "article" ? "bg-background shadow-sm" : ""}`}
+              onClick={() => setActiveFilter("article")}
+              aria-pressed={activeFilter === "article"}
+            >
+              Articles
+              <Badge variant="secondary" className="h-4 px-1 text-xs">{articleCount}</Badge>
+            </Button>
+          )}
         </div>
       )}
 
