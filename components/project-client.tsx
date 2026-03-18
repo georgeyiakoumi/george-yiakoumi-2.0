@@ -155,7 +155,7 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
         />
       )}
 
-      <article className="flex flex-col w-full pb-16">
+      <article className="flex flex-col w-full py-16">
         {project.body && <ProjectBlockRenderer blocks={project.body} projectTitle={project.title} />}
       </article>
 
