@@ -16,6 +16,7 @@ import { getStrapiMediaURL } from "@/lib/strapi";
 import { Typography } from "@/components/ui/typography";
 import { ProjectCard } from "@/components/project-card";
 import { ProjectBlockRenderer } from "@/components/project-blocks";
+import { ShareBar } from "@/components/share-bar";
 import type { ProjectData, ToolData } from "@/lib/strapi-queries";
 
 interface ProjectClientProps {
@@ -157,6 +158,7 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
 
       <article className="flex flex-col w-full py-16">
         {project.body && <ProjectBlockRenderer blocks={project.body} projectTitle={project.title} />}
+        <ShareBar type={project.type} />
       </article>
 
       {otherProjects.length > 0 && (
