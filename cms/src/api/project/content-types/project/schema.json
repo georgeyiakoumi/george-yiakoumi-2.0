@@ -67,7 +67,8 @@
       "type": "enumeration",
       "enum": [
         "client",
-        "concept"
+        "concept",
+        "article"
       ]
     }
   }
