@@ -77,7 +77,7 @@ export function ContactClient() {
 
   return (
     <Section>
-      <h1 className="z-10 inline-flex items-center justify-center rounded-md text-sm font-medium bg-background px-4 py-2 fixed top-8 left-8 md:hidden pointer-events-none">
+      <h1 className="hidden">
         Contact
       </h1>
 
