@@ -36,10 +36,10 @@ export function SiteNavigation() {
   };
 
   return (
-    <NavigationMenu orientation="vertical" className="bg-background rounded-full overflow-hidden md:overflow-visible md:rounded-md fixed box-border items-start left-1/2 -translate-x-1/2 md:left-8 lg:left-16 md:translate-x-0 bottom-8 md:bottom-auto md:top-8 lg:top-16 z-10">
+    <NavigationMenu orientation="vertical" className="bg-background rounded-full border border-border md:border-0 overflow-hidden md:overflow-visible md:rounded-md fixed box-border items-start left-1/2 -translate-x-1/2 md:left-8 lg:left-16 md:translate-x-0 bottom-8 md:bottom-auto md:top-8 lg:top-16 z-10">
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuLink asChild active={pathname === NAV_LINKS.about.href}>
+          <NavigationMenuLink asChild active={pathname === NAV_LINKS.about.href} className="pl-6">
             <AnimateIcon animateOnHover asChild>
               <Link
                 href={NAV_LINKS.about.href}
@@ -108,7 +108,7 @@ export function SiteNavigation() {
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuLink asChild>
+          <NavigationMenuLink asChild className="pr-6">
             <a
               href={SOCIAL_LINKS.github.url}
               target="_blank"

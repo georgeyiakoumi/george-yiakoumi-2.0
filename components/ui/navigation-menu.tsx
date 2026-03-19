@@ -40,7 +40,7 @@ function NavigationMenuList({
     <NavigationMenuPrimitive.List
       data-slot="navigation-menu-list"
       className={cn(
-        "group flex flex-1 list-none items-center justify-center gap-1 flex-row md:flex-col md:space-x-0 md:space-y-2 md:items-start",
+        "group flex flex-1 list-none items-center justify-center md:gap-1 flex-row md:flex-col md:space-x-0 md:space-y-2 md:items-start",
         className
       )}
       {...props}
@@ -134,7 +134,7 @@ function NavigationMenuLink({
       data-slot="navigation-menu-link"
       active={active}
       className={cn(
-        "data-[active]:bg-secondary/80 data-[active]:text-secondary-foreground data-[active]:font-semibold data-[active]:rounded-none data-[active]:md:rounded-sm xl:hover:bg-secondary/80 xl:hover:text-secondary-foreground focus:bg-foreground/5 focus:text-accent-foreground focus-visible:ring-ring/50 [&_svg:not([class*='text-'])]:text-foreground/80 flex items-center gap-2 rounded-sm py-3 px-5 md:py-2 md:pl-3 md:pr-4 text-base md:text-sm motion-safe:transition-all motion-safe:duration-200 motion-safe:ease-out motion-reduce:transition-none outline-none focus-visible:ring-[3px] focus-visible:outline-1 [&_svg:not([class*='size-'])]:size-5 md:[&_svg:not([class*='size-'])]:size-4 [&_span]:hidden md:[&_span]:inline",
+        "data-[active]:bg-secondary/80 data-[active]:text-secondary-foreground data-[active]:font-semibold data-[active]:rounded-none data-[active]:md:rounded-sm xl:hover:bg-secondary/80 xl:hover:text-secondary-foreground focus:bg-foreground/5 focus:text-accent-foreground focus-visible:ring-ring/50 [&_svg:not([class*='text-'])]:text-foreground/80 flex flex-col md:flex-row items-center gap-2 rounded-sm py-2 px-3 md:py-2 md:pl-3 md:pr-4 text-base md:text-sm motion-safe:transition-all motion-safe:duration-200 motion-safe:ease-out motion-reduce:transition-none outline-none focus-visible:ring-[3px] focus-visible:outline-1 [&_svg:not([class*='size-'])]:size-5 md:[&_svg:not([class*='size-'])]:size-4 [&_span]:text-xs [&_span]:md:text-sm",
         !active && "motion-safe:xl:hover:scale-110",
         className
       )}
