@@ -59,6 +59,37 @@ export interface ProjectBlocksCarousel extends Struct.ComponentSchema {
   };
 }
 
+export interface ProjectBlocksCodeBlock extends Struct.ComponentSchema {
+  collectionName: 'components_project_blocks_code_blocks';
+  info: {
+    description: '';
+    displayName: 'code-block';
+  };
+  attributes: {
+    caption: Schema.Attribute.Text;
+    code: Schema.Attribute.Text & Schema.Attribute.Required;
+    filename: Schema.Attribute.String;
+    language: Schema.Attribute.Enumeration<
+      [
+        'typescript',
+        'javascript',
+        'css',
+        'html',
+        'json',
+        'bash',
+        'python',
+        'go',
+        'rust',
+        'sql',
+        'yaml',
+        'markdown',
+        'diff',
+      ]
+    > &
+      Schema.Attribute.DefaultTo<'typescript'>;
+  };
+}
+
 export interface ProjectBlocksComparisonSlider extends Struct.ComponentSchema {
   collectionName: 'components_project_blocks_comparison_sliders';
   info: {
@@ -75,6 +106,7 @@ export interface ProjectBlocksComparisonSlider extends Struct.ComponentSchema {
     > &
       Schema.Attribute.Required;
     caption: Schema.Attribute.Text;
+    legacy: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
   };
 }
 
@@ -181,6 +213,7 @@ declare module '@strapi/strapi' {
       'cv.chapter': CvChapter;
       'cv.languages': CvLanguages;
       'project-blocks.carousel': ProjectBlocksCarousel;
+      'project-blocks.code-block': ProjectBlocksCodeBlock;
       'project-blocks.comparison-slider': ProjectBlocksComparisonSlider;
       'project-blocks.image': ProjectBlocksImage;
       'project-blocks.rich-text': ProjectBlocksRichText;
