@@ -153,7 +153,7 @@ export function ProjectsContent({ projects }: ProjectsContentProps) {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPagination className="mt-4" />
+        {filteredProjects.length > 1 && <CarouselPagination className="mt-4" />}
       </Carousel>
 
       {/* Tablet Grid */}
