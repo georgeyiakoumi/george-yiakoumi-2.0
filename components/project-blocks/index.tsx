@@ -6,6 +6,7 @@ import { VideoBlock } from "./video-block";
 import { ComparisonSliderBlock } from "./comparison-slider-block";
 import { ComparisonSliderBlock as LegacyComparisonSliderBlock } from "@/components/legacy/comparison-slider-block";
 import { StatsBlock } from "./stats-block";
+import { CodeBlock } from "./code-block";
 
 interface ProjectBlockRendererProps {
   blocks: ProjectBlock[];
@@ -40,6 +41,9 @@ export function ProjectBlockRenderer({ blocks, projectTitle }: ProjectBlockRende
           case 'project-blocks.stats':
             return <StatsBlock key={key} block={block} />;
 
+          case 'project-blocks.code-block':
+            return <CodeBlock key={key} block={block} />;
+
           default:
             console.warn(`Unknown block type: ${(block as any).__component}`);
             return null;
@@ -56,4 +60,5 @@ export {
   VideoBlock,
   ComparisonSliderBlock,
   StatsBlock,
+  CodeBlock,
 };

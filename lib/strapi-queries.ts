@@ -165,13 +165,23 @@ export interface StatsBlock {
   description?: string;
 }
 
+export interface CodeBlockType {
+  __component: 'project-blocks.code-block';
+  id: number;
+  code: string;
+  language?: 'typescript' | 'javascript' | 'css' | 'html' | 'json' | 'bash' | 'python' | 'go' | 'rust' | 'sql' | 'yaml' | 'markdown' | 'diff';
+  filename?: string;
+  caption?: string;
+}
+
 export type ProjectBlock =
   | RichTextBlock
   | ImageBlock
   | CarouselBlock
   | VideoBlock
   | ComparisonSliderBlock
-  | StatsBlock;
+  | StatsBlock
+  | CodeBlockType;
 
 export interface ProjectData {
   id: number;

@@ -1,0 +1,39 @@
+{
+  "collectionName": "components_project_blocks_code_blocks",
+  "info": {
+    "displayName": "code-block",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "code": {
+      "type": "text",
+      "required": true
+    },
+    "language": {
+      "type": "enumeration",
+      "enum": [
+        "typescript",
+        "javascript",
+        "css",
+        "html",
+        "json",
+        "bash",
+        "python",
+        "go",
+        "rust",
+        "sql",
+        "yaml",
+        "markdown",
+        "diff"
+      ],
+      "default": "typescript"
+    },
+    "filename": {
+      "type": "string"
+    },
+    "caption": {
+      "type": "text"
+    }
+  }
+}
