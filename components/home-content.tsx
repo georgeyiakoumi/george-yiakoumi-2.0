@@ -8,7 +8,8 @@ import { Typography } from "@/components/ui/typography";
 import { type ToolData, type BusinessData, type ProjectData } from "@/lib/strapi-queries";
 import { ProjectCard } from "@/components/project-card";
 import { ThemedLogo } from "@/components/themed-logo";
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState } from "react";
+import { AnimatedTabs } from "@/components/ui/animated-tabs";
 
 // Lazy load animation components
 const AnimateIcon = dynamic(() => import("@/components/animate-ui/icons/icon").then(mod => ({ default: mod.AnimateIcon })), { ssr: false });
@@ -40,68 +41,6 @@ interface HomeContentProps {
 
 export function HomeContent({ aboutData, tools, businesses, latestProject }: HomeContentProps) {
   const [activeCategory, setActiveCategory] = useState<string>("all");
-  const [clipPath, setClipPath] = useState<string>("");
-  const [isAnimating, setIsAnimating] = useState<boolean>(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const buttonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
-  const resizeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const animationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  const updateClipPath = useCallback(() => {
-    const container = containerRef.current;
-    const activeButton = buttonRefs.current[activeCategory];
-
-    if (!container || !activeButton) return;
-
-    // Set animating state
-    setIsAnimating(true);
-
-    // Use requestAnimationFrame to batch with browser paint
-    requestAnimationFrame(() => {
-      const containerRect = container.getBoundingClientRect();
-      const buttonRect = activeButton.getBoundingClientRect();
-
-      const left = buttonRect.left - containerRect.left;
-      const right = containerRect.width - (buttonRect.right - containerRect.left);
-      const top = buttonRect.top - containerRect.top;
-      const bottom = containerRect.height - (buttonRect.bottom - containerRect.top);
-
-      setClipPath(`inset(${top}px ${right}px ${bottom}px ${left}px round 0.375rem)`);
-
-      // Remove willChange after animation completes
-      if (animationTimeoutRef.current) {
-        clearTimeout(animationTimeoutRef.current);
-      }
-      animationTimeoutRef.current = setTimeout(() => {
-        setIsAnimating(false);
-      }, 200); // Match transition duration
-    });
-  }, [activeCategory]);
-
-  useEffect(() => {
-    updateClipPath();
-
-    // Debounced resize handler
-    const handleResize = () => {
-      if (resizeTimeoutRef.current) {
-        clearTimeout(resizeTimeoutRef.current);
-      }
-      resizeTimeoutRef.current = setTimeout(() => {
-        updateClipPath();
-      }, 100);
-    };
-
-    window.addEventListener('resize', handleResize, { passive: true });
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      if (resizeTimeoutRef.current) {
-        clearTimeout(resizeTimeoutRef.current);
-      }
-      if (animationTimeoutRef.current) {
-        clearTimeout(animationTimeoutRef.current);
-      }
-    };
-  }, [updateClipPath]);
 
   if (!aboutData) {
     return null;
@@ -187,63 +126,17 @@ export function HomeContent({ aboutData, tools, businesses, latestProject }: Hom
         </Typography>
 
         <div className="flex flex-col items-center gap-8 w-full">
-          <div
-            ref={containerRef}
-            className="relative inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground gap-1"
-            role="group"
-            aria-label="Filter tools by category"
-          >
-            {/* Animated background */}
-            <div
-              className="absolute inset-0 bg-background shadow-sm transition-[clip-path] duration-200 ease-out motion-reduce:transition-none"
-              style={{
-                clipPath,
-                willChange: isAnimating ? 'clip-path' : 'auto'
-              }}
-              aria-hidden="true"
-            />
-
-            <Button
-              ref={(el) => { buttonRefs.current["all"] = el; }}
-              variant="ghost"
-              size="sm"
-              onClick={() => setActiveCategory("all")}
-              aria-pressed={activeCategory === "all"}
-              className="h-7 cursor-pointer relative z-10 hover:bg-transparent"
-            >
-              All
-            </Button>
-            <Button
-              ref={(el) => { buttonRefs.current["design"] = el; }}
-              variant="ghost"
-              size="sm"
-              onClick={() => setActiveCategory("design")}
-              aria-pressed={activeCategory === "design"}
-              className="h-7 cursor-pointer relative z-10 hover:bg-transparent"
-            >
-              Design
-            </Button>
-            <Button
-              ref={(el) => { buttonRefs.current["development"] = el; }}
-              variant="ghost"
-              size="sm"
-              onClick={() => setActiveCategory("development")}
-              aria-pressed={activeCategory === "development"}
-              className="h-7 cursor-pointer relative z-10 hover:bg-transparent"
-            >
-              Development
-            </Button>
-            <Button
-              ref={(el) => { buttonRefs.current["tools"] = el; }}
-              variant="ghost"
-              size="sm"
-              onClick={() => setActiveCategory("tools")}
-              aria-pressed={activeCategory === "tools"}
-              className="h-7 cursor-pointer relative z-10 hover:bg-transparent"
-            >
-              Tools
-            </Button>
-          </div>
+          <AnimatedTabs
+            tabs={[
+              { value: "all", label: "All" },
+              { value: "design", label: "Design" },
+              { value: "development", label: "Development" },
+              { value: "tools", label: "Tools" },
+            ]}
+            activeTab={activeCategory}
+            onTabChange={setActiveCategory}
+            ariaLabel="Filter tools by category"
+          />
 
           <div className="w-full grid gap-8 grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 2xl:grid-cols-8">
             {tools.map((tool) => {

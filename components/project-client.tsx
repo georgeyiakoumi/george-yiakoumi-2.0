@@ -121,6 +121,7 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
             {new Date(project.date).toLocaleDateString("en-US", {
               year: "numeric",
               month: "short",
+              ...(project.type === "article" && { day: "numeric" }),
             })}
           </time>
           {project.project_role && (
