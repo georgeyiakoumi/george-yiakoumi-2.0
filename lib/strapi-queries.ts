@@ -189,7 +189,7 @@ export interface ProjectData {
     width?: number;
     height?: number;
   };
-  type?: 'client' | 'concept' | 'article';
+  type?: 'client' | 'personal' | 'article';
   project_client?: string;
   project_role?: string;
   body?: ProjectBlock[];
