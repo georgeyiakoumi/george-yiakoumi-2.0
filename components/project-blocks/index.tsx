@@ -4,6 +4,7 @@ import { ImageBlock } from "./image-block";
 import { CarouselBlock } from "./carousel-block";
 import { VideoBlock } from "./video-block";
 import { ComparisonSliderBlock } from "./comparison-slider-block";
+import { ComparisonSliderBlock as LegacyComparisonSliderBlock } from "@/components/legacy/comparison-slider-block";
 import { StatsBlock } from "./stats-block";
 
 interface ProjectBlockRendererProps {
@@ -32,7 +33,9 @@ export function ProjectBlockRenderer({ blocks, projectTitle }: ProjectBlockRende
             return <VideoBlock key={key} block={block} />;
 
           case 'project-blocks.comparison-slider':
-            return <ComparisonSliderBlock key={key} block={block} projectTitle={projectTitle} />;
+            return block.legacy
+              ? <LegacyComparisonSliderBlock key={key} block={block} projectTitle={projectTitle} />
+              : <ComparisonSliderBlock key={key} block={block} projectTitle={projectTitle} />;
 
           case 'project-blocks.stats':
             return <StatsBlock key={key} block={block} />;
