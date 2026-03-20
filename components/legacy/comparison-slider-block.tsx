@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { ChevronsLeftRight } from "lucide-react";
 import { getStrapiMediaURL } from "@/lib/strapi";
 import { Typography } from "@/components/ui/typography";
+import { Button } from "@/components/ui/button";
 import type { ComparisonSliderBlock as ComparisonSliderBlockType } from "@/lib/strapi-queries";
 
 interface ComparisonSliderBlockProps {
@@ -15,7 +16,6 @@ interface ComparisonSliderBlockProps {
 export function ComparisonSliderBlock({ block, projectTitle }: ComparisonSliderBlockProps) {
   const [sliderPosition, setSliderPosition] = useState(50);
   const containerRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
 
   if (!block.before_image || !block.after_image) return null;
@@ -23,27 +23,27 @@ export function ComparisonSliderBlock({ block, projectTitle }: ComparisonSliderB
   const beforeImageUrl = getStrapiMediaURL(block.before_image.url);
   const afterImageUrl = getStrapiMediaURL(block.after_image.url);
 
-  const handleTrackMove = useCallback((clientX: number) => {
-    if (!trackRef.current) return;
+  const handleMove = (clientX: number) => {
+    if (!containerRef.current) return;
 
-    const rect = trackRef.current.getBoundingClientRect();
+    const rect = containerRef.current.getBoundingClientRect();
     const x = clientX - rect.left;
     const percentage = (x / rect.width) * 100;
     setSliderPosition(Math.min(Math.max(percentage, 0), 100));
-  }, []);
+  };
 
-  const handleTrackStart = useCallback((clientX: number) => {
+  const handleStart = (clientX: number) => {
     setIsDragging(true);
-    handleTrackMove(clientX);
-  }, [handleTrackMove]);
+    handleMove(clientX);
+  };
 
   const handleMouseDown = (e: React.MouseEvent) => {
-    handleTrackStart(e.clientX);
+    handleStart(e.clientX);
   };
 
   const handleTouchStart = (e: React.TouchEvent) => {
     if (e.touches[0]) {
-      handleTrackStart(e.touches[0].clientX);
+      handleStart(e.touches[0].clientX);
     }
   };
 
@@ -51,12 +51,12 @@ export function ComparisonSliderBlock({ block, projectTitle }: ComparisonSliderB
     if (!isDragging) return;
 
     const handleMouseMove = (e: MouseEvent) => {
-      handleTrackMove(e.clientX);
+      handleMove(e.clientX);
     };
 
     const handleTouchMove = (e: TouchEvent) => {
       if (e.touches[0]) {
-        handleTrackMove(e.touches[0].clientX);
+        handleMove(e.touches[0].clientX);
       }
     };
 
@@ -75,22 +75,18 @@ export function ComparisonSliderBlock({ block, projectTitle }: ComparisonSliderB
       document.removeEventListener('touchmove', handleTouchMove);
       document.removeEventListener('touchend', handleEnd);
     };
-  }, [isDragging, handleTrackMove]);
+  }, [isDragging]);
 
   return (
     <figure className="flex flex-col gap-4 items-center w-full my-8">
-      {block.caption && (
-        <Typography variant="muted" className="text-center px-8 max-w-2xl">
-          {block.caption}
-        </Typography>
-      )}
-
       <div className="relative w-full md:max-w-lg lg:max-w-2xl mx-auto px-8">
-        {/* Image container */}
         <div
           ref={containerRef}
-          className="relative w-full aspect-video select-none"
+          className="relative w-full aspect-video cursor-ew-resize select-none"
+          onMouseDown={handleMouseDown}
+          onTouchStart={handleTouchStart}
         >
+          {/* Image container with overflow hidden */}
           <div className="absolute inset-0 rounded-lg overflow-hidden border-border border">
             {/* Before Image (full) */}
             <Image
@@ -120,48 +116,28 @@ export function ComparisonSliderBlock({ block, projectTitle }: ComparisonSliderB
             </div>
           </div>
 
-          {/* Divider line on image */}
+          {/* Slider Handle - outside overflow-hidden container */}
           <div
-            className="absolute top-0 bottom-0 w-px bg-background/80 pointer-events-none z-10"
+            className="absolute top-0 bottom-0"
             style={{ left: `${sliderPosition}%` }}
-          />
-        </div>
-
-        {/* Track and handle below image */}
-        <div
-          ref={trackRef}
-          className="relative w-full h-12 lg:h-8 mt-2 cursor-ew-resize select-none flex items-center"
-          onMouseDown={handleMouseDown}
-          onTouchStart={handleTouchStart}
-          role="slider"
-          aria-label="Comparison slider"
-          aria-valuenow={Math.round(sliderPosition)}
-          aria-valuemin={0}
-          aria-valuemax={100}
-          tabIndex={0}
-          onKeyDown={(e) => {
-            if (e.key === 'ArrowLeft') setSliderPosition((p) => Math.max(p - 2, 0));
-            if (e.key === 'ArrowRight') setSliderPosition((p) => Math.min(p + 2, 100));
-          }}
-        >
-          {/* Track background */}
-          <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-0.5 rounded-full bg-muted" />
-
-          {/* Filled track */}
-          <div
-            className="absolute top-1/2 -translate-y-1/2 left-0 h-0.5 rounded-full bg-foreground"
-            style={{ width: `${sliderPosition}%` }}
-          />
-
-          {/* Handle */}
-          <div
-            className="absolute size-8 lg:size-6 rounded-full bg-primary border-1 border-border shadow-sm flex items-center justify-center"
-            style={{ left: `${sliderPosition}%`, top: '50%', transform: 'translate(-50%, -50%)' }}
           >
-            <ChevronsLeftRight className="size-4 lg:size-3 text-primary-foreground" />
+            <Button
+              size="icon-sm"
+              variant="secondary"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none"
+            >
+              <ChevronsLeftRight />
+            </Button>
           </div>
+
         </div>
+
       </div>
+      {block.caption && (
+        <Typography variant="muted" className="text-center px-8 max-w-2xl">
+          {block.caption}
+        </Typography>
+      )}
     </figure>
   );
 }

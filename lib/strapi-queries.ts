@@ -126,6 +126,7 @@ export interface ComparisonSliderBlock {
     height?: number;
   };
   caption?: string;
+  legacy?: boolean;
 }
 
 export interface StatItem {
