@@ -18,7 +18,7 @@ export default async function Home() {
     getAboutPage(),
     getTools(),
     getBusinesses(),
-    getProjects({ limit: 1 }),
+    getProjects({ limit: 1, type: 'client' }),
   ]);
 
   return <HomeContent aboutData={aboutData} tools={tools} businesses={businesses} latestProject={projects[0] ?? null} />;

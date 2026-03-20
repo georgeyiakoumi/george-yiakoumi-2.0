@@ -29,13 +29,13 @@ export function ProjectCard({ project, scenario = "carousel", background = "mute
         asChild
         variant="outline"
         className={cn(
-          "p-px",
+          "!p-0 overflow-hidden",
           background === "background" && "xl:bg-background xl:[a]:hover:bg-background xl:hover:border-foreground"
         )}
       >
         <Link href={`/project/${project.slug}`}>
           {project.project_thumb && (
-            <ItemMedia variant="image" className="size-32 !rounded-e-none">
+            <ItemMedia variant="image" className="size-32 !rounded-none !translate-y-0 !self-center">
               <Image
                 src={project.project_thumb.url}
                 alt={project.project_thumb.alternativeText || project.title}

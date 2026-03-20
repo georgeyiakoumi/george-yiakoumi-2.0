@@ -288,6 +288,7 @@ export async function getAboutPage() {
 export async function getProjects(options?: {
   limit?: number;
   tag?: string;
+  type?: 'client' | 'personal' | 'article';
 }) {
   try {
     const query: Record<string, string | number | boolean> = {
@@ -301,6 +302,10 @@ export async function getProjects(options?: {
 
     if (options?.tag) {
       query['filters[tags][name][$eq]'] = options.tag;
+    }
+
+    if (options?.type) {
+      query['filters[type][$eq]'] = options.type;
     }
 
     if (options?.limit) {
