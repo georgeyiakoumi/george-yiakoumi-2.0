@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Carousel, CarouselContent, CarouselItem, CarouselPagination } from "@/components/ui/carousel";
@@ -8,7 +8,7 @@ import { ProjectCard } from "@/components/project-card";
 import { ItemGroup } from "@/components/ui/item";
 import type { ProjectData } from "@/lib/strapi-queries";
 
-type ProjectFilter = "client" | "concept" | "article";
+type ProjectFilter = "client" | "personal" | "article";
 
 interface ProjectsContentProps {
   projects: ProjectData[];
@@ -16,51 +16,126 @@ interface ProjectsContentProps {
 
 export function ProjectsContent({ projects }: ProjectsContentProps) {
   const [activeFilter, setActiveFilter] = useState<ProjectFilter>("client");
+  const [clipPath, setClipPath] = useState<string>("");
+  const [isAnimating, setIsAnimating] = useState<boolean>(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const buttonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const resizeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const animationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const clientCount = projects.filter((p) => (p.type || "client") === "client").length;
-  const conceptCount = projects.filter((p) => p.type === "concept").length;
+  const personalCount = projects.filter((p) => p.type === "personal").length;
   const articleCount = projects.filter((p) => p.type === "article").length;
-  const hasConcepts = conceptCount > 0;
+  const hasPersonal = personalCount > 0;
   const hasArticles = articleCount > 0;
-  const hasFilters = hasConcepts || hasArticles;
+  const hasFilters = hasPersonal || hasArticles;
 
   const filteredProjects = hasFilters
     ? projects.filter((p) => (p.type || "client") === activeFilter)
     : projects;
 
+  const updateClipPath = useCallback(() => {
+    const container = containerRef.current;
+    const activeButton = buttonRefs.current[activeFilter];
+
+    if (!container || !activeButton) return;
+
+    setIsAnimating(true);
+
+    requestAnimationFrame(() => {
+      const containerRect = container.getBoundingClientRect();
+      const buttonRect = activeButton.getBoundingClientRect();
+
+      const left = buttonRect.left - containerRect.left;
+      const right = containerRect.width - (buttonRect.right - containerRect.left);
+      const top = buttonRect.top - containerRect.top;
+      const bottom = containerRect.height - (buttonRect.bottom - containerRect.top);
+
+      setClipPath(`inset(${top}px ${right}px ${bottom}px ${left}px round 0.375rem)`);
+
+      if (animationTimeoutRef.current) {
+        clearTimeout(animationTimeoutRef.current);
+      }
+      animationTimeoutRef.current = setTimeout(() => {
+        setIsAnimating(false);
+      }, 200);
+    });
+  }, [activeFilter]);
+
+  useEffect(() => {
+    updateClipPath();
+
+    const handleResize = () => {
+      if (resizeTimeoutRef.current) {
+        clearTimeout(resizeTimeoutRef.current);
+      }
+      resizeTimeoutRef.current = setTimeout(() => {
+        updateClipPath();
+      }, 100);
+    };
+
+    window.addEventListener('resize', handleResize, { passive: true });
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      if (resizeTimeoutRef.current) {
+        clearTimeout(resizeTimeoutRef.current);
+      }
+      if (animationTimeoutRef.current) {
+        clearTimeout(animationTimeoutRef.current);
+      }
+    };
+  }, [updateClipPath]);
+
   return (
     <>
       {hasFilters && (
-        <div className="flex gap-1 bg-muted p-1 rounded-lg">
+        <div
+          ref={containerRef}
+          className="relative inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground gap-1"
+          role="group"
+          aria-label="Filter projects by type"
+        >
+          <div
+            className="absolute inset-0 bg-background shadow-sm transition-[clip-path] duration-200 ease-out motion-reduce:transition-none"
+            style={{
+              clipPath,
+              willChange: isAnimating ? 'clip-path' : 'auto'
+            }}
+            aria-hidden="true"
+          />
+
           <Button
+            ref={(el) => { buttonRefs.current["client"] = el; }}
             variant="ghost"
             size="sm"
-            className={`h-7 cursor-pointer gap-1.5 ${activeFilter === "client" ? "bg-background shadow-sm" : ""}`}
             onClick={() => setActiveFilter("client")}
             aria-pressed={activeFilter === "client"}
+            className="h-7 cursor-pointer relative z-10 hover:bg-transparent gap-1.5"
           >
             Client work
             <Badge variant="secondary" className="h-4 px-1 text-xs">{clientCount}</Badge>
           </Button>
-          {hasConcepts && (
+          {hasPersonal && (
             <Button
+              ref={(el) => { buttonRefs.current["personal"] = el; }}
               variant="ghost"
               size="sm"
-              className={`h-7 cursor-pointer gap-1.5 ${activeFilter === "concept" ? "bg-background shadow-sm" : ""}`}
-              onClick={() => setActiveFilter("concept")}
-              aria-pressed={activeFilter === "concept"}
+              onClick={() => setActiveFilter("personal")}
+              aria-pressed={activeFilter === "personal"}
+              className="h-7 cursor-pointer relative z-10 hover:bg-transparent gap-1.5"
             >
-              Concepts
-              <Badge variant="secondary" className="h-4 px-1 text-xs">{conceptCount}</Badge>
+              Personal Projects
+              <Badge variant="secondary" className="h-4 px-1 text-xs">{personalCount}</Badge>
             </Button>
           )}
           {hasArticles && (
             <Button
+              ref={(el) => { buttonRefs.current["article"] = el; }}
               variant="ghost"
               size="sm"
-              className={`h-7 cursor-pointer gap-1.5 ${activeFilter === "article" ? "bg-background shadow-sm" : ""}`}
               onClick={() => setActiveFilter("article")}
               aria-pressed={activeFilter === "article"}
+              className="h-7 cursor-pointer relative z-10 hover:bg-transparent gap-1.5"
             >
               Articles
               <Badge variant="secondary" className="h-4 px-1 text-xs">{articleCount}</Badge>

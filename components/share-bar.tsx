@@ -10,7 +10,7 @@ import { LinkedinIcon, type LinkedinIconHandle } from "@/components/ui/linkedin"
 
 interface ShareBarProps {
   url?: string;
-  type?: "client" | "concept" | "article";
+  type?: "client" | "personal" | "article";
 }
 
 export function ShareBar({ url: urlProp, type }: ShareBarProps) {
@@ -56,18 +56,20 @@ export function ShareBar({ url: urlProp, type }: ShareBarProps) {
         </AnimateIcon>
       )}
 
-      <Button variant="outline" size="sm" asChild className="cursor-pointer gap-1.5">
-        <a
-          href={linkedInUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          onMouseEnter={() => linkedinRef.current?.startAnimation()}
-          onMouseLeave={() => linkedinRef.current?.stopAnimation()}
-        >
-          <LinkedinIcon ref={linkedinRef} size={16} />
-          Share on LinkedIn
-        </a>
-      </Button>
+      {!canShare && (
+        <Button variant="outline" size="sm" asChild className="cursor-pointer gap-1.5">
+          <a
+            href={linkedInUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onMouseEnter={() => linkedinRef.current?.startAnimation()}
+            onMouseLeave={() => linkedinRef.current?.stopAnimation()}
+          >
+            <LinkedinIcon ref={linkedinRef} size={16} />
+            Share on LinkedIn
+          </a>
+        </Button>
+      )}
     </div>
   );
 }
