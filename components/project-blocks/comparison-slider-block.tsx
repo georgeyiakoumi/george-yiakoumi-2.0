@@ -55,6 +55,7 @@ export function ComparisonSliderBlock({ block, projectTitle }: ComparisonSliderB
     };
 
     const handleTouchMove = (e: TouchEvent) => {
+      e.preventDefault();
       if (e.touches[0]) {
         handleTrackMove(e.touches[0].clientX);
       }
@@ -66,7 +67,7 @@ export function ComparisonSliderBlock({ block, projectTitle }: ComparisonSliderB
 
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleEnd);
-    document.addEventListener('touchmove', handleTouchMove);
+    document.addEventListener('touchmove', handleTouchMove, { passive: false });
     document.addEventListener('touchend', handleEnd);
 
     return () => {
@@ -130,7 +131,7 @@ export function ComparisonSliderBlock({ block, projectTitle }: ComparisonSliderB
         {/* Track and handle below image */}
         <div
           ref={trackRef}
-          className="relative w-full h-12 lg:h-8 mt-2 cursor-ew-resize select-none flex items-center"
+          className="relative w-full h-12 lg:h-8 mt-2 cursor-ew-resize select-none flex items-center touch-none"
           onMouseDown={handleMouseDown}
           onTouchStart={handleTouchStart}
           role="slider"
