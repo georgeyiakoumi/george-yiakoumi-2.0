@@ -3,6 +3,7 @@
 import { useTheme } from "next-themes";
 import { Item, ItemMedia } from "@/components/ui/item";
 import { getStrapiMediaURL } from "@/lib/strapi";
+import { Typography } from "@/components/ui/typography";
 import { useEffect, useState } from "react";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerTrigger } from "@/components/ui/drawer";
@@ -131,9 +132,9 @@ export function ThemedLogo({ data }: ThemedLogoProps) {
       </HoverCardTrigger>
       <HoverCardContent className="w-80">
         <div className="space-y-1">
-          <h4 className="text-sm font-semibold">{data.name}</h4>
+          <Typography variant="small" as="h4">{data.name}</Typography>
           {description && (
-            <p className="text-sm text-muted-foreground">{description}</p>
+            <Typography variant="muted">{description}</Typography>
           )}
         </div>
       </HoverCardContent>
