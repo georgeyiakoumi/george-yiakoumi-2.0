@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { getStrapiMediaURL } from "@/lib/strapi";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, CarouselPagination } from "@/components/ui/carousel";
+import { Typography } from "@/components/ui/typography";
 import type { CarouselBlock as CarouselBlockType } from "@/lib/strapi-queries";
 
 interface CarouselBlockProps {
@@ -12,7 +13,7 @@ export function CarouselBlock({ block, projectTitle }: CarouselBlockProps) {
   if (!block.slides || block.slides.length === 0) return null;
 
   return (
-    <figure className="flex flex-col gap-12 items-center w-full md:max-w-lg lg:max-w-xl xl:max-w-2xl px-8 lg:px-0 mx-auto my-12">
+    <figure className="flex flex-col gap-12 items-center w-full md:max-w-md lg:max-w-xl xl:max-w-2xl px-8 lg:px-0 mx-auto my-12">
       <Carousel
         opts={{
           align: "center",
@@ -56,9 +57,9 @@ export function CarouselBlock({ block, projectTitle }: CarouselBlockProps) {
       <CarouselPagination className="absolute left-0 right-0 bottom-[-32]" />
     </Carousel>
     {block.caption && (
-      <figcaption className="text-center max-w-2xl text-sm text-muted-foreground">
+      <Typography variant="figcaption" className="max-w-2xl">
         {block.caption}
-      </figcaption>
+      </Typography>
     )}
     </figure>
   );

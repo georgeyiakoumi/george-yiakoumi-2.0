@@ -79,14 +79,14 @@ export function ComparisonSliderBlock({ block, projectTitle }: ComparisonSliderB
   }, [isDragging, handleTrackMove]);
 
   return (
-    <figure className="flex flex-col gap-4 items-center w-full my-8">
+    <figure className="flex flex-col gap-4 items-center w-full px-8 my-8">
       {block.caption && (
-        <Typography variant="muted" className="text-center px-8 max-w-2xl">
+        <Typography variant="figcaption" className="max-w-2xl">
           {block.caption}
         </Typography>
       )}
 
-      <div className="relative w-full md:max-w-lg lg:max-w-2xl mx-auto px-8">
+      <div className="relative w-full md:max-w-md lg:max-w-xl xl:max-w-2xl mx-auto">
         {/* Image container */}
         <div
           ref={containerRef}

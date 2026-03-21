@@ -54,8 +54,8 @@ export function VideoBlock({ block }: VideoBlockProps) {
   // Embedded URL (YouTube/Vimeo)
   if (block.url) {
     return (
-      <figure className="flex flex-col gap-4 items-center w-full my-8">
-        <div className="w-full md:max-w-lg lg:max-w-2xl mx-auto px-8">
+      <figure className="flex flex-col gap-4 items-center w-full px-8 my-8">
+        <div className="w-full md:max-w-md lg:max-w-xl xl:max-w-2xl mx-auto">
           <div className="relative w-full aspect-video rounded-lg overflow-hidden md:border-border md:border">
             <iframe
               src={toEmbedUrl(block.url)}
@@ -67,7 +67,7 @@ export function VideoBlock({ block }: VideoBlockProps) {
           </div>
         </div>
         {block.caption && (
-          <Typography variant="muted" className="text-center px-8 max-w-2xl">
+          <Typography variant="figcaption" className="max-w-2xl">
             {block.caption}
           </Typography>
         )}
@@ -80,8 +80,8 @@ export function VideoBlock({ block }: VideoBlockProps) {
     const videoUrl = getStrapiMediaURL(block.file.url);
 
     return (
-      <figure className="flex flex-col gap-4 items-center w-full my-8">
-        <div className="w-full md:max-w-lg lg:max-w-2xl mx-auto px-8">
+      <figure className="flex flex-col gap-4 items-center w-full px-8 my-8">
+        <div className="w-full md:max-w-md lg:max-w-xl xl:max-w-2xl mx-auto">
           <video
             ref={videoRef}
             src={videoUrl || ''}
@@ -94,7 +94,7 @@ export function VideoBlock({ block }: VideoBlockProps) {
           </video>
         </div>
         {block.caption && (
-          <Typography variant="muted" className="text-center px-8 max-w-2xl">
+          <Typography variant="figcaption" className="max-w-2xl">
             {block.caption}
           </Typography>
         )}

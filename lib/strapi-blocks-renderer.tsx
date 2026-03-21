@@ -85,7 +85,7 @@ function renderBlock(block: RichTextBlock, index: number): React.ReactNode {
     case 'heading':
       const headingChildren = block.children?.map((child, i) => renderChild(child, i));
       const headingVariant = `h${block.level || 2}` as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
-      return <Typography key={index} variant={headingVariant} className="mb-4 last:mb-0">{headingChildren}</Typography>;
+      return <Typography key={index} variant={headingVariant} className="mt-8 first:mt-0 mb-4 last:mb-0">{headingChildren}</Typography>;
 
     case 'list':
       const listItems = block.children?.map((child, i) => renderChild(child, i));
