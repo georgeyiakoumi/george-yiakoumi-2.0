@@ -189,9 +189,9 @@ export function CVClient({ cvData, careerChapters, certificates, tools }: CVClie
         {/* Skills / Tools Section */}
         {tools && tools.length > 0 && (
           <div className="space-y-6">
-            <h2 className="uppercase font-bold tracking-widest text-xs text-center">
+            <Typography variant="overline" align="center">
               Skills / Tools
-            </h2>
+            </Typography>
             <div className="flex flex-wrap items-center gap-3 justify-center">
               {tools.map((tool) => (
                 <ToolBadge key={tool.id} tool={tool} />
@@ -202,9 +202,9 @@ export function CVClient({ cvData, careerChapters, certificates, tools }: CVClie
 
         {/* Career History Section */}
         <div className="space-y-6">
-          <h2 className="uppercase font-bold tracking-widest text-xs text-center">
+          <Typography variant="overline" align="center">
             Career History
-          </h2  >
+          </Typography>
           <div className="space-y-4">
             {sortedChapters.map((chapter) => (
               <div key={chapter.id} className="border border-border rounded-2xl p-4 space-y-4">
@@ -226,14 +226,14 @@ export function CVClient({ cvData, careerChapters, certificates, tools }: CVClie
                   {/* Title and Description */}
                   <div className="flex-1 space-y-1">
                     <div className="flex items-baseline gap-2 flex-wrap">
-                      <h3 className="text-lg font-medium">
+                      <Typography variant="large" as="h3">
                         {chapter.business_name}
-                      </h3>
-                      <span className="text-xs text-muted-foreground">
+                      </Typography>
+                      <Typography variant="muted" as="span" className="!text-xs">
                         {chapter.city}, {chapter.country}
                         {chapter.remote && " • Remote"}
                         {chapter.hybrid && " • Hybrid"}
-                      </span>
+                      </Typography>
                     </div>
                     {chapter.description && (
                       <Typography variant="muted" className="text-sm leading-normal">
@@ -249,12 +249,12 @@ export function CVClient({ cvData, careerChapters, certificates, tools }: CVClie
                 ).map((role) => (
                   <div key={role.id} className="bg-muted/50 p-4 space-y-3 rounded-md">
                     <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2">
-                      <h4 className="text-s font-medium">
+                      <Typography variant="small" as="h4">
                         {role.role}
-                      </h4>
-                      <span className="text-xs text-muted-foreground">
+                      </Typography>
+                      <Typography variant="muted" as="span" className="!text-xs">
                         {formatDate(role.start_date)} - {role.end_date ? formatDate(role.end_date) : "Present"}
-                      </span>
+                      </Typography>
                     </div>
 
                     {/* Experience list */}
@@ -285,9 +285,9 @@ export function CVClient({ cvData, careerChapters, certificates, tools }: CVClie
         {/* Certifications Section */}
         {certificates && certificates.length > 0 && (
           <div className="space-y-6">
-            <h2 className="uppercase font-bold tracking-widest text-xs text-center">
+            <Typography variant="overline" align="center">
               Certifications
-            </h2>
+            </Typography>
             <div className="space-y-4">
               {certificates.map((cert) => (
                 <Item key={cert.id} variant="outline" className="rounded-2xl" asChild>

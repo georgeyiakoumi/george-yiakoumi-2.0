@@ -11,6 +11,7 @@ import {
   ItemActions,
 } from "@/components/ui/item";
 import { cn } from "@/lib/utils";
+import { Typography } from "@/components/ui/typography";
 import type { ProjectData } from "@/lib/strapi-queries";
 
 interface ProjectCardProps {
@@ -47,11 +48,9 @@ export function ProjectCard({ project, scenario = "carousel", background = "mute
           )}
           <ItemContent>
             {primaryTag && (
-            <div className={cn(
-              "text-xs text-muted-foreground pb-2"
-            )}>
+            <Typography variant="muted" as="div" className="!text-xs pb-2">
               {year} · {primaryTag}
-            </div>
+            </Typography>
             )}
             <ItemTitle className="xl:text-foreground line-clamp-2">
               {project.title}
@@ -93,9 +92,9 @@ export function ProjectCard({ project, scenario = "carousel", background = "mute
         )}
         <ItemContent className="px-4">
           {primaryTag && (
-            <div className="text-xs text-muted-foreground mb-1">
+            <Typography variant="muted" as="div" className="!text-xs mb-1">
               {year} · {primaryTag}
-            </div>
+            </Typography>
           )}
           <ItemTitle className="line-clamp-2">
             {project.title}

@@ -70,7 +70,7 @@ function renderChild(child: RichTextChild, index: number): React.ReactNode {
     content = <s key={index}>{content}</s>;
   }
   if (child.code) {
-    content = <code key={index} className="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded text-sm">{content}</code>;
+    content = <Typography key={index} variant="code" as="code">{content}</Typography>;
   }
 
   return <React.Fragment key={index}>{content}</React.Fragment>;
@@ -80,7 +80,7 @@ function renderBlock(block: RichTextBlock, index: number): React.ReactNode {
   switch (block.type) {
     case 'paragraph':
       const paragraphChildren = block.children?.map((child, i) => renderChild(child, i));
-      return <p key={index} className="text-gray-600 dark:text-gray-400 mb-4 last:mb-0">{paragraphChildren}</p>;
+      return <Typography key={index} variant="muted" className="!text-base leading-7 mb-4 last:mb-0">{paragraphChildren}</Typography>;
 
     case 'heading':
       const headingChildren = block.children?.map((child, i) => renderChild(child, i));
@@ -90,28 +90,28 @@ function renderBlock(block: RichTextBlock, index: number): React.ReactNode {
     case 'list':
       const listItems = block.children?.map((child, i) => renderChild(child, i));
       const ListTag = block.format === 'ordered' ? 'ol' : 'ul';
-      return <ListTag key={index} className={`text-gray-600 dark:text-gray-400 mb-4 last:mb-0 pl-5 space-y-2 ${block.format === 'ordered' ? 'list-decimal list-outside' : 'list-disc list-outside'}`}>{listItems}</ListTag>;
+      return <ListTag key={index} className={`text-muted-foreground mb-4 last:mb-0 pl-5 space-y-2 ${block.format === 'ordered' ? 'list-decimal list-outside' : 'list-disc list-outside'}`}>{listItems}</ListTag>;
 
     case 'list-item':
       // This shouldn't normally be rendered directly as it's handled by renderChild
       const listItemChildren = block.children?.map((child, i) => renderChild(child, i));
-      return <li key={index} className="text-gray-600 dark:text-gray-400">{listItemChildren}</li>;
+      return <li key={index} className="text-muted-foreground">{listItemChildren}</li>;
 
     case 'quote':
       const quoteChildren = block.children?.map((child, i) => renderChild(child, i));
-      return <blockquote key={index} className="border-l-4 border-gray-300 dark:border-gray-700 pl-4 italic text-gray-600 dark:text-gray-400 mb-4 last:mb-0">{quoteChildren}</blockquote>;
+      return <Typography key={index} variant="blockquote" className="mb-4 last:mb-0">{quoteChildren}</Typography>;
 
     case 'code':
       const codeChildren = block.children?.map((child, i) => renderChild(child, i));
-      return <pre key={index} className="bg-gray-100 dark:bg-gray-900 p-4 rounded-lg overflow-x-auto text-gray-600 dark:text-gray-400 mb-4 last:mb-0"><code>{codeChildren}</code></pre>;
+      return <pre key={index} className="bg-muted p-4 rounded-lg overflow-x-auto text-muted-foreground mb-4 last:mb-0"><code>{codeChildren}</code></pre>;
 
     case 'link':
       const linkChildren = block.children?.map((child, i) => renderChild(child, i));
-      return <a key={index} href={block.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline">{linkChildren}</a>;
+      return <a key={index} href={block.url} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">{linkChildren}</a>;
 
     default:
       const defaultChildren = block.children?.map((child, i) => renderChild(child, i));
-      return <p key={index} className="text-gray-600 dark:text-gray-400">{defaultChildren}</p>;
+      return <Typography key={index} variant="muted" className="!text-base leading-7">{defaultChildren}</Typography>;
   }
 }
 
@@ -147,7 +147,7 @@ export function renderStrapiRichText(
       </div>
 
       {imageUrl && (
-        <div className="relative aspect-video rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-900">
+        <div className="relative aspect-video rounded-lg overflow-hidden bg-muted">
           <Image
             src={imageUrl}
             alt={richTextBlock.Image?.alternativeText || 'Section image'}
