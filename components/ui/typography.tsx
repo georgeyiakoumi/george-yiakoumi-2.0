@@ -17,6 +17,7 @@ const typographyVariants = cva("text-foreground", {
       large: "text-lg font-semibold",
       small: "text-sm font-medium leading-5",
       muted: "text-sm text-muted-foreground",
+      figcaption: "text-sm text-muted-foreground text-center",
     },
     align: {
       left: "text-left",
@@ -33,7 +34,7 @@ const typographyVariants = cva("text-foreground", {
 export interface TypographyProps
   extends React.HTMLAttributes<HTMLElement>,
     VariantProps<typeof typographyVariants> {
-  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "span" | "div" | "time"
+  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "span" | "div" | "time" | "figcaption"
   dateTime?: string
 }
 
@@ -55,7 +56,7 @@ Typography.displayName = "Typography"
 
 function getDefaultElement(
   variant: TypographyProps["variant"]
-): "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" {
+): "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "figcaption" {
   switch (variant) {
     case "h1":
       return "h1"
@@ -69,6 +70,8 @@ function getDefaultElement(
       return "h5"
     case "h6":
       return "h6"
+    case "figcaption":
+      return "figcaption"
     default:
       return "p"
   }

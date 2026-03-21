@@ -24,7 +24,7 @@ export function CodeBlock({ block }: CodeBlockProps) {
   }, [block.code, block.language, resolvedTheme]);
 
   return (
-    <figure className="flex flex-col gap-2 items-center w-full my-8 mx-auto md:max-w-lg lg:max-w-2xl xl:max-w-4xl 2xl:max-w-6xl px-8 lg:px-0">
+    <figure className="flex flex-col gap-2 items-center w-full my-8 mx-auto md:max-w-md lg:max-w-xl xl:max-w-2xl px-8 lg:px-0">
       {block.filename && (
         <div className={`w-full rounded-t-lg border border-b-0 border-border bg-muted px-4 py-2 text-xs text-muted-foreground font-mono ${html ? "" : "mb-0"}`}>
           {block.filename}
@@ -35,7 +35,7 @@ export function CodeBlock({ block }: CodeBlockProps) {
         dangerouslySetInnerHTML={{ __html: html }}
       />
       {block.caption && (
-        <Typography variant="muted" className="text-center max-w-2xl">
+        <Typography variant="figcaption" className="max-w-2xl">
           {block.caption}
         </Typography>
       )}
