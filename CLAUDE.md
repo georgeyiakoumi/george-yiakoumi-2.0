@@ -207,6 +207,7 @@ This project is hosted on Netlify Free Tier with limited serverless function inv
 - Follow existing component patterns in components/ui
 - No unnecessary comments in code
 - Keep animations smooth and performant
+- **Typography**: ALWAYS use the `Typography` component (`components/ui/typography.tsx`) for ALL text elements. Never use raw `<p>`, `<h1>`–`<h6>`, `<blockquote>`, `<figcaption>`, `<code>`, or `<span>` with text styling classes. Available variants: `h1`–`h6`, `p`, `lead`, `large`, `small`, `muted`, `figcaption`, `blockquote`, `overline`, `code`. Use the `as` prop to override the rendered HTML element when needed.
 
 ### Media Handling
 - All media assets hosted on Cloudinary via Strapi
