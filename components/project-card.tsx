@@ -71,7 +71,7 @@ export function ProjectCard({ project, scenario = "carousel", background = "mute
 
   return (
     <Item
-      variant="muted"
+      variant="outline"
       asChild
       className={cn(
         "p-0 rounded-xl overflow-hidden",

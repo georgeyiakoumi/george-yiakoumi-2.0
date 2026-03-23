@@ -3,7 +3,9 @@
 import { usePathname } from "next/navigation";
 import { SiteNavigation } from "@/components/site-navigation";
 import { SiteFooter } from "@/components/site-footer";
+import { ModeToggle } from "@/components/mode-toggle";
 import { ScrollProgressProvider, ScrollProgress, ScrollProgressContainer } from "@/components/animate-ui/primitives/animate/scroll-progress";
+import { ScrollVisibilityProvider } from "@/hooks/use-scroll-visibility";
 import { useEffect, useState } from "react";
 
 export function ConditionalLayout({ children }: { children: React.ReactNode }) {
@@ -27,20 +29,23 @@ export function ConditionalLayout({ children }: { children: React.ReactNode }) {
   // Full layout with navigation for other pages
   return (
     <ScrollProgressProvider>
-      <SiteNavigation />
+      <ScrollVisibilityProvider>
+        <SiteNavigation />
+        <ModeToggle />
 
-      {/* Scroll progress indicator - only on index and project detail pages */}
-      {showScrollProgress && (
-        <ScrollProgress className="fixed top-0 left-0 h-1 bg-primary z-50 origin-left" />
-      )}
+        {/* Scroll progress indicator - only on index and project detail pages */}
+        {showScrollProgress && (
+          <ScrollProgress className="fixed top-0 left-0 h-1 bg-primary z-50 origin-left" />
+        )}
 
-      <ScrollProgressContainer asChild>
-        <main className="h-dvh overflow-y-auto relative scrollbar-hide">
-          {children}
-        </main>
-      </ScrollProgressContainer>
+        <ScrollProgressContainer asChild>
+          <main className="h-dvh overflow-y-auto relative scrollbar-hide">
+            {children}
+          </main>
+        </ScrollProgressContainer>
 
-      <SiteFooter />
+        <SiteFooter />
+      </ScrollVisibilityProvider>
     </ScrollProgressProvider>
   );
 }

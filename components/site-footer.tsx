@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useScrollVisibility } from "@/hooks/use-scroll-visibility";
 import { AUTHOR } from "@/lib/constants";
 import {
   Tooltip,
@@ -23,6 +24,7 @@ import { Button } from "@/components/ui/button";
 export function SiteFooter() {
   const currentYear = new Date().getFullYear();
   const [open, setOpen] = useState(false);
+  const scrollVisible = useScrollVisibility();
 
   const LogoSVG = () => (
     <svg
@@ -51,12 +53,12 @@ export function SiteFooter() {
   );
 
   return (
-    <footer className="fixed top-4 left-1/2 -translate-x-1/2 md:translate-x-0 md:bottom-4 md:top-auto md:right-4 md:bottom-4 lg:bottom-12 lg:right-12 md:left-auto box-border flex flex-col gap-4 items-start lg:items-end z-10 p-4">
+    <footer style={{ transform: `translateX(-50%) translateY(${scrollVisible ? '0' : '-120%'})` }} className={`fixed top-6 left-1/2 md:!transform-none md:translate-x-0 md:bottom-4 md:top-auto md:right-4 md:bottom-4 lg:bottom-12 lg:right-12 md:left-auto box-border flex flex-col gap-4 items-start lg:items-end z-10 transition-[transform,opacity] duration-300 ease-out will-change-transform motion-reduce:transition-none ${scrollVisible ? 'opacity-100' : 'opacity-0 pointer-events-none md:opacity-100 md:pointer-events-auto'}`}>
       {/* Mobile/Tablet: Drawer */}
       <div className="xl:hidden">
         <Drawer open={open} onOpenChange={setOpen}>
           <DrawerTrigger asChild>
-            <button aria-label="Open footer information">
+            <button aria-label="Open footer information" className="size-12 rounded-full bg-background flex items-center justify-center md:size-auto md:rounded-none md:bg-transparent">
               <LogoSVG />
             </button>
           </DrawerTrigger>

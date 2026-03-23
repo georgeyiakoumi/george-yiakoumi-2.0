@@ -7,9 +7,11 @@ import { AnimateIcon } from "@/components/animate-ui/icons/icon"
 import { useTheme } from "next-themes"
 import { Button } from "@/components/ui/button"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { useScrollVisibility } from "@/hooks/use-scroll-visibility";
 
 export function ModeToggle() {
   const { theme, setTheme } = useTheme()
+  const scrollVisible = useScrollVisibility()
   const [animate, setAnimate] = React.useState(false)
   const [animateMoon, setAnimateMoon] = React.useState(false)
 
@@ -24,7 +26,7 @@ export function ModeToggle() {
   }
 
   return (
-    <div className="fixed box-border flex items-center justify-center p-4 lg:p-0 right-4 top-4 lg:right-16 lg:top-16 z-11">
+    <div style={{ transform: scrollVisible ? 'translateY(0)' : 'translateY(-120%)' }} className={`fixed box-border flex items-center justify-center p-4 lg:p-0 right-4 top-4 lg:right-16 lg:top-16 z-11 transition-[transform,opacity] duration-300 ease-out will-change-transform motion-reduce:transition-none md:!transform-none ${scrollVisible ? 'opacity-100' : 'opacity-0 pointer-events-none md:opacity-100 md:pointer-events-auto'}`}>
       <Tooltip>
         <TooltipTrigger asChild>
           <Button variant="secondary" size="icon" onClick={toggleTheme} className="bg-background hover:bg-background xl:hover:bg-secondary/80 motion-safe:transition-transform motion-safe:duration-200 motion-safe:ease-out motion-reduce:transition-none xl:cursor-pointer motion-safe:xl:hover:scale-110">
