@@ -8,7 +8,8 @@ import { Typography } from "@/components/ui/typography";
 import { type ToolData, type BusinessData, type ProjectData } from "@/lib/strapi-queries";
 import { ProjectCard } from "@/components/project-card";
 import { ThemedLogo } from "@/components/themed-logo";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { ArrowDown } from "lucide-react";
 import { AnimatedTabs } from "@/components/ui/animated-tabs";
 
 // Lazy load animation components
@@ -41,6 +42,21 @@ interface HomeContentProps {
 
 export function HomeContent({ aboutData, tools, businesses, latestProject }: HomeContentProps) {
   const [activeCategory, setActiveCategory] = useState<string>("all");
+  const [showScrollIndicator, setShowScrollIndicator] = useState(true);
+  useEffect(() => {
+    const scrollContainer = document.querySelector("main");
+    if (!scrollContainer) return;
+
+    const handleScroll = () => {
+      if (scrollContainer.scrollTop >= 100) {
+        setShowScrollIndicator(false);
+        scrollContainer.removeEventListener("scroll", handleScroll);
+      }
+    };
+
+    scrollContainer.addEventListener("scroll", handleScroll, { passive: true });
+    return () => scrollContainer.removeEventListener("scroll", handleScroll);
+  }, []);
 
   if (!aboutData) {
     return null;
@@ -62,7 +78,7 @@ export function HomeContent({ aboutData, tools, businesses, latestProject }: Hom
 
   return (
     <>
-      <Section as="header">
+      <Section as="header" className="relative">
         {avatarUrl && (
           <Image
             src={avatarUrl}
@@ -84,6 +100,14 @@ export function HomeContent({ aboutData, tools, businesses, latestProject }: Hom
             {para.children?.[0]?.text || ''}
           </Typography>
         ))}
+
+        <div
+          className={`absolute animate-bounce bottom-32 md:bottom-8 lg:bottom-16 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground transition-opacity duration-300 motion-reduce:hidden ${
+            showScrollIndicator ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
+        >
+          <ArrowDown className="size-5" />
+        </div>
       </Section>
 
       {latestProject && (
