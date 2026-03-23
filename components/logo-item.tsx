@@ -11,7 +11,7 @@ export function LogoItem({ logo, ariaLabel, className }: LogoItemProps) {
   return (
     <Item
       variant="outline"
-      className="size-full justify-center aspect-square"
+      className="size-full justify-center py-6 sm:py-0"
       role="img"
       aria-label={ariaLabel}
     >
