@@ -1,10 +1,29 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useTheme } from "next-themes";
-import { codeToHtml } from "shiki";
+import { createHighlighter, type Highlighter } from "shiki";
 import { Typography } from "@/components/ui/typography";
 import type { CodeBlockType } from "@/lib/strapi-queries";
+
+const SUPPORTED_LANGS = [
+  "typescript", "javascript", "css", "html", "json",
+  "bash", "python", "go", "rust", "sql", "yaml", "markdown", "diff",
+] as const;
+
+const THEMES = ["github-dark", "github-light"] as const;
+
+let highlighterPromise: Promise<Highlighter> | null = null;
+
+function getHighlighter() {
+  if (!highlighterPromise) {
+    highlighterPromise = createHighlighter({
+      themes: [...THEMES],
+      langs: [...SUPPORTED_LANGS],
+    });
+  }
+  return highlighterPromise;
+}
 
 interface CodeBlockProps {
   block: CodeBlockType;
@@ -13,14 +32,22 @@ interface CodeBlockProps {
 export function CodeBlock({ block }: CodeBlockProps) {
   const [html, setHtml] = useState<string>("");
   const { resolvedTheme } = useTheme();
+  const mountedRef = useRef(true);
 
   useEffect(() => {
+    mountedRef.current = true;
     const theme = resolvedTheme === "dark" ? "github-dark" : "github-light";
 
-    codeToHtml(block.code, {
-      lang: block.language || "typescript",
-      theme,
-    }).then(setHtml);
+    getHighlighter().then((highlighter) => {
+      if (!mountedRef.current) return;
+      const result = highlighter.codeToHtml(block.code, {
+        lang: block.language || "typescript",
+        theme,
+      });
+      setHtml(result);
+    });
+
+    return () => { mountedRef.current = false; };
   }, [block.code, block.language, resolvedTheme]);
 
   return (
