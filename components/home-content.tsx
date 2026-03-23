@@ -112,7 +112,7 @@ export function HomeContent({ aboutData, tools, businesses, latestProject }: Hom
 
           <div className="w-full grid gap-8 grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
             {businesses.map((business, index) => (
-              <div key={business.id} className={index > 5 ? "lazy-load" : ""}>
+              <div key={business.id} className={`aspect-auto ${index > 5 ? "lazy-load" : ""}`}>
                 <ThemedLogo data={business} />
               </div>
             ))}
