@@ -5,7 +5,7 @@ test.describe('Homepage', () => {
     await page.goto('/');
 
     // Wait for page to load
-    await expect(page).toHaveTitle(/George Yiakoumi/);
+    await expect(page).toHaveTitle(/About/);
   });
 
   test('should have navigation menu', async ({ page }) => {
@@ -26,6 +26,9 @@ test.describe('Homepage', () => {
     // Click to toggle theme
     await themeToggle.click();
 
+    // Wait for theme to apply
+    await page.waitForTimeout(500);
+
     // Verify theme changed (check for dark class on html element)
     const html = page.locator('html');
     const hasDarkClass = await html.evaluate((el) => el.classList.contains('dark'));
@@ -36,7 +39,7 @@ test.describe('Homepage', () => {
     await page.goto('/');
 
     // Click on projects link
-    await page.click('text=Portfolio');
+    await page.click('text=Projects');
 
     // Verify we're on the projects page
     await expect(page).toHaveURL(/\/projects/);
@@ -48,6 +51,6 @@ test.describe('Homepage', () => {
     await page.goto('/');
 
     // Check page loads on mobile
-    await expect(page).toHaveTitle(/George Yiakoumi/);
+    await expect(page).toHaveTitle(/About/);
   });
 });

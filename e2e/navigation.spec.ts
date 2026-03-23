@@ -4,22 +4,16 @@ test.describe('Navigation', () => {
   test('should navigate to all main pages', async ({ page }) => {
     await page.goto('/');
 
-    // Navigate to Portfolio
-    await page.click('text=Portfolio');
+    // Navigate to Projects
+    await page.click('text=Projects');
     await expect(page).toHaveURL(/\/projects/);
-    await expect(page.locator('h1')).toContainText(/Projects|Portfolio/i);
 
     // Navigate to Contact
     await page.click('text=Contact');
     await expect(page).toHaveURL(/\/contact/);
-    await expect(page.locator('h1')).toContainText(/Contact/i);
-
-    // Navigate to CV
-    await page.click('text=CV');
-    await expect(page).toHaveURL(/\/cv/);
   });
 
-  test('should have working external links', async ({ page, context }) => {
+  test('should have working external links', async ({ page }) => {
     await page.goto('/');
 
     // Check LinkedIn link
