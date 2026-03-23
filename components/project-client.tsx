@@ -13,6 +13,7 @@ import { ArrowLeft } from "@/components/animate-ui/icons/arrow-left";
 import { AnimateIcon } from "@/components/animate-ui/icons/icon";
 
 import { getStrapiMediaURL } from "@/lib/strapi";
+import { useScrollVisibility } from "@/hooks/use-scroll-visibility";
 import { Typography } from "@/components/ui/typography";
 import { ProjectCard } from "@/components/project-card";
 import { ProjectBlockRenderer } from "@/components/project-blocks";
@@ -86,6 +87,8 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
     ? getStrapiMediaURL(project.project_thumb.url)
     : null;
 
+  const scrollVisible = useScrollVisibility();
+
   const handleBack = () => {
     window.history.back();
   };
@@ -93,7 +96,7 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
   return (
     <section className="place-items-center relative">
       <AnimateIcon animateOnHover asChild>
-        <Button onClick={handleBack} variant="secondary" className="bg-background fixed cursor-pointer top-8 left-8 md:bottom-8 md:top-auto md:left-8 lg:left-16 z-20">
+        <Button onClick={handleBack} variant="secondary" style={{ transform: scrollVisible ? 'translateY(0)' : 'translateY(-120%)' }} className={`bg-background fixed cursor-pointer top-8 left-8 md:bottom-8 md:top-auto md:left-8 lg:left-16 z-20 transition-[transform,opacity] duration-300 ease-out will-change-transform motion-reduce:transition-none md:!transform-none ${scrollVisible ? 'opacity-100' : 'opacity-0 pointer-events-none md:opacity-100 md:pointer-events-auto'}`}>
           <ArrowLeft />
           Back
         </Button>

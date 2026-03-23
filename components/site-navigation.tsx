@@ -2,6 +2,7 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { useRef, useTransition } from "react";
+import { useScrollVisibility } from "@/hooks/use-scroll-visibility";
 import { User } from "@/components/animate-ui/icons/user";
 import { GalleryHorizontalEnd } from "@/components/animate-ui/icons/gallery-vertical-end";
 import { MessageCircleMore } from "@/components/animate-ui/icons/message-circle-more";
@@ -25,6 +26,7 @@ export function SiteNavigation() {
   const githubIconRef = useRef<GithubIconHandle>(null);
   const [isPending, startTransition] = useTransition();
   const pendingPathRef = useRef<string | null>(null);
+  const navVisible = useScrollVisibility();
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
@@ -36,7 +38,7 @@ export function SiteNavigation() {
   };
 
   return (
-    <NavigationMenu orientation="vertical" className="bg-background rounded-full border border-border md:border-0 overflow-hidden md:overflow-visible md:rounded-md fixed box-border items-start left-1/2 -translate-x-1/2 md:left-8 lg:left-16 md:translate-x-0 bottom-8 md:bottom-auto md:top-8 lg:top-16 z-10">
+    <NavigationMenu orientation="vertical" style={{ transform: `translateX(-50%) translateY(${navVisible ? '0' : '120%'})` }} className={`bg-background rounded-full border border-border md:border-0 overflow-hidden md:overflow-visible md:rounded-md fixed box-border items-start left-1/2 md:!transform-none md:left-8 lg:left-16 bottom-8 md:bottom-auto md:top-8 lg:top-16 z-10 transition-[transform,opacity] duration-300 ease-out will-change-transform motion-reduce:transition-none ${navVisible ? "opacity-100" : "opacity-0 pointer-events-none md:opacity-100 md:pointer-events-auto"}`}>
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuLink asChild active={pathname === NAV_LINKS.about.href} className="pl-6">

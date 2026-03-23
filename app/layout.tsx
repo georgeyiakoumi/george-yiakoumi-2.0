@@ -1,7 +1,6 @@
 import { Mulish } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import { ModeToggle } from "@/components/mode-toggle";
 import { Toaster } from "@/components/ui/sonner";
 import { GoogleAnalytics } from '@/components/google-analytics';
 import { generateSiteMetadata } from "@/lib/metadata";
@@ -33,8 +32,6 @@ export default function RootLayout({
       </head>
       <body className={mulish.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <ModeToggle />
-
           <ConditionalLayout>
             {children}
           </ConditionalLayout>
