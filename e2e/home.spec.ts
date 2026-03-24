@@ -23,16 +23,20 @@ test.describe('Homepage', () => {
     const themeToggle = page.getByRole('button', { name: /toggle theme/i });
     await expect(themeToggle).toBeVisible();
 
+    // Get initial theme state
+    const html = page.locator('html');
+    const initialClass = await html.getAttribute('class') || '';
+    const wasDark = initialClass.includes('dark');
+
     // Click to toggle theme
     await themeToggle.click();
 
-    // Wait for theme to apply
-    await page.waitForTimeout(500);
-
-    // Verify theme changed (check for dark class on html element)
-    const html = page.locator('html');
-    const hasDarkClass = await html.evaluate((el) => el.classList.contains('dark'));
-    expect(hasDarkClass).toBeTruthy();
+    // Verify theme changed from initial state
+    if (wasDark) {
+      await expect(html).not.toHaveClass(/dark/, { timeout: 2000 });
+    } else {
+      await expect(html).toHaveClass(/dark/, { timeout: 2000 });
+    }
   });
 
   test('should navigate to projects page', async ({ page }) => {
