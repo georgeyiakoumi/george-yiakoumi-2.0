@@ -19,17 +19,16 @@ test.describe('Homepage', () => {
   test('should have working dark mode toggle', async ({ page }) => {
     await page.goto('/');
 
-    // Find theme toggle button and wait for hydration
+    // Wait for hydration — nav becomes interactive when React hydrates
+    await page.waitForFunction(() => document.querySelector('nav')?.getAttribute('data-orientation') !== null);
+
+    // Find and click theme toggle
     const themeToggle = page.getByRole('button', { name: /toggle theme/i });
     await expect(themeToggle).toBeVisible();
-    await expect(themeToggle).toBeEnabled();
+    await themeToggle.click();
 
-    // Force click to bypass any overlay/tooltip issues
-    await themeToggle.click({ force: true });
-
-    // Verify theme changed — check localStorage as source of truth
-    const theme = await page.evaluate(() => localStorage.getItem('theme'));
-    expect(theme).toBe('dark');
+    // Wait for localStorage to update
+    await page.waitForFunction(() => localStorage.getItem('theme') === 'dark', { timeout: 3000 });
   });
 
   test('should navigate to projects page', async ({ page }) => {
