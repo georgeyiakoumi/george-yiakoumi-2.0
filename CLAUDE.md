@@ -36,6 +36,12 @@ This is a personal portfolio website built with modern web technologies to showc
 - **Zod** - Schema validation
 - **@hookform/resolvers** - Integration between React Hook Form and Zod
 
+### Syntax Highlighting
+- **Shiki** - Server-side syntax highlighting using VS Code's engine
+  - Uses `createHighlighter` singleton pattern (not `codeToHtml`) for tree-shaking
+  - Only loads supported languages and 2 themes (github-dark, github-light)
+  - Dual theme support matching light/dark mode
+
 ### Additional Libraries
 - **Sonner** - Toast notifications
 - **date-fns** - Date utilities
@@ -76,7 +82,8 @@ This is a personal portfolio website built with modern web technologies to showc
 │   ├── strapi-queries.ts # Strapi data fetching functions
 │   └── strapi-blocks-renderer.tsx # Rich text rendering
 ├── hooks/                 # Custom React hooks
-│   └── use-mobile.ts
+│   ├── use-mobile.ts
+│   └── use-scroll-visibility.ts  # Shared scroll-aware hide/show for fixed UI
 ├── cms/                   # Strapi CMS (separate Node.js app)
 │   ├── config/           # Strapi configuration
 │   ├── src/              # Content types, controllers, services
@@ -91,9 +98,11 @@ This is a personal portfolio website built with modern web technologies to showc
 ## Key Features
 
 ### Navigation
-- Fixed navigation menu (bottom-left on mobile, top-left on desktop)
-- Links: About, Portfolio, Contact, LinkedIn, GitHub
-- Logo displayed top-left mobile, bottom-right desktop (ThemedLogo component manages drawer visibility)
+- Fixed navigation menu (bottom-center on mobile, top-left on desktop)
+- Labels visible on mobile as text-xs beneath icons in vertical layout
+- Links: About, Projects, Contact, LinkedIn, GitHub
+- Logo displayed top-center mobile (circular bg-background), bottom-right desktop (ThemedLogo component manages drawer visibility)
+- **Scroll-aware visibility**: All fixed UI elements (nav, mode toggle, logo, back button) hide while scrolling on mobile and reappear after 150ms idle. Uses shared `ScrollVisibilityProvider` context with a single scroll listener. Desktop unaffected.
 
 ### Animations
 - Animated icons with hover and view-trigger effects using @animate-ui
@@ -127,6 +136,7 @@ This is a personal portfolio website built with modern web technologies to showc
 
 ### Dark Mode
 - System-aware dark mode with manual toggle
+- **IMPORTANT**: Use `resolvedTheme` (not `theme`) from next-themes when checking current theme — `theme` returns `"system"` on first load, not the actual resolved value
 - Persistent theme selection
 - Smooth transitions without flicker
 
@@ -334,7 +344,9 @@ The Strapi CMS includes the following content types:
 - **Projects** - Portfolio case studies with:
   - Rich text content sections (Challenge, Solution, Role, Impact, Takeaway)
   - Media gallery field supporting multiple images and videos
+  - Dynamic zone blocks: rich-text, image, video, carousel, comparison-slider (V1 legacy + V2), stats, code-block
   - Hero image, thumbnail, tags, dates, client info
+  - Type enum: `client`, `personal`, `article`
   - Slug for URL routing
 - **About** - About page content
 - **Contact Page** - Contact form configuration
@@ -492,7 +504,7 @@ npx lighthouse http://localhost:3000 --only-categories=performance --view
 
 **Testing Stack**:
 - Vitest - Unit & component tests
-- Playwright - E2E tests across browsers
+- Playwright - E2E tests (Chromium only in CI for speed)
 - React Testing Library - Component testing
 
 See [TESTING.md](TESTING.md) for full documentation.
@@ -508,7 +520,7 @@ The CI pipeline runs on every push and PR:
 4. **E2E Tests**: Playwright tests must pass in Chromium
 5. **Build**: Production build must succeed
 
-**Configuration**: [.github/workflows/ci.yml](.github/workflows/ci.yml)
+**Configuration**: [.github/workflows/test.yml](.github/workflows/test.yml)
 
 **Local Pre-commit Checklist**:
 ```bash
@@ -544,8 +556,17 @@ When implementing new features or fixing bugs:
 
 **These are not suggestions - they are requirements.** The quality bar has been set across these 4 phases and must be maintained.
 
+### Reusable Components
+- **AnimatedTabs** (`components/ui/animated-tabs.tsx`) — Shared animated clip-path tab switcher used on both homepage (tools) and projects page (type filter). Always use this instead of building custom tab UI.
+- **ShareBar** (`components/share-bar.tsx`) — Copy link, native share (mobile only via pointer:coarse), LinkedIn share (desktop only). Renders on all project entry types.
+- **ScrollVisibilityProvider** (`hooks/use-scroll-visibility.ts`) — Context provider with single shared scroll listener. All fixed UI elements consume `useScrollVisibility()` hook.
+
+### Project Block Consistency
+- All project blocks use consistent max-widths: `md:max-w-md lg:max-w-xl xl:max-w-2xl`
+- All captions use `<Typography variant="figcaption">`
+- Blocks wrap content in `<figure>` with `px-8 lg:px-0`
+
 ## Future Enhancements
 1. Implement contact form email backend (currently uses Sonner toast notifications)
-2. Consider adding blog/articles section
-3. Add more portfolio projects through Strapi CMS
-4. Add page transitions between routes
+2. Add more portfolio projects through Strapi CMS
+3. Add page transitions between routes

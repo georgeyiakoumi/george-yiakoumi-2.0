@@ -9,7 +9,10 @@ A modern, full-stack portfolio website showcasing design and development work. B
 - **Rich Text Rendering**: Custom renderer supporting nested lists, formatting, embedded images, code blocks, and more
 - **Responsive Design**: Mobile-first approach with seamless adaptation across all screen sizes
 - **Dark Mode**: System-aware theme switching with persistent user preference
-- **Smooth Animations**: Interactive animated icons, smooth transitions, and scroll-triggered video playback
+- **Smooth Animations**: Interactive animated icons, smooth transitions, scroll-triggered video playback, and scroll-aware UI hiding on mobile
+- **Code Blocks**: Syntax-highlighted code snippets in project pages using Shiki with light/dark theme support
+- **Share Bar**: Copy link, native share (mobile), and LinkedIn share on all project pages
+- **Comparison Slider**: Before/after image comparison with V1 (overlay) and V2 (track below) variants
 - **Type-Safe**: Full TypeScript integration across frontend and API layer
 - **Modern UI**: Built with shadcn/ui components and Tailwind CSS
 - **Optimized Performance**: ISR caching with webhook-based revalidation for low server costs and real-time updates
@@ -152,6 +155,7 @@ netlify deploy --dir=storybook-static --prod
 - **Styling**: Tailwind CSS 4.1.13
 - **UI Components**: shadcn/ui + Radix UI
 - **Icons**: Lucide React + @animate-ui/icons for animated components
+- **Syntax Highlighting**: Shiki (VS Code engine, server-rendered, dual theme)
 - **Animation**: CSS transitions and @animate-ui interactive animations
 - **Forms**: React Hook Form + Zod
 - **Theme**: next-themes (dark mode support)
@@ -159,8 +163,9 @@ netlify deploy --dir=storybook-static --prod
 
 ### CMS
 - **Headless CMS**: Strapi 5.8.1
-- **Content Types**: Projects, About Page, Contact Info
-- **Media**: Cloudinary integration for images
+- **Content Types**: Projects (client, personal, article), About Page, Contact Info, Tools
+- **Dynamic Zone Blocks**: Rich text, images, video, carousel, comparison slider (V1/V2), stats, code blocks
+- **Media**: Cloudinary integration for images and video
 
 ## Project Structure
 
@@ -172,12 +177,16 @@ netlify deploy --dir=storybook-static --prod
 │   ├── contact/            # Contact page
 │   └── layout.tsx          # Root layout with navigation
 ├── components/             # React components
-│   ├── ui/                # shadcn/ui components
-│   └── ...                # Custom components
+│   ├── ui/                # shadcn/ui components (Typography, AnimatedTabs, etc.)
+│   ├── project-blocks/    # Dynamic zone block renderers (code, image, video, etc.)
+│   ├── legacy/            # V1 components kept for backwards compatibility
+│   └── ...                # Custom components (ShareBar, ThemedLogo, etc.)
+├── hooks/                 # Custom React hooks
+│   ├── use-mobile.ts
+│   └── use-scroll-visibility.ts  # Shared scroll-aware hide/show context
 ├── lib/                   # Utilities and integrations
 │   ├── strapi.ts         # Strapi API client
 │   ├── strapi-queries.ts # Content fetching functions
-│   ├── strapi-types.ts   # TypeScript type definitions
 │   └── strapi-blocks-renderer.tsx # Rich text renderer
 └── public/               # Static assets
 ```
@@ -203,10 +212,9 @@ The custom rich text renderer supports:
 
 ## Pages
 
-- **Home** (`/`) - Redirects to About page
-- **About** (`/about`) - Main landing page with bio, skills, and work experience featuring scroll-triggered animations
-- **Portfolio** (`/project`) - Responsive grid showcasing all portfolio projects
-- **Project Details** (`/project/[slug]`) - Individual case studies with rich content sections (Challenge, Solution, Role, Impact, Key Takeaway) featuring interspersed media galleries with auto-playing videos
+- **Home** (`/`) - Landing page with bio, latest project, business logos, tools, and contact CTA
+- **Projects** (`/projects`) - Filterable project listing with animated tabs (Client Work, Personal Projects, Articles)
+- **Project Details** (`/project/[slug]`) - Individual case studies with dynamic zone blocks (rich text, images, video, comparison sliders, code blocks, stats) and share bar
 - **Contact** (`/contact`) - Contact form with validation and toast notifications (using Sonner)
 
 ## Caching Strategy
