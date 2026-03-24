@@ -10,7 +10,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { useScrollVisibility } from "@/hooks/use-scroll-visibility";
 
 export function ModeToggle() {
-  const { theme, setTheme } = useTheme()
+  const { resolvedTheme, setTheme } = useTheme()
   const scrollVisible = useScrollVisibility()
   const [animate, setAnimate] = React.useState(false)
   const [animateMoon, setAnimateMoon] = React.useState(false)
@@ -18,7 +18,7 @@ export function ModeToggle() {
   const toggleTheme = () => {
     setAnimate(true)
     setAnimateMoon(true)
-    setTheme(theme === "light" ? "dark" : "light")
+    setTheme(resolvedTheme === "light" ? "dark" : "light")
     setTimeout(() => {
       setAnimate(false)
       setAnimateMoon(false)
@@ -38,7 +38,7 @@ export function ModeToggle() {
           </Button>
         </TooltipTrigger>
         <TooltipContent side="left" className="hidden xl:block">
-          {theme === "dark" ? (
+          {resolvedTheme === "dark" ? (
             <><strong>Too dark?</strong> Turn on the lights!</>
           ) : (
             <><strong>Too bright?</strong> Turn the lights off!</>
