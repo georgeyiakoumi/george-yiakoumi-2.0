@@ -71,6 +71,12 @@
         "personal",
         "article"
       ]
+    },
+    "website_url": {
+      "type": "string"
+    },
+    "github_url": {
+      "type": "string"
     }
   }
 }

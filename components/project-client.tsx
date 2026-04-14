@@ -11,6 +11,7 @@ import { ItemGroup } from "@/components/ui/item";
 
 import { ArrowLeft } from "@/components/animate-ui/icons/arrow-left";
 import { AnimateIcon } from "@/components/animate-ui/icons/icon";
+import { ExternalLink, Github } from "lucide-react";
 
 import { getStrapiMediaURL } from "@/lib/strapi";
 import { useScrollVisibility } from "@/hooks/use-scroll-visibility";
@@ -134,6 +135,37 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
             </>
           )}
         </Typography>
+
+        {(project.website_url || project.github_url) && (
+          <div className="flex items-center gap-3">
+            {project.website_url && (
+              <Button variant="outline" size="sm" asChild>
+                <a
+                  href={project.website_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Visit website"
+                >
+                  <ExternalLink className="size-4" />
+                  Visit website
+                </a>
+              </Button>
+            )}
+            {project.github_url && (
+              <Button variant="outline" size="sm" asChild>
+                <a
+                  href={project.github_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="View source on GitHub"
+                >
+                  <Github className="size-4" />
+                  GitHub
+                </a>
+              </Button>
+            )}
+          </div>
+        )}
 
         {project.tools && project.tools.length > 0 && (
           <div className="flex flex-wrap gap-2 justify-center">
