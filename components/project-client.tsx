@@ -82,6 +82,10 @@ function ToolBadge({ tool }: { tool: ToolData }) {
   );
 }
 
+function ensureProtocol(url: string) {
+  return url.match(/^https?:\/\//) ? url : `https://${url}`;
+}
+
 export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
 
   const heroImageUrl = project.project_thumb
@@ -141,26 +145,26 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
             {project.website_url && (
               <Button variant="outline" size="sm" asChild>
                 <a
-                  href={project.website_url}
+                  href={ensureProtocol(project.website_url)}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Visit website"
                 >
                   <ExternalLink className="size-4" />
-                  Visit website
+                  View project
                 </a>
               </Button>
             )}
             {project.github_url && (
               <Button variant="outline" size="sm" asChild>
                 <a
-                  href={project.github_url}
+                  href={ensureProtocol(project.github_url)}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="View source on GitHub"
                 >
                   <Github className="size-4" />
-                  GitHub
+                  GitHub Repo
                 </a>
               </Button>
             )}
