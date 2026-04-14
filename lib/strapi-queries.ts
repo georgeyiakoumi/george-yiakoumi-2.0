@@ -203,6 +203,8 @@ export interface ProjectData {
   type?: 'client' | 'personal' | 'article';
   project_client?: string;
   project_role?: string;
+  website_url?: string;
+  github_url?: string;
   body?: ProjectBlock[];
   tools?: ToolData[];
   media?: Array<{
