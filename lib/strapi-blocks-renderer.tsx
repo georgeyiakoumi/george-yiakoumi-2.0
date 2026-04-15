@@ -12,6 +12,7 @@ interface RichTextChild {
   underline?: boolean;
   strikethrough?: boolean;
   code?: boolean;
+  url?: string;
   children?: RichTextChild[];
 }
 
@@ -47,6 +48,8 @@ function renderChild(child: RichTextChild, index: number): React.ReactNode {
     switch (child.type) {
       case 'list-item':
         return <li key={index}>{nestedContent}</li>;
+      case 'link':
+        return <a key={index} href={child.url} target="_blank" rel="noopener noreferrer" className="!underline hover:!no-underline !text-primary">{nestedContent}</a>;
       default:
         return <span key={index}>{nestedContent}</span>;
     }
@@ -107,7 +110,7 @@ function renderBlock(block: RichTextBlock, index: number): React.ReactNode {
 
     case 'link':
       const linkChildren = block.children?.map((child, i) => renderChild(child, i));
-      return <a key={index} href={block.url} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">{linkChildren}</a>;
+      return <a key={index} href={block.url} target="_blank" rel="noopener noreferrer" className="!underline hover:!no-underline !text-primary">{linkChildren}</a>;
 
     default:
       const defaultChildren = block.children?.map((child, i) => renderChild(child, i));
