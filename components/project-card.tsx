@@ -30,7 +30,7 @@ export function ProjectCard({ project, scenario = "carousel", background = "mute
         variant="outline"
         className={cn(
           "!p-0 overflow-hidden",
-          background === "background" && "xl:bg-background xl:[a]:hover:bg-background xl:hover:border-foreground"
+          background === "background" && "xl:bg-background xl:hover:bg-background xl:hover:border-foreground"
         )}
       >
         <Link href={`/project/${project.slug}`}>
