@@ -1,6 +1,7 @@
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
+import { Typography } from "@/components/ui/typography"
 
 function Empty({ className, ...props }: React.ComponentProps<"div">) {
   return (
@@ -60,9 +61,11 @@ function EmptyMedia({
 
 function EmptyTitle({ className, ...props }: React.ComponentProps<"div">) {
   return (
-    <div
+    <Typography
+      variant="large"
+      as="div"
       data-slot="empty-title"
-      className={cn("text-lg font-medium tracking-tight", className)}
+      className={cn("font-medium tracking-tight", className)}
       {...props}
     />
   )
