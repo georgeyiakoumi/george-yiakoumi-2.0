@@ -21,7 +21,6 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project, scenario = "carousel", background = "muted" }: ProjectCardProps) {
-  const year = new Date(project.date).getFullYear();
   const primaryTag = project.tags?.[0]?.name;
 
   if (scenario === "list") {
@@ -49,7 +48,7 @@ export function ProjectCard({ project, scenario = "carousel", background = "mute
           <ItemContent>
             {primaryTag && (
             <Typography variant="muted" as="div" className="!text-xs pb-2">
-              {year} · {primaryTag}
+              {primaryTag}
             </Typography>
             )}
             <ItemTitle className="xl:text-foreground line-clamp-2">
@@ -93,7 +92,7 @@ export function ProjectCard({ project, scenario = "carousel", background = "mute
         <ItemContent className="px-4">
           {primaryTag && (
             <Typography variant="muted" as="div" className="!text-xs mb-1">
-              {year} · {primaryTag}
+              {primaryTag}
             </Typography>
           )}
           <ItemTitle className="line-clamp-2">
