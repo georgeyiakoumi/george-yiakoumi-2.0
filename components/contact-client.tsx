@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { FieldSet, FieldGroup, Field, FieldLabel } from "@/components/ui/field";
+import { FieldSet, FieldGroup, Field, FieldLabel, FieldError } from "@/components/ui/field";
 import { Section } from "@/components/section";
 import { Send } from "@/components/animate-ui/icons/send";
 import { AnimateIcon } from "@/components/animate-ui/icons/icon";
@@ -98,7 +98,7 @@ export function ContactClient() {
               </label>
             </p>
 
-            <Field>
+            <Field data-invalid={form.formState.errors.name ? "" : undefined}>
               <FieldLabel htmlFor="name">Name</FieldLabel>
               <Input
                 id="name"
@@ -106,15 +106,16 @@ export function ContactClient() {
                 autoComplete="name"
                 {...form.register("name")}
                 aria-invalid={!!form.formState.errors.name}
+                aria-describedby={form.formState.errors.name ? "name-error" : undefined}
               />
               {form.formState.errors.name && (
-                <p className="text-sm text-destructive mt-1">
+                <FieldError id="name-error">
                   {form.formState.errors.name.message}
-                </p>
+                </FieldError>
               )}
             </Field>
 
-            <Field>
+            <Field data-invalid={form.formState.errors.email ? "" : undefined}>
               <FieldLabel htmlFor="email">Email</FieldLabel>
               <Input
                 id="email"
@@ -123,15 +124,16 @@ export function ContactClient() {
                 autoComplete="email"
                 {...form.register("email")}
                 aria-invalid={!!form.formState.errors.email}
+                aria-describedby={form.formState.errors.email ? "email-error" : undefined}
               />
               {form.formState.errors.email && (
-                <p className="text-sm text-destructive mt-1">
+                <FieldError id="email-error">
                   {form.formState.errors.email.message}
-                </p>
+                </FieldError>
               )}
             </Field>
 
-            <Field>
+            <Field data-invalid={form.formState.errors.message ? "" : undefined}>
               <FieldLabel htmlFor="message">Message</FieldLabel>
               <Textarea
                 id="message"
@@ -139,11 +141,12 @@ export function ContactClient() {
                 rows={3}
                 {...form.register("message")}
                 aria-invalid={!!form.formState.errors.message}
+                aria-describedby={form.formState.errors.message ? "message-error" : undefined}
               />
               {form.formState.errors.message && (
-                <p className="text-sm text-destructive mt-1">
+                <FieldError id="message-error">
                   {form.formState.errors.message.message}
-                </p>
+                </FieldError>
               )}
             </Field>
 
