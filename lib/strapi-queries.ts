@@ -174,6 +174,18 @@ export interface CodeBlockType {
   caption?: string;
 }
 
+export interface SnapshotItem {
+  id: number;
+  label: string;
+  value: string;
+}
+
+export interface SnapshotBlock {
+  __component: 'project-blocks.snapshot';
+  id: number;
+  items?: SnapshotItem[];
+}
+
 export type ProjectBlock =
   | RichTextBlock
   | ImageBlock
@@ -181,7 +193,8 @@ export type ProjectBlock =
   | VideoBlock
   | ComparisonSliderBlock
   | StatsBlock
-  | CodeBlockType;
+  | CodeBlockType
+  | SnapshotBlock;
 
 export interface ProjectData {
   id: number;

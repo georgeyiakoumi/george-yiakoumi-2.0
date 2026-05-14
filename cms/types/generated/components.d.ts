@@ -134,6 +134,29 @@ export interface ProjectBlocksRichText extends Struct.ComponentSchema {
   };
 }
 
+export interface ProjectBlocksSnapshot extends Struct.ComponentSchema {
+  collectionName: 'components_project_blocks_snapshots';
+  info: {
+    description: 'Key-value metadata block for case study snapshots (Role, Client, Date, etc.)';
+    displayName: 'snapshot';
+  };
+  attributes: {
+    items: Schema.Attribute.Component<'project-blocks.snapshot-item', true>;
+  };
+}
+
+export interface ProjectBlocksSnapshotItem extends Struct.ComponentSchema {
+  collectionName: 'components_project_blocks_snapshot_items';
+  info: {
+    description: 'A label-value pair for the snapshot block';
+    displayName: 'snapshot-item';
+  };
+  attributes: {
+    label: Schema.Attribute.String & Schema.Attribute.Required;
+    value: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface ProjectBlocksStatItem extends Struct.ComponentSchema {
   collectionName: 'components_project_blocks_stat_items';
   info: {
@@ -217,6 +240,8 @@ declare module '@strapi/strapi' {
       'project-blocks.comparison-slider': ProjectBlocksComparisonSlider;
       'project-blocks.image': ProjectBlocksImage;
       'project-blocks.rich-text': ProjectBlocksRichText;
+      'project-blocks.snapshot': ProjectBlocksSnapshot;
+      'project-blocks.snapshot-item': ProjectBlocksSnapshotItem;
       'project-blocks.stat-item': ProjectBlocksStatItem;
       'project-blocks.stats': ProjectBlocksStats;
       'project-blocks.video': ProjectBlocksVideo;

@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_project_blocks_snapshots",
+  "info": {
+    "displayName": "snapshot",
+    "description": "Key-value metadata block for case study snapshots (Role, Client, Date, etc.)"
+  },
+  "options": {},
+  "attributes": {
+    "items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "project-blocks.snapshot-item"
+    }
+  }
+}
