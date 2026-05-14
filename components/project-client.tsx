@@ -11,7 +11,7 @@ import { ItemGroup } from "@/components/ui/item";
 
 import { ArrowLeft } from "@/components/animate-ui/icons/arrow-left";
 import { AnimateIcon } from "@/components/animate-ui/icons/icon";
-import { ExternalLink, Github } from "lucide-react";
+import { ArrowDown, ExternalLink, Github } from "lucide-react";
 
 import { getStrapiMediaURL } from "@/lib/strapi";
 import { useScrollVisibility } from "@/hooks/use-scroll-visibility";
@@ -19,7 +19,7 @@ import { Typography } from "@/components/ui/typography";
 import { ProjectCard } from "@/components/project-card";
 import { ProjectBlockRenderer } from "@/components/project-blocks";
 import { ShareBar } from "@/components/share-bar";
-import type { ProjectData, ToolData } from "@/lib/strapi-queries";
+import type { ProjectData, ToolData, SnapshotBlock as SnapshotBlockType, SnapshotItem } from "@/lib/strapi-queries";
 
 interface ProjectClientProps {
   project: ProjectData;
@@ -93,10 +93,58 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
     : null;
 
   const scrollVisible = useScrollVisibility();
+  const [showScrollIndicator, setShowScrollIndicator] = useState(true);
+
+  useEffect(() => {
+    const scrollContainer = document.querySelector("main");
+    if (!scrollContainer) return;
+
+    const handleScroll = () => {
+      if (scrollContainer.scrollTop >= 100) {
+        setShowScrollIndicator(false);
+        scrollContainer.removeEventListener("scroll", handleScroll);
+      }
+    };
+
+    scrollContainer.addEventListener("scroll", handleScroll, { passive: true });
+    return () => scrollContainer.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const handleBack = () => {
     window.history.back();
   };
+
+  // Auto-generate snapshot from existing project fields if no CMS snapshot block exists
+  const hasSnapshotBlock = project.body?.some(
+    (block) => block.__component === 'project-blocks.snapshot'
+  );
+
+  const autoSnapshotBlock: SnapshotBlockType | null = !hasSnapshotBlock
+    ? (() => {
+        const items: SnapshotItem[] = [];
+        let id = 1;
+        if (project.project_role) items.push({ id: id++, label: 'Role', value: project.project_role });
+        if (project.project_client) items.push({ id: id++, label: 'Client', value: project.project_client });
+        if (project.date) {
+          items.push({
+            id: id++,
+            label: 'Date',
+            value: new Date(project.date).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "short",
+              ...(project.type === "article" && { day: "numeric" }),
+            }),
+          });
+        }
+        return items.length > 0
+          ? { __component: 'project-blocks.snapshot' as const, id: 0, items }
+          : null;
+      })()
+    : null;
+
+  const blocksWithSnapshot = autoSnapshotBlock && project.body
+    ? [autoSnapshotBlock, ...project.body]
+    : project.body;
 
   return (
     <section className="place-items-center relative">
@@ -107,7 +155,7 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
         </Button>
       </AnimateIcon>
 
-      <header className="flex flex-col gap-8 px-8 items-center justify-center w-full md:max-w-lg lg:max-w-2xl xl:max-w-3xl h-screen mx-auto">
+      <header className="relative flex flex-col gap-8 px-8 items-center justify-center w-full md:max-w-lg lg:max-w-2xl xl:max-w-3xl h-screen mx-auto">
         <Typography variant="h1" className="text-center">
           {project.title}
         </Typography>
@@ -117,28 +165,6 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
             {project.description}
           </Typography>
         )}
-
-        <Typography variant="muted" className="flex items-center gap-2 flex-wrap justify-center">
-          {project.project_client && (
-            <>
-              <span>{project.project_client}</span>
-              <span>•</span>
-            </>
-          )}
-          <time dateTime={project.date}>
-            {new Date(project.date).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "short",
-              ...(project.type === "article" && { day: "numeric" }),
-            })}
-          </time>
-          {project.project_role && (
-            <>
-              <span>•</span>
-              <span>{project.project_role}</span>
-            </>
-          )}
-        </Typography>
 
         {(project.website_url || project.github_url) && (
           <div className="flex items-center gap-3">
@@ -171,13 +197,13 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
           </div>
         )}
 
-        {project.tools && project.tools.length > 0 && (
-          <div className="flex flex-wrap gap-2 justify-center">
-            {project.tools.map((tool) => (
-              <ToolBadge key={tool.id} tool={tool} />
-            ))}
-          </div>
-        )}
+        <div
+          className={`absolute animate-bounce bottom-32 md:bottom-8 lg:bottom-16 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground transition-opacity duration-300 motion-reduce:hidden ${
+            showScrollIndicator ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
+        >
+          <ArrowDown className="size-5" />
+        </div>
       </header>
 
       {heroImageUrl && (
@@ -197,7 +223,16 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
       )}
 
       <article className="flex flex-col w-full py-16">
-        {project.body && <ProjectBlockRenderer blocks={project.body} projectTitle={project.title} />}
+        {blocksWithSnapshot && (
+          <ProjectBlockRenderer
+            blocks={blocksWithSnapshot}
+            projectTitle={project.title}
+            toolsContent={project.tools && project.tools.length > 0
+              ? project.tools.map((tool) => <ToolBadge key={tool.id} tool={tool} />)
+              : undefined
+            }
+          />
+        )}
         <ShareBar type={project.type} />
       </article>
 

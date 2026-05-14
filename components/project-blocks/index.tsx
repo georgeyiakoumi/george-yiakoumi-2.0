@@ -1,3 +1,4 @@
+import React from "react";
 import type { ProjectBlock } from "@/lib/strapi-queries";
 import { RichTextBlock } from "./rich-text-block";
 import { ImageBlock } from "./image-block";
@@ -7,13 +8,15 @@ import { ComparisonSliderBlock } from "./comparison-slider-block";
 import { ComparisonSliderBlock as LegacyComparisonSliderBlock } from "@/components/legacy/comparison-slider-block";
 import { StatsBlock } from "./stats-block";
 import { CodeBlock } from "./code-block";
+import { SnapshotBlock } from "./snapshot-block";
 
 interface ProjectBlockRendererProps {
   blocks: ProjectBlock[];
   projectTitle: string;
+  toolsContent?: React.ReactNode;
 }
 
-export function ProjectBlockRenderer({ blocks, projectTitle }: ProjectBlockRendererProps) {
+export function ProjectBlockRenderer({ blocks, projectTitle, toolsContent }: ProjectBlockRendererProps) {
   if (!blocks || blocks.length === 0) return null;
 
   return (
@@ -44,6 +47,9 @@ export function ProjectBlockRenderer({ blocks, projectTitle }: ProjectBlockRende
           case 'project-blocks.code-block':
             return <CodeBlock key={key} block={block} />;
 
+          case 'project-blocks.snapshot':
+            return <SnapshotBlock key={key} block={block} toolsContent={toolsContent} />;
+
           default:
             console.warn(`Unknown block type: ${(block as any).__component}`);
             return null;
@@ -61,4 +67,5 @@ export {
   ComparisonSliderBlock,
   StatsBlock,
   CodeBlock,
+  SnapshotBlock,
 };
