@@ -97,15 +97,12 @@ export async function generateSiteMetadata(): Promise<Metadata> {
       },
     },
     icons: {
-      icon: seoData?.favIcon?.url
-        ? getStrapiMediaURL(seoData.favIcon.url) ?? "/favicon.ico"
-        : "/favicon.ico",
-      shortcut: seoData?.favIcon?.url
-        ? getStrapiMediaURL(seoData.favIcon.url) ?? "/favicon.ico"
-        : "/favicon.ico",
-      apple: seoData?.appleTouchIcon?.url
-        ? getStrapiMediaURL(seoData.appleTouchIcon.url) ?? "/apple-touch-icon.png"
-        : "/apple-touch-icon.png",
+      icon: [
+        { url: "/favicon.svg", type: "image/svg+xml" },
+        { url: "/favicon.ico", sizes: "32x32" },
+      ],
+      shortcut: "/favicon.ico",
+      apple: "/apple-touch-icon.png",
     },
   };
 }
