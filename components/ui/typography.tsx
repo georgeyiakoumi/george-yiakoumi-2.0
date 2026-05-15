@@ -17,7 +17,7 @@ const typographyVariants = cva("text-foreground", {
       large: "text-lg font-semibold",
       small: "text-sm font-medium leading-5",
       muted: "text-sm text-muted-foreground",
-      figcaption: "text-sm text-muted-foreground text-center",
+      figcaption: "text-xs text-muted-foreground text-center",
       blockquote: "border-l-4 border-border pl-4 italic text-muted-foreground",
       overline: "uppercase font-bold tracking-widest text-xs",
       code: "bg-muted px-1 py-0.5 rounded text-sm font-mono",

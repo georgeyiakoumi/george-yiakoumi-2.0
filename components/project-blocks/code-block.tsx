@@ -62,7 +62,7 @@ export function CodeBlock({ block }: CodeBlockProps) {
         dangerouslySetInnerHTML={{ __html: html }}
       />
       {block.caption && (
-        <Typography variant="figcaption" className="max-w-2xl">
+        <Typography variant="figcaption" className="max-w-2xl order-first md:order-last">
           {block.caption}
         </Typography>
       )}

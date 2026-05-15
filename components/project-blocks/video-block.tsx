@@ -67,7 +67,7 @@ export function VideoBlock({ block }: VideoBlockProps) {
           </div>
         </div>
         {block.caption && (
-          <Typography variant="figcaption" className="max-w-2xl">
+          <Typography variant="figcaption" className="max-w-2xl order-first md:order-last">
             {block.caption}
           </Typography>
         )}
@@ -94,7 +94,7 @@ export function VideoBlock({ block }: VideoBlockProps) {
           </video>
         </div>
         {block.caption && (
-          <Typography variant="figcaption" className="max-w-2xl">
+          <Typography variant="figcaption" className="max-w-2xl order-first md:order-last">
             {block.caption}
           </Typography>
         )}

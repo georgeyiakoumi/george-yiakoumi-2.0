@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import Image from "next/image";
 import { ChevronsLeftRight } from "lucide-react";
 import { getStrapiMediaURL } from "@/lib/strapi";
 import { Typography } from "@/components/ui/typography";
+import { ImageWithFallback } from "@/components/ui/image-with-fallback";
 import type { ComparisonSliderBlock as ComparisonSliderBlockType } from "@/lib/strapi-queries";
 
 interface ComparisonSliderBlockProps {
@@ -81,7 +81,7 @@ export function ComparisonSliderBlock({ block, projectTitle }: ComparisonSliderB
   return (
     <figure className="flex flex-col gap-4 items-center w-full px-8 my-8">
       {block.caption && (
-        <Typography variant="figcaption" className="max-w-2xl">
+        <Typography variant="figcaption" className="max-w-2xl md:order-last">
           {block.caption}
         </Typography>
       )}
@@ -94,7 +94,7 @@ export function ComparisonSliderBlock({ block, projectTitle }: ComparisonSliderB
         >
           <div className="absolute inset-0 rounded-lg overflow-hidden border-border border">
             {/* Before Image (full) */}
-            <Image
+            <ImageWithFallback
               src={beforeImageUrl || ''}
               alt={`${projectTitle} — before`}
               fill
@@ -110,7 +110,7 @@ export function ComparisonSliderBlock({ block, projectTitle }: ComparisonSliderB
                 clipPath: `inset(0 ${100 - sliderPosition}% 0 0)`,
               }}
             >
-              <Image
+              <ImageWithFallback
                 src={afterImageUrl || ''}
                 alt={`${projectTitle} — after`}
                 fill
