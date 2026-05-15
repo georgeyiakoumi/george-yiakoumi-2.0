@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import dynamic from "next/dynamic";
+import { ImageWithFallback } from "@/components/ui/image-with-fallback";
 import { Button } from "@/components/ui/button";
 import { Section } from "@/components/section";
 import { Typography } from "@/components/ui/typography";
@@ -48,10 +48,7 @@ export function HomeContent({ aboutData, tools, businesses, latestProject }: Hom
     if (!scrollContainer) return;
 
     const handleScroll = () => {
-      if (scrollContainer.scrollTop >= 100) {
-        setShowScrollIndicator(false);
-        scrollContainer.removeEventListener("scroll", handleScroll);
-      }
+      setShowScrollIndicator(scrollContainer.scrollTop < 100);
     };
 
     scrollContainer.addEventListener("scroll", handleScroll, { passive: true });
@@ -80,7 +77,7 @@ export function HomeContent({ aboutData, tools, businesses, latestProject }: Hom
     <>
       <Section as="header" className="relative">
         {avatarUrl && (
-          <Image
+          <ImageWithFallback
             src={avatarUrl}
             alt={avatarAlt}
             width={128}

@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import { ImageWithFallback } from "@/components/ui/image-with-fallback";
 import { ChevronRight } from "lucide-react";
 import {
   Item,
@@ -36,7 +36,7 @@ export function ProjectCard({ project, scenario = "carousel", background = "mute
         <Link href={`/project/${project.slug}`}>
           {project.project_thumb && (
             <ItemMedia variant="image" className="size-32 !rounded-none !translate-y-0 !self-center">
-              <Image
+              <ImageWithFallback
                 src={project.project_thumb.url}
                 alt={project.project_thumb.alternativeText || project.title}
                 fill
@@ -80,7 +80,7 @@ export function ProjectCard({ project, scenario = "carousel", background = "mute
       <Link href={`/project/${project.slug}`} className="pb-4">
         {project.project_thumb && (
           <ItemHeader className="relative aspect-video w-full overflow-hidden">
-            <Image
+            <ImageWithFallback
               src={project.project_thumb.url}
               alt={project.project_thumb.alternativeText || project.title}
               fill

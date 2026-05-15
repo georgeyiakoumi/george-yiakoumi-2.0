@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useTheme } from "next-themes";
+import { ImageWithFallback } from "@/components/ui/image-with-fallback";
 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -100,10 +101,7 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
     if (!scrollContainer) return;
 
     const handleScroll = () => {
-      if (scrollContainer.scrollTop >= 100) {
-        setShowScrollIndicator(false);
-        scrollContainer.removeEventListener("scroll", handleScroll);
-      }
+      setShowScrollIndicator(scrollContainer.scrollTop < 100);
     };
 
     scrollContainer.addEventListener("scroll", handleScroll, { passive: true });
@@ -207,7 +205,7 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
       </header>
 
       {heroImageUrl && (
-        <Image
+        <ImageWithFallback
           src={heroImageUrl}
           alt={project.project_thumb?.alternativeText || project.title || ''}
           width={1920}
@@ -216,6 +214,8 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
           fetchPriority="high"
           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 32rem, 48rem"
           className="h-auto md:max-w-md lg:max-w-xl xl:max-w-3xl mx-auto md:border-border md:border md:rounded-lg select-none"
+          wrapperClassName="w-full flex justify-center"
+          skeletonClassName="md:rounded-lg"
           placeholder="blur"
           blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyMCIgaGVpZ2h0PSIxMDgwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxOTIwIiBoZWlnaHQ9IjEwODAiIGZpbGw9IiNlZWUiLz48L3N2Zz4="
           draggable={false}

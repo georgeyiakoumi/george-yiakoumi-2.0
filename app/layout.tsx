@@ -13,7 +13,6 @@ import "@/lib/tailwind-safelist";
 const mulish = Mulish({
   subsets: ["latin"],
   display: 'swap',
-  preload: false,
 });
 
 export const generateMetadata = generateSiteMetadata;
@@ -28,6 +27,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <link rel="preconnect" href="https://res.cloudinary.com" />
+        <link rel="dns-prefetch" href="https://res.cloudinary.com" />
         <SEOScripts />
       </head>
       <body className={mulish.className}>

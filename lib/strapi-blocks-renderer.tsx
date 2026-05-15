@@ -1,5 +1,5 @@
 import React from 'react';
-import Image from 'next/image';
+import { ImageWithFallback } from '@/components/ui/image-with-fallback';
 import { getStrapiMediaURL } from './strapi';
 import { cn } from './utils';
 import { Typography } from '@/components/ui/typography';
@@ -232,7 +232,7 @@ function renderEyebrow(text: string, key: number): React.ReactNode {
       key={key}
       variant="overline"
       as="span"
-      className="mb-2 block text-xs font-bold uppercase tracking-widest text-foreground/80"
+      className="mb-4 block text-xs font-extrabold uppercase tracking-widest text-foreground/70"
     >
       {text}
     </Typography>
@@ -327,12 +327,13 @@ export function renderStrapiRichText(
 
       {imageUrl && (
         <div className="relative aspect-video rounded-lg overflow-hidden bg-muted">
-          <Image
+          <ImageWithFallback
             src={imageUrl}
             alt={richTextBlock.Image?.alternativeText || 'Section image'}
             fill
             sizes="100vw"
             className="object-cover"
+            skeletonClassName="rounded-lg"
           />
         </div>
       )}
