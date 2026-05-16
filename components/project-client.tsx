@@ -19,8 +19,9 @@ import { useScrollVisibility } from "@/hooks/use-scroll-visibility";
 import { Typography } from "@/components/ui/typography";
 import { ProjectCard } from "@/components/project-card";
 import { ProjectBlockRenderer } from "@/components/project-blocks";
+import { SnapshotBlock } from "@/components/project-blocks/snapshot-block";
 import { ShareBar } from "@/components/share-bar";
-import type { ProjectData, ToolData, SnapshotBlock as SnapshotBlockType, SnapshotItem } from "@/lib/strapi-queries";
+import type { ProjectData, ToolData, SnapshotItem } from "@/lib/strapi-queries";
 
 interface ProjectClientProps {
   project: ProjectData;
@@ -112,50 +113,44 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
     window.history.back();
   };
 
-  // Auto-generate snapshot from existing project fields if no CMS snapshot block exists
-  const hasSnapshotBlock = project.body?.some(
-    (block) => block.__component === 'project-blocks.snapshot'
-  );
+  // Build snapshot items: always start from project fields, then append CMS extras
+  const snapshotItems: SnapshotItem[] = (() => {
+    const items: SnapshotItem[] = [];
+    let id = 1;
+    if (project.project_role) items.push({ id: id++, label: 'Role', value: project.project_role });
+    if (project.project_client) items.push({ id: id++, label: 'Client', value: project.project_client });
+    if (project.date) {
+      const startDate = new Date(project.date);
+      const dateFormat: Intl.DateTimeFormatOptions = {
+        year: "numeric",
+        month: "short",
+        ...(project.type === "article" && { day: "numeric" as const }),
+      };
+      let dateValue = startDate.toLocaleDateString("en-US", dateFormat);
 
-  const autoSnapshotBlock: SnapshotBlockType | null = !hasSnapshotBlock
-    ? (() => {
-        const items: SnapshotItem[] = [];
-        let id = 1;
-        if (project.project_role) items.push({ id: id++, label: 'Role', value: project.project_role });
-        if (project.project_client) items.push({ id: id++, label: 'Client', value: project.project_client });
-        if (project.date) {
-          const startDate = new Date(project.date);
-          const dateFormat: Intl.DateTimeFormatOptions = {
-            year: "numeric",
-            month: "short",
-            ...(project.type === "article" && { day: "numeric" as const }),
-          };
-          let dateValue = startDate.toLocaleDateString("en-US", dateFormat);
+      if (project.end_date) {
+        const endDate = new Date(project.end_date);
+        dateValue += ` – ${endDate.toLocaleDateString("en-US", dateFormat)}`;
 
-          if (project.end_date) {
-            const endDate = new Date(project.end_date);
-            dateValue += ` – ${endDate.toLocaleDateString("en-US", dateFormat)}`;
+        const totalMonths =
+          (endDate.getFullYear() - startDate.getFullYear()) * 12 +
+          (endDate.getMonth() - startDate.getMonth()) + 1;
 
-            const totalMonths =
-              (endDate.getFullYear() - startDate.getFullYear()) * 12 +
-              (endDate.getMonth() - startDate.getMonth());
-
-            if (totalMonths > 0) {
-              dateValue += ` (${totalMonths} month${totalMonths !== 1 ? "s" : ""})`;
-            }
-          }
-
-          items.push({ id: id++, label: 'Date', value: dateValue });
+        if (totalMonths > 0) {
+          dateValue += ` (${totalMonths} month${totalMonths !== 1 ? "s" : ""})`;
         }
-        return items.length > 0
-          ? { __component: 'project-blocks.snapshot' as const, id: 0, items }
-          : null;
-      })()
-    : null;
+      }
 
-  const blocksWithSnapshot = autoSnapshotBlock && project.body
-    ? [autoSnapshotBlock, ...project.body]
-    : project.body;
+      items.push({ id: id++, label: 'Date', value: dateValue });
+    }
+    // Append any extra CMS-authored snapshot items
+    if (project.snapshot_items) {
+      for (const item of project.snapshot_items) {
+        items.push({ id: id++, label: item.label, value: item.value });
+      }
+    }
+    return items;
+  })();
 
   return (
     <section className="place-items-center relative">
@@ -243,14 +238,19 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
       )}
 
       <article className="flex flex-col w-full py-16">
-        {blocksWithSnapshot && (
-          <ProjectBlockRenderer
-            blocks={blocksWithSnapshot}
-            projectTitle={project.title}
+        {snapshotItems.length > 0 && (
+          <SnapshotBlock
+            items={snapshotItems}
             toolsContent={project.tools && project.tools.length > 0
               ? project.tools.map((tool) => <ToolBadge key={tool.id} tool={tool} />)
               : undefined
             }
+          />
+        )}
+        {project.body && (
+          <ProjectBlockRenderer
+            blocks={project.body}
+            projectTitle={project.title}
           />
         )}
         <ShareBar type={project.type} />

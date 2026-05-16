@@ -148,12 +148,6 @@ export interface SnapshotItem {
   value: string;
 }
 
-export interface SnapshotBlock {
-  __component: 'project-blocks.snapshot';
-  id: number;
-  items?: SnapshotItem[];
-}
-
 export type ProjectBlock =
   | RichTextBlock
   | ImageBlock
@@ -161,8 +155,7 @@ export type ProjectBlock =
   | VideoBlock
   | ComparisonSliderBlock
   | StatsBlock
-  | CodeBlockType
-  | SnapshotBlock;
+  | CodeBlockType;
 
 export interface ProjectData {
   id: number;
@@ -186,6 +179,7 @@ export interface ProjectData {
   hero_caption?: string;
   project_client?: string;
   project_role?: string;
+  snapshot_items?: SnapshotItem[];
   website_url?: string;
   github_url?: string;
   body?: ProjectBlock[];
@@ -307,6 +301,7 @@ export async function getProjectBySlug(slug: string) {
         'populate[project_thumb][fields][2]': 'width',
         'populate[project_thumb][fields][3]': 'height',
         'populate[tools][populate]': '*',
+        'populate[snapshot_items]': '*',
       },
       tags: ['projects', `project-${slug}`],
     });

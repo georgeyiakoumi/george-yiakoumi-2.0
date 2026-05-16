@@ -1,10 +1,10 @@
 import React from "react";
-import type { SnapshotBlock as SnapshotBlockType } from "@/lib/strapi-queries";
+import type { SnapshotItem } from "@/lib/strapi-queries";
 import { Typography } from "@/components/ui/typography";
 import { Badge } from "@/components/ui/badge";
 
 interface SnapshotBlockProps {
-  block: SnapshotBlockType;
+  items: SnapshotItem[];
   toolsContent?: React.ReactNode;
 }
 
@@ -43,12 +43,12 @@ function parseSnapshotValue(value: string): React.ReactNode {
   return <>{parts}</>;
 }
 
-export function SnapshotBlock({ block, toolsContent }: SnapshotBlockProps) {
-  const items = block.items?.filter(
+export function SnapshotBlock({ items: rawItems, toolsContent }: SnapshotBlockProps) {
+  const items = rawItems.filter(
     (item) => item.label?.trim() && item.value?.trim()
   );
 
-  if (!items || items.length === 0) return null;
+  if (items.length === 0) return null;
 
   return (
     <div className="mx-auto w-full md:max-w-lg lg:max-w-2xl xl:max-w-4xl 2xl:max-w-6xl px-8 lg:px-0 mb-16">

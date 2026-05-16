@@ -719,7 +719,6 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
         'project-blocks.comparison-slider',
         'project-blocks.carousel',
         'project-blocks.code-block',
-        'project-blocks.snapshot',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;
@@ -741,6 +740,10 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
     project_thumb: Schema.Attribute.Media<'images' | 'files'>;
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    snapshot_items: Schema.Attribute.Component<
+      'project-blocks.snapshot-item',
+      true
+    >;
     tags: Schema.Attribute.JSON &
       Schema.Attribute.CustomField<'plugin::tagsinput.tags'>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
