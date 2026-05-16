@@ -58,6 +58,11 @@
     "project_role": {
       "type": "string"
     },
+    "snapshot_items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "project-blocks.snapshot-item"
+    },
     "body": {
       "type": "dynamiczone",
       "components": [
@@ -67,8 +72,7 @@
         "project-blocks.image",
         "project-blocks.comparison-slider",
         "project-blocks.carousel",
-        "project-blocks.code-block",
-        "project-blocks.snapshot"
+        "project-blocks.code-block"
       ]
     },
     "type": {
