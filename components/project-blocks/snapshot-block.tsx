@@ -1,6 +1,5 @@
 import React from "react";
 import type { SnapshotItem } from "@/lib/strapi-queries";
-import { Typography } from "@/components/ui/typography";
 import { Badge } from "@/components/ui/badge";
 
 interface SnapshotBlockProps {
@@ -51,37 +50,30 @@ export function SnapshotBlock({ items: rawItems, toolsContent }: SnapshotBlockPr
   if (items.length === 0) return null;
 
   return (
-    <div className="mx-auto w-full md:max-w-lg lg:max-w-2xl xl:max-w-4xl 2xl:max-w-6xl px-8 lg:px-0 mb-16">
-      <div className="md:max-w-md lg:max-w-xl xl:max-w-2xl mx-auto">
-        <Typography
-          variant="overline"
-          as="span"
-          className="mb-4 block text-xs font-bold uppercase tracking-widest text-foreground/80"
-        >
-          Snapshot
-        </Typography>
-        <dl className="grid grid-cols-[auto_1fr] gap-x-6 gap-y-2">
+    <div className="mx-auto w-full md:max-w-md lg:max-w-xl xl:max-w-2xl px-8 lg:px-0 mb-16">
+      <div>
+        <dl className="grid grid-cols-[4rem_1fr] gap-x-4 gap-y-5 sm:grid-cols-[3rem_1fr]">
           {items.map((item) => (
-            <div key={item.id} className="col-span-2 grid grid-cols-subgrid items-baseline">
-              <dt className="text-sm font-semibold text-foreground">
+            <React.Fragment key={item.id}>
+              <dt className="text-xs uppercase tracking-wide text-muted-foreground pt-0.5">
                 {item.label}
               </dt>
-              <dd className="text-sm text-muted-foreground">
+              <dd className="text-sm text-foreground">
                 {parseSnapshotValue(item.value)}
               </dd>
-            </div>
+            </React.Fragment>
           ))}
           {toolsContent && (
-            <div className="col-span-2 grid grid-cols-subgrid">
-              <dt className="text-sm font-semibold text-foreground pt-0.5">
+            <>
+              <dt className="text-xs uppercase tracking-wide text-muted-foreground pt-1">
                 Tools
               </dt>
-              <dd>
+              <dd className="pt-0.5">
                 <div className="flex flex-wrap gap-2">
                   {toolsContent}
                 </div>
               </dd>
-            </div>
+            </>
           )}
         </dl>
       </div>
