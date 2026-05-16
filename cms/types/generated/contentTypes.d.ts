@@ -719,6 +719,7 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
         'project-blocks.comparison-slider',
         'project-blocks.carousel',
         'project-blocks.code-block',
+        'project-blocks.snapshot',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;
@@ -726,7 +727,9 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     date: Schema.Attribute.Date;
     description: Schema.Attribute.Text;
+    end_date: Schema.Attribute.Date;
     github_url: Schema.Attribute.String;
+    hero_caption: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',

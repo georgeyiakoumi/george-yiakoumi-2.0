@@ -124,15 +124,28 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
         if (project.project_role) items.push({ id: id++, label: 'Role', value: project.project_role });
         if (project.project_client) items.push({ id: id++, label: 'Client', value: project.project_client });
         if (project.date) {
-          items.push({
-            id: id++,
-            label: 'Date',
-            value: new Date(project.date).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "short",
-              ...(project.type === "article" && { day: "numeric" }),
-            }),
-          });
+          const startDate = new Date(project.date);
+          const dateFormat: Intl.DateTimeFormatOptions = {
+            year: "numeric",
+            month: "short",
+            ...(project.type === "article" && { day: "numeric" as const }),
+          };
+          let dateValue = startDate.toLocaleDateString("en-US", dateFormat);
+
+          if (project.end_date) {
+            const endDate = new Date(project.end_date);
+            dateValue += ` – ${endDate.toLocaleDateString("en-US", dateFormat)}`;
+
+            const totalMonths =
+              (endDate.getFullYear() - startDate.getFullYear()) * 12 +
+              (endDate.getMonth() - startDate.getMonth());
+
+            if (totalMonths > 0) {
+              dateValue += ` (${totalMonths} month${totalMonths !== 1 ? "s" : ""})`;
+            }
+          }
+
+          items.push({ id: id++, label: 'Date', value: dateValue });
         }
         return items.length > 0
           ? { __component: 'project-blocks.snapshot' as const, id: 0, items }
@@ -205,21 +218,28 @@ export function ProjectClient({ project, otherProjects }: ProjectClientProps) {
       </header>
 
       {heroImageUrl && (
-        <ImageWithFallback
-          src={heroImageUrl}
-          alt={project.project_thumb?.alternativeText || project.title || ''}
-          width={1920}
-          height={1080}
-          priority
-          fetchPriority="high"
-          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 32rem, 48rem"
-          className="h-auto md:max-w-md lg:max-w-xl xl:max-w-3xl mx-auto md:border-border md:border md:rounded-lg select-none"
-          wrapperClassName="w-full flex justify-center"
-          skeletonClassName="md:rounded-lg"
-          placeholder="blur"
-          blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyMCIgaGVpZ2h0PSIxMDgwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxOTIwIiBoZWlnaHQ9IjEwODAiIGZpbGw9IiNlZWUiLz48L3N2Zz4="
-          draggable={false}
-        />
+        <figure className="flex flex-col gap-4 items-center w-full px-8">
+          <ImageWithFallback
+            src={heroImageUrl}
+            alt={project.project_thumb?.alternativeText || project.title || ''}
+            width={1920}
+            height={1080}
+            priority
+            fetchPriority="high"
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 32rem, 48rem"
+            className="h-auto md:max-w-md lg:max-w-xl xl:max-w-3xl mx-auto md:border-border md:border md:rounded-lg select-none"
+            wrapperClassName="w-full flex justify-center"
+            skeletonClassName="md:rounded-lg"
+            placeholder="blur"
+            blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyMCIgaGVpZ2h0PSIxMDgwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxOTIwIiBoZWlnaHQ9IjEwODAiIGZpbGw9IiNlZWUiLz48L3N2Zz4="
+            draggable={false}
+          />
+          {project.hero_caption && (
+            <Typography variant="figcaption" className="max-w-2xl order-first md:order-last">
+              {project.hero_caption}
+            </Typography>
+          )}
+        </figure>
       )}
 
       <article className="flex flex-col w-full py-16">
