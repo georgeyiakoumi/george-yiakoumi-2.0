@@ -11,8 +11,6 @@ import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, Dr
 interface LogoItemData {
   id: number;
   name: string;
-  ariaLabel: string;
-  imageWidth?: number;
   classes?: string | null;
   cssVariables?: Record<string, string> | null;
   cssVariablesDark?: Record<string, string> | null;

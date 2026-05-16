@@ -1,36 +1,4 @@
 import { fetchAPI } from './strapi';
-import type { StrapiMedia } from './strapi-types';
-
-export interface AboutPageData {
-  id: number;
-  attributes: {
-    title: string;
-    description: string;
-    bio?: string;
-    avatar?: {
-      data: StrapiMedia | null;
-    };
-    skills?: Array<{
-      id: number;
-      name: string;
-      category: string;
-    }>;
-    experience?: Array<{
-      id: number;
-      company: string;
-      position: string;
-      startDate: string;
-      endDate?: string;
-      description: string;
-      logo?: {
-        data: StrapiMedia | null;
-      };
-    }>;
-    createdAt: string;
-    updatedAt: string;
-    publishedAt: string;
-  };
-}
 
 interface StrapiRichTextBlock {
   id: number;
@@ -203,6 +171,7 @@ export interface ProjectData {
   description?: string;
   slug: string;
   date: string;
+  end_date?: string;
   tags: Array<{
     name: string;
   }>;
@@ -214,39 +183,18 @@ export interface ProjectData {
     height?: number;
   };
   type?: 'client' | 'personal' | 'article';
+  hero_caption?: string;
   project_client?: string;
   project_role?: string;
   website_url?: string;
   github_url?: string;
   body?: ProjectBlock[];
   tools?: ToolData[];
-  media?: Array<{
-    id: number;
-    url: string;
-    alternativeText?: string;
-    width?: number;
-    height?: number;
-    mime?: string;
-  }>;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
 }
 
-export interface ContactInfoData {
-  id: number;
-  attributes: {
-    email: string;
-    phone?: string;
-    linkedinUrl?: string;
-    githubUrl?: string;
-    location?: string;
-    availability?: string;
-    createdAt: string;
-    updatedAt: string;
-    publishedAt: string;
-  };
-}
 
 export interface AboutRichTextChild {
   text: string;
@@ -268,8 +216,6 @@ export interface AboutRichTextBlock {
 export interface AboutBusiness {
   id: number;
   name: string;
-  imageWidth?: number;
-  ariaLabel: string;
   classes?: string | null;
   cssVariables?: Record<string, string> | null;
   cssVariablesDark?: Record<string, string> | null;
@@ -371,18 +317,6 @@ export async function getProjectBySlug(slug: string) {
   }
 }
 
-export async function getContactInfo() {
-  try {
-    const data = await fetchAPI<ContactInfoData>({
-      endpoint: '/contact-info',
-      tags: ['contact-info'],
-    });
-    return data;
-  } catch (error) {
-    console.error('Error fetching contact info:', error);
-    return null;
-  }
-}
 
 // Global SEO
 export interface GlobalSEOData {
@@ -409,14 +343,6 @@ export interface GlobalSEOData {
   };
   twitterCard?: 'summary' | 'summary_large_image';
   gtagId?: string;
-  favIcon?: {
-    id: number;
-    url: string;
-  };
-  appleTouchIcon?: {
-    id: number;
-    url: string;
-  };
 }
 
 export async function getGlobalSEO() {
@@ -428,8 +354,6 @@ export async function getGlobalSEO() {
         'populate[ogImage][fields][1]': 'alternativeText',
         'populate[ogImage][fields][2]': 'width',
         'populate[ogImage][fields][3]': 'height',
-        'populate[favIcon][fields][0]': 'url',
-        'populate[appleTouchIcon][fields][0]': 'url',
       },
       tags: ['global-seo'],
     });
@@ -444,8 +368,6 @@ export interface ToolData {
   id: number;
   documentId: string;
   name: string;
-  ariaLabel: string;
-  imageWidth?: number;
   url?: string;
   description?: string;
   category?: 'design' | 'development' | 'tools';
@@ -490,8 +412,6 @@ export interface BusinessData {
   id: number;
   documentId: string;
   name: string;
-  ariaLabel: string;
-  imageWidth?: number;
   classes?: string | null;
   cssVariables?: Record<string, string> | null;
   cssVariablesDark?: Record<string, string> | null;

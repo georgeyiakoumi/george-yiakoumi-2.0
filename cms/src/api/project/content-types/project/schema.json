@@ -34,7 +34,13 @@
         "files"
       ]
     },
+    "hero_caption": {
+      "type": "string"
+    },
     "date": {
+      "type": "date"
+    },
+    "end_date": {
       "type": "date"
     },
     "tags": {
@@ -61,7 +67,8 @@
         "project-blocks.image",
         "project-blocks.comparison-slider",
         "project-blocks.carousel",
-        "project-blocks.code-block"
+        "project-blocks.code-block",
+        "project-blocks.snapshot"
       ]
     },
     "type": {
